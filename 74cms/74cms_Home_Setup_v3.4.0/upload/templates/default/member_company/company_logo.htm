@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+//控制图片大小
+{#if $company_profile.logo<>""#}
+var imgwidth=$("#c_img").attr("width");
+if (imgwidth>500)
+{
+$("#c_img").attr("width","500")
+}
+{#/if#}
+});
+//验证
+$(document).ready(function() {
+ $("#Form1").validate({
+// debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+	   logo: {
+	   required:true,
+	   accept:"jpg|gif|png"
+	   }
+	},
+    messages: {
+   logo:{
+    required:jQuery.format("请上传logo"),
+	accept:jQuery.format("您上传的文件格式不正确")
+   }   
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+	
+	$("#up").click(function() {
+	if ($("#Form1").valid())
+	{
+	$("#upform").hide();
+	$("#upform_wait").show();
+	}
+	});
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;公司信息&nbsp;>>&nbsp;企业LOGO
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+		<div class="user_right_box" style="padding-bottom:100px;">
+		<div class="user_right_top_tit_bg">		
+		  <h1>企业LOGO</h1>
+		</div>
+		 <form action="?act=company_logo_save" method="post"  id="Form1" enctype="multipart/form-data">
+      <table width="100%" border="0" cellpadding="4" cellspacing="0" >
+		        <tr>
+          <td height="30" colspan="2"   style="padding-left:20px; color: #009900; line-height:200%;border-bottom:1px  #93C4DB dashed" class="link_lan">LOGO是网站形象的重要体现，上传LOGO尺寸请不要超过300×110像素，图片大小不超过 {#$QISHI.logo_max_size#}KB，允许格式：jpg/gif/png</td>
+        </tr>
+		</table>
+		{#if $company_profile.logo=="" || $smarty.get.up=="again"#}
+		<table width="100%" border="0" cellpadding="4" cellspacing="0" id="upform" >
+        <tr>
+          <td height="30" align="right" >上传logo图片：</td>
+          <td ><input type="file" name="logo"  id="logo" style="height:24px; width:275px; font-size:12px; line-height:20px;"  onkeydown="alert('请点击右侧“浏览”选择您电脑上的图片！');return false"/>
+           </td>
+        </tr>
+		<tr>		
+          <td height="30" align="right" >&nbsp;</td>
+          <td ><input type="submit" name="Submit" value="立即上传"  id="up"  class="user_submit" /></td>
+		</tr>
+		</table>
+		 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:200px; margin-top:50px;line-height:180%; display:none; color:#009900" id="upform_wait">
+  <tr>
+    <td height="40" align="center"><img src="{#$QISHI.site_template#}images/30.gif"  border="0"/></td>
+  </tr>
+  <tr>
+    <td height="20" align="center">正在上传，请稍后...</td>
+  </tr>
+</table>
+		{#else#}
+		<table width="100%" border="0" cellpadding="4" cellspacing="0" style="margin-bottom:100px;" >
+		        <tr>
+          <td height="30" align="right" >&nbsp;</td>
+          <td   class="link_lan">您已经上传了企业LOGO：<a href="{#$QISHI.site_dir#}data/logo/{#$company_profile.logo#}" target="_blank">{#$company_profile.logo#}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="?act=company_logo&up=again">[重新上传]</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="?act=company_logo_del">[删除LOGO]</a></td>
+        </tr>
+		{#/if#}
+{#if $company_profile.logo<>""#}
+<tr>
+          <td height="30" align="right" >logo图片：</td>
+          <td valign="top" >
+		  <div style="width:500px; overflow:hidden ">		  
+		  <a href="{#$QISHI.site_dir#}data/logo/{#$company_profile.logo#}" target="_blank"><img src="{#$QISHI.site_dir#}data/logo/{#$company_profile.logo#}?rand={#$rand#}" border="0" id="c_img"/></a>
+		  </div>
+		  </td>
+        </tr>		
+      </table>
+	  {#/if#}
+	  </form>
+	  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link href="templates/css/common.css" rel="stylesheet" type="text/css" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<title>安装向导 - 骑士PHP人才系统(www.74cms.com)</title>
+</head>
+<body>
+{#include file="header.htm"#}
+{#include file="tip.htm"#}
+<table width="800" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;">
+  <tr>
+    <td width="186" valign="top"><table width="180" border="0" cellspacing="0" cellpadding="0"  class="left_table_right_dot">
+      <tr>
+        <td>
+{#include file="left.htm"#}	
+		</td>
+      </tr>
+    </table></td>
+    <td valign="top"><table width="98%" border="0" align="center" cellpadding="6" cellspacing="0">
+      <tr>
+        <td bgcolor="#F7FBFC" style=" font-size:13px; padding-left:15px;  "> <strong>服务器信息</strong> </td>
+      </tr>
+      <tr>
+        <td style="line-height:200%;">
+		服务器操作系统：<span style="color:#0066CC">{#$system_info.os#}</span><br />
+服务器解译引擎：<span style="color:#0066CC">{#$system_info.web_server#}</span><br />
+PHP版本：<span style="color:#0066CC">{#$system_info.php_ver#}</span><br />
+上传附件最大值：<span style="color:#0066CC">{#$system_info.max_filesize#}</span>
+</td>
+      </tr>
+    </table>
+      <table width="98%" border="0" align="center" cellpadding="6" cellspacing="0">
+        <tr>
+          <td bgcolor="#F7FBFC" style=" font-size:13px; padding-left:15px;  "><strong>目录权限检测</strong> </td>
+        </tr>
+        <tr>
+          <td style="line-height:200%;"><table width="100%" border="0" cellspacing="1" cellpadding="0">
+            <tr>
+              <td width="33%" align="center"><strong>目录名</strong></td>
+              <td width="33%" align="center"><strong>读取权限</strong></td>
+              <td align="center"><strong>写入权限</strong></td>
+            </tr>
+          	{#section name=dir loop=$dir_check#}
+			<tr>
+				<td>{#$dir_check[dir].dir#}</td>
+				<td align="center">{#$dir_check[dir].read#}</td>
+				<td align="center">{#$dir_check[dir].write#}</td>
+			</tr>
+			{#/section#}
+          </table>          </td>
+        </tr>
+        <tr>
+          <td height="55" align="center"  >
+		  <form action="index.php" method="get">
+	<input name="act" type="hidden" value="3" />
+	<input name="" type="button"  class="step_submit" onclick="window.location.href='index.php?act=1';" value="上一步" />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        <input type="submit" name="" value="下一步"  class="step_submit" />
+		  </form>
+		  </td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+{#include file="foot.htm"#}
+</body>
+</html>

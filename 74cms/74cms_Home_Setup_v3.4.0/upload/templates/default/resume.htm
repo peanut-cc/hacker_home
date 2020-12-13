@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />{#qishi_pageinfo set="列表名:page,调用:QS_resume"#}
+<title>{#$page.title#}</title>
+<meta name="description" content="{#$page.description#}">
+<meta name="keywords" content="{#$page.keywords#}">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/resume.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_dir#}data/cache_classify.js" type='text/javascript' charset="utf-8"></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#"QS_resume"|qishi_url#}">求职信息</a>
+</div>
+<div class="resume-nav">
+  <a href="{#"QS_resumelist"|qishi_url#}" class="select">全能搜索</a>
+  <a href="{#"QS_resumetag"|qishi_url#}" >按标签搜索</a>
+   <div class="clear"></div>
+</div>
+<div class="resumesearchbox link_bkg" id="resumesearchbox"><div class="loading"></div></div>
+<script src="{#$QISHI.site_template#}js/jquery.resume-search.js" type='text/javascript'></script>
+<script type="text/javascript">
+	var getstr=",,,,,,,,,";
+	var defaultkey="请输入：技能，特长，职位{#if $QISHI.resumesearch_type=='1'#}，学历，姓名，地区，学校等{#/if#}...";
+	var getkey="{#$smarty.get.key#}";
+	if (getkey=='')
+	{
+	getkey=defaultkey;
+	}
+	allaround('{#$QISHI.site_template#}','{#$QISHI.site_dir#}','{#"QS_resumelist"|qishi_url#}',getkey,getstr);
+</script>
+<div class="resumebox link_greenu">
+<h2>照片简历 </h2>
+{#qishi_resume_list set="列表名:resume,显示数目:6,照片:1,意向职位长度:18,填补字符:...,排序:rtime>desc"#}
+{#foreach from=$resume item=list#}
+<div class="photobox">
+		  <div class="imgdiv">
+		  <a href="{#$list.resume_url#}" target="_blank"><img src="{#$list.photosrc#}"  width="68" height="85" border="0"/></a>
+		  </div>  
+		  <div class="txt">
+<a href="{#$list.resume_url#}" target="_blank">{#$list.fullname#}</a><br />
+性别：{#$list.sex_cn#}&nbsp;&nbsp;年龄：{#$list.age#}岁&nbsp;&nbsp;<br />
+学历：{#$list.education_cn#}&nbsp;&nbsp;工作经验：{#$list.experience_cn#}<br />
+<span>{#$list.intention_jobs#}</span>
+		  </div>
+		  <div class="clear"></div>
+</div> 
+{#/foreach#}
+<div class="clear"></div>
+</div>
+
+<div class="resumebox">
+<h2>最新简历 </h2>
+<ul class="link_bkgu">
+{#qishi_resume_list set="列表名:resume,显示数目:30,意向职位长度:25,填补字符:...,排序:rtime>desc"#}
+{#foreach from=$resume item=list#}
+<li class="newresume"><a href="{#$list.resume_url#}" target="_blank">{#$list.fullname#}</a>&nbsp;&nbsp;
+{#$list.sex_cn#}&nbsp;&nbsp;
+{#$list.education_cn#}&nbsp;&nbsp;
+<span>{#$list.intention_jobs#}</span>
+</li>
+{#/foreach#}
+</ul>
+<div class="clear"></div>
+</div>
+
+<div class="links link_bkg">
+	{#qishi_link set="列表名:link,显示数目:100,调用名称:QS_resume,类型:1"#}
+	<strong>友情链接：</strong>
+	{#foreach from=$link item=list#}
+	<a href="{#$list.link_url#}" target="_blank">{#$list.title#}</a>
+	{#/foreach#}
+	<a href="{#$QISHI.site_dir#}link/add_link.php"  style="color: #009900">[申请友情连接]</a>
+  <div class="clear"></div>
+	{#qishi_link  set="列表名:link,显示数目:18,调用名称:QS_resume,类型:2"#}
+	{#foreach from=$link  item=list#}
+		<div class="imglink">
+		<a href="{#$list.link_url#}" target="_blank">
+		<img src="{#$list.link_logo#}" alt="{#$list.title#}"  border="0"  width="88" height="31" />		</a>		</div>
+	{#/foreach#}
+	<div class="clear"></div>
+</div>
+{#include file="footer.htm"#}
+</body>
+</html>

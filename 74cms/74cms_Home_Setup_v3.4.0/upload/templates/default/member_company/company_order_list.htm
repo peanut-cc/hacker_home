@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;服务中心&nbsp;>>&nbsp;订单管理
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top"> 
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>订单管理</h1>
+		</div>
+	   <div class="us_tab">
+			<a href="?act={#$act#}&amp;is_paid=" {#if $smarty.get.is_paid==""#}class="select"{#/if#}>所有订单</a>
+              <a href="?act={#$act#}&amp;is_paid=1" {#if $smarty.get.is_paid=="1"#}class="select"{#/if#}>待付款的</a>
+              <a href="?act={#$act#}&amp;is_paid=2" {#if $smarty.get.is_paid=="2"#}class="select"{#/if#}>已完成的</a>
+			  <div class="clear"></div>
+			  </div>
+			     <table width="97%" border="0" cellpadding="0" cellspacing="0" align="center" id="list" class="link_lan" >
+              <tr>
+			  <td width="80" class="us_list_title" align="center" >状态</td>
+                <td width="90" height="26" class="us_list_title">创建时间</td>
+                <td width="100"   class="us_list_title">充值金额</td>
+				<td width="90"  class="us_list_title">支付方式</td>
+				<td  width="100" class="us_list_title">单号</td> 
+                <td class="us_list_title" >说明</td>
+                <td width="70" align="center"  class="us_list_title">操作</td>
+              </tr>
+              {#section name=payment loop=$payment#}
+              <tr>
+			    <td   height="32" class="us_list" align="center" >
+				{#if $payment[payment].is_paid==1#}<span style="color: #FF6600">待付款</span>{#/if#}
+				{#if $payment[payment].is_paid==2#}<span style="color: #009900">已完成</span>{#/if#}
+				</td>
+      <td   class="us_list">
+	  {#$payment[payment].addtime|date_format:"%Y-%m-%d"#}
+	  </td>
+      <td class="us_list">
+	  ￥<span style="color: #FF6600">{#$payment[payment].amount#}</span> 元
+	  </td>
+	  <td   class="us_list">{#$payment[payment].payment_name#}</td>
+                <td  class="us_list"><span style=" color: #666666">{#$payment[payment].oid#}</span></td>
+				<td   class="us_list">{#$payment[payment].description#}</td>              
+                <td   class="us_list"  align="center" >
+				{#if $payment[payment].is_paid==1#}<a href="?act=payment&order_id={#$payment[payment].id#}">付款</a>&nbsp;&nbsp;&nbsp;
+				<a href="?act=order_del&id={#$payment[payment].id#}" onclick="return confirm('你确定要取消吗？')">取消</a>{#/if#}&nbsp;
+				</td>
+              </tr>
+              {#/section#}
+            </table>
+			{#if $payment#}
+            <table border="0" align="center" cellpadding="0" cellspacing="0" class="link_bk">
+              <tr>
+                <td height="60" align="center"> <div class="page link_bk">{#$page#}</div></td>
+              </tr>
+            </table>
+			{#else#}
+			<div class="us_list_no_content">没有您要找的信息</div>
+			{#/if#}
+			 </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

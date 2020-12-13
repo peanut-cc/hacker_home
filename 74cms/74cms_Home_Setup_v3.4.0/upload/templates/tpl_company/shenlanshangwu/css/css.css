@@ -1,0 +1,95 @@
+/*--------职位展示-------*/
+.jobs-show {width:985px; margin:0 auto; margin-top:8px;}
+.jobs-show  .left{width: 710px; float:left}
+.jobs-show  .left .show{width:670px;border:1px solid #E4E4E4; padding:15px;}
+.jobs-show  .left .show h1{font-family:"microsoft yahei","宋体"; font-size:30px; font-weight:lighter; color:#000000; line-height:30px; padding-bottom:10px;}
+.jobs-show  .left .show .imgtipbox{ width:650px; height:50px; line-height:130%; padding-top:6px;  padding-left:10px; border-bottom:1px #E4E4E4 dashed; margin-bottom:15px;}
+.jobs-show  .left .show .liimg{width:92px; height:40px; float:left; background-color: #FFFFCC; color:#999999; background:url(../images/3.gif) no-repeat 0px 0px; padding-left:38px;}
+.jobs-show  .left .show .liimg.li1{}
+.jobs-show  .left .show .liimg.li2{background:url(../images/3.gif) no-repeat 0px -50px;}
+.jobs-show  .left .show .liimg.li3{background:url(../images/3.gif) no-repeat 0px -100px;}
+.jobs-show  .left .show .liimg.li4{background:url(../images/3.gif) no-repeat 0px -150px;}
+.jobs-show  .left .show .liimg.li5{background:url(../images/3.gif) no-repeat 0px -200px;}
+.jobs-show  .left .show .share{ text-align:center; padding:10px; padding-left:180px;}
+.jobs-show  .left .show .tip{ color: #009900; height:30px;}
+.jobs-show  .left .show .contact{ padding:3px; border:1px   #FF9900 solid; background-color: #FDFBF0; padding-left:8px;}
+.jobs-show  .left .show .jobsshow{ line-height:180%;word-break:break-all;word-wrap:break-word;}
+.jobs-show  .left .show .jobsshow .title{ height:33px ; line-height:33px; font-size:14px; color:#333333}
+.jobs-show  .left .show .jobsshow .remind{ background-color: #FFFDE8; border:1px #FF9900 solid; color:#FF0000; padding:8px 15px;}
+.jobs-show  .left .show .floatli li{width:335px; float:left; height:26px; line-height:26px; overflow:hidden}
+.jobs-show  .left .show .company{ line-height:180%; position:relative}
+.jobs-show  .left .show .company .logo{ position:absolute; right:0px; top:15px; }
+.jobs-show  .left .show .company .ctitle{ height:33px ; line-height:33px; font-size:14px; color:#333333}
+.jobs-show  .left .show .company  li{  height:26px; line-height:26px;}
+.jobs-show  .left .show .joblist{ line-height:180%}
+.jobs-show  .left .show .joblist  .listtit{ font-weight:bold}
+.jobs-show  .left .show .joblist  .list{ border-bottom:1px  #CCCCCC dashed}
+.jobs-show  .right{width:275px;float:left;}
+.jobs-show  .right .txtbox{width:273px;border:1px solid #E4E4E4; margin-bottom:8px;position:relative}
+.jobs-show  .right .txtbox .qrcode{position:absolute; top:38px; left:3px;}
+.jobs-show  .right .txtbox .tit{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px; font-size:14px; font-weight:bold; color:#666666; padding-left:15px;}
+.jobs-show  .right .txtbox .txt{ padding-top:5px; padding-left:75px; }
+.jobs-show  .right .txtbox .txt li{ padding-left:10px;}
+.jobs-show  .right .txtbox .pm{height:30px; border-top:1px #E4E4E4 solid; background-color:#F6F6F6; margin-top:5px;}
+.jobs-show  .right .txtbox .pm .pleft{ width:60px; float:left; height:20px; padding-top:10px; padding-left:60px; background:url(../images/4.gif) no-repeat 42px 11px;}
+.jobs-show  .right .txtbox .pm .pright{ width:60px; float:left; height:20px; padding-top:10px; padding-left:60px; background:url(../images/4.gif) no-repeat 42px -37px;}
+.jobs-show  .right .txtbox .txt1{ padding:5px; padding-left:15px; line-height:180%; border-bottom:1px #E4E4E4 solid}
+ /*--------企业展示-------*/
+.company-show-topnav{height:102px;width:985px; margin:0 auto; margin-top:8px;background-image:url(../images/16.jpg);word-break:break-all;word-wrap:break-word; background-position:bottom; }
+.company-show-topnav .topcomname{ width:950px; height:55px; padding-left:30px; padding-top:15px;}
+.company-show-topnav .topcomname h1{font-family:"microsoft yahei","宋体"; font-size:25px; font-weight:lighter; color:#000000;float:left; padding-right:15px; color: #FFFFFF}
+.company-show-topnav .snav{height:32px; width:963px; background-image: url(../images/59.gif); background-position:bottom;background-repeat:repeat-x; padding-left:20px;}
+.company-show-topnav .snav a{ width:90px; height:30px; border:1px #1299DA solid; display:block; float:left; margin-right:10px; line-height:30px; text-align:center; font-family:"microsoft yahei","宋体"; font-size:14px; color: #FFFFFF; text-decoration:none; background-color:#0066CC;}
+.company-show-topnav .snav a.selected{font-weight:bold; height:30px; line-height:30px; color: #0033CC; border-bottom-color:#FFFFFF; background:url(../images/4.jpg) repeat-x;}
+.company-show {width:985px; margin:0 auto; margin-top:8px;}
+.company-show  .left{width: 710px; float:left}
+.company-show  .left .show{width:670px;border:1px solid #E4E4E4; padding:15px; line-height:180% ; position:relative;word-break:break-all;word-wrap:break-word;}
+.company-show  .left .show  .item{width:500px; margin-bottom:20px;}
+.company-show  .left .show  .item li{height:26px; line-height:26px;}
+.company-show  .left .show  .title{ height:33px ; line-height:33px; font-size:14px; color:#333333; padding-top:10px;}
+.company-show  .left .show  .logo{ right:15px; top:40px; position:absolute}
+.company-show  .left .show  .listtit{ font-weight:bold}
+.company-show  .left .show  .list{ border-bottom:1px  #CCCCCC dashed}
+.company-show  .left .show .contact{ padding:3px; border:1px   #FF9900 solid; background-color: #FDFBF0; padding-left:8px;}
+.company-show  .right{width:275px;float:left;}
+.company-show  .right .txtbox{width:273px;border:1px solid #E4E4E4; margin-bottom:8px;position:relative}
+.company-show  .right .txtbox .qrcode{position:absolute; top:38px; left:3px;}
+.company-show  .right .txtbox .tit{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px; font-size:14px; font-weight:bold; color:#666666; padding-left:15px;}
+.company-show  .right .txtbox .txt{ padding-top:5px; padding-left:75px;}
+.company-show  .right .txtbox .pm{height:30px; border-top:1px #E4E4E4 solid; background-color:#F6F6F6; margin-top:5px;}
+.company-show  .right .txtbox .pm .pleft{ width:60px; float:left; height:20px; padding-top:10px; padding-left:60px; background:url(../images/4.gif) no-repeat 42px 11px;}
+.company-show  .right .txtbox .pm .pright{ width:60px; float:left; height:20px; padding-top:10px; padding-left:60px; background:url(../images/4.gif) no-repeat 42px -37px;}
+.company-show  .right .txtbox .txt li{ padding-left:10px;}
+.company-show  .right .txtbox .txt1{ padding:5px; padding-left:15px; line-height:180%; border-bottom:1px #E4E4E4 solid}
+ /*--------企业职位列表-------*/
+.jobs-list{width:700px;border:1px solid #E4E4E4; padding-bottom:10px;}
+.jobs-list .joblistbox{ width:675px; height:148px; border:1px solid #E4E4E4; margin-left:13px; margin-top:10px;}
+.jobs-list .joblistbox .jleft{ width:520px; padding-left:15px; padding-top:15px; float:left}
+.jobs-list .joblistbox .jleft h2{font-family:"microsoft yahei","宋体"; font-size:20px; font-weight:lighter; color:#000000; height:30px;}
+.jobs-list .joblistbox .jleft .tip{ height:20px; color:#009900; padding-top:5px;}
+.jobs-list .joblistbox .jleft .amount{ height:20px; color:#000000; padding-top:5px;}
+.jobs-list .joblistbox .jleft .txt{ color: #999999; line-height:180%;word-break:break-all;word-wrap:break-word;}
+.jobs-list .joblistbox .jright{width:95px; padding-top:18px; padding-left:20px; float:left}
+.jobs-list .joblistbox .jright .showurl a{ width:94px; height:27px; line-height:27px; text-align:center;background:url(../images/2.gif) repeat-x 0px -28px; display:block;margin-bottom:15px;}
+.jobs-list .joblistbox .jright .showurl a:hover { background-position:0px 0px; color:#FFFFFF; text-decoration: none}
+.jobs-list .joblistbox .jright .abox{width:94px; height:27px; line-height:27px; text-align:center;background:url(../images/2.gif) repeat-x 0px -28px; cursor:pointer; margin-bottom:15px;}
+.jobs-list .joblistbox .jright .morebox{width:94px; height:27px; line-height:27px; text-align:center;background:url(../images/2.gif) repeat-x 0px -28px; cursor:pointer; margin-bottom:15px; position:relative}
+.jobs-list .joblistbox .jright .morebox .more{ position:absolute; left:0px; top:0px; width:94px; height:100px; background-color:#ffffff; display:none; border:1px #CCCCCC solid; line-height:23px; padding-top:5px;}
+ /*--------企业新闻-------*/
+.news-list .tit{height:30px;border-bottom:1px solid #E4E4E4; line-height:30px;}
+.news-list .tit h1 {font-size:14px; font-weight:bold; color:#666666;padding:0px; margin:0px; padding-left:15px;}
+.news-list .txt { background:url(../images/19.gif) no-repeat 13px 12px; padding:8px;padding-left:30px; line-height:180%; border-bottom:1px solid #E4E4E4;}
+.news-list .txt h2 { font-size:14px; font-weight:bold ; padding:0px; margin:0px;}
+.news-list .txt em { color: #009900; margin-right:30px;font-style: normal}
+/*--------企业新闻详细页-------*/
+.news-show h1{text-align:center; font-size:23px; line-height:180%;  font-weight:bold; color:#000000;margin-top:15px; margin-bottom:12px; }
+.news-show .date{width: 600px;text-align:center; height:28px; line-height:28px; border-top:1px #E4E4E4 solid; border-bottom:1px #E4E4E4 solid; margin-left:34px; }
+.news-show .txt { padding:15px; font-size:14px;line-height:180%;}
+/*--------企业图片-------*/
+.company-img .imgbox{width:320px; height:175px;padding-left:15px; float:left; margin-top:3px; margin-bottom:8px;}
+.company-img .imgbox .imglist{width:295px; height:165px; padding:2px; border:1px #EBEBEB solid;  background-color:#F7F7F7; text-align:center}
+/*--------营业执照图标-------*/
+.company_license1{background:url(../images/1.gif) no-repeat 0px 0px; width:38px; height:24px; margin-top:5px; margin-left:5px; float:left}
+.company_license2{background:url(../images/1.gif) no-repeat 0px -25px;width:38px; height:24px;margin-top:5px; margin-left:5px; float:left}
+.company_license3{background:url(../images/1.gif) no-repeat 0px -51px;width:23px; height:18px;margin-top:0px; margin-left:5px; float:left}
+.company_license4{background:url(../images/1.gif) no-repeat 0px -72px;width:23px; height:18px;margin-top:0px; margin-left:5px; float:left}

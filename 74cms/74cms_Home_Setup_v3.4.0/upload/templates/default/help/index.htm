@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />{#qishi_pageinfo set="列表名:page,调用:QS_help"#}
+<title>{#$page.title#}</title>
+<meta name="description" content="{#$page.description#}">
+<meta name="keywords" content="{#$page.keywords#}">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/help.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#help_searcform #search_go").click(function()
+	{
+		if ($("#help_searcform #key").val()=="" || $("#key").val()=="请输入关键字...")
+			{
+				alert("请输入关键字");
+				return false;
+			}
+	$("body").append('<div id="pageloadingbox">页面加载中....</div><div id="pageloadingbg"></div>');
+	$("#pageloadingbg").css("opacity", 0.5);
+	$.get("{#$QISHI.site_dir#}plus/ajax_search_location.php", {"act":"QS_helpsearch","key":$("#help_searcform #key").val(),"page":1},
+			function (data,textStatus)
+			 {
+				 window.location.href=data;
+			 }
+		);
+	});
+	$("#help_searcform #key").focus(function(){
+	if ($("#key").val()=="请输入关键字...")
+	{
+	$("#help_searcform #key").css('color','').val('');
+	}  
+	});
+ 
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#"QS_help"|qishi_url#}">帮助</a>
+</div>
+<div class="help-index">
+  <div class="left link_bk">
+{#qishi_help_category set="列表名:category,大类:0"#}
+{#foreach from=$category item=list#}
+    <div class="box">
+	  <div class="tit"><h3>{#$list.title#}</h3></div>	  
+	  <div class="txt">
+	  <ul>
+	  {#qishi_help_category set="列表名:sclass,大类:"|cat:$list.id#}
+		{#foreach from=$sclass item=slist#}
+		<li><a href="{#$slist.url#}">{#$slist.title#}</a></li>
+		 {#/foreach#}
+	  </ul>
+	  </div>
+    </div>
+	 {#/foreach#}
+  </div>
+  <div class="right">
+    <div class="topso">
+			 <div class="keybox">
+					 <div id="help_searcform">
+						<div class="keyinputbox">
+						<input name="key" type="text" id="key" maxlength="25" value="请输入关键字..." style="color: #CCCCCC"/>
+						</div>			
+						<div class="subinputbox"><input type="submit" name="" value="搜索" id="search_go" /></div>
+						<div class="clear"></div>
+			   </div>
+			</div>
+	  <div class="hotkey link_bku">
+			热门关键字：<a href="{#"QS_helpsearch,key:%D5%D2%BB%D8%C3%DC%C2%EB"|qishi_url#}">找回密码</a><a href="{#"QS_helpsearch,key:%D5%D2%BB%D8%C3%DC%C2%EB"|qishi_url#}">置顶</a><a href="{#"QS_helpsearch,key:%CD%C6%BC%F6"|qishi_url#}">推荐</a><a href="{#"QS_helpsearch,key:%C4%A3%B0%E6"|qishi_url#}">模版</a><a href="{#"QS_helpsearch,key:%B5%E7%D7%D3%B5%D8%CD%BC"|qishi_url#}">电子地图</a>
+	  </div>
+			<div class="clear"></div>	
+	</div>	
+    <div class="txt link_bk">
+	  <div class="tit"><h3>热点问题</h3></div>
+	  <ul>
+	   	{#qishi_help_list set="列表名:help,显示数目:25,标题长度:45,填补字符:..."#}
+		{#foreach from=$help item=list#}
+		<li><a href="{#$list.url#}"  target="_blank">{#$list.title#}</a></li>
+		{#foreachelse#}
+		<li>没有相关信息！</li>
+		{#/foreach#}
+	  </ul>
+	</div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+{#include file="footer.htm"#}
+</body>
+</html>

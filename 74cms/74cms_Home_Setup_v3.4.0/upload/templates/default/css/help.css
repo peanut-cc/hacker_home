@@ -1,0 +1,25 @@
+.help-index {width:985px;  margin:0 auto; margin-top:8px;}
+.help-index .left{ width:218px; float:left}
+.help-index .left .box{ width:208px; border:1px #D5D5D5 solid; margin-bottom:8px;}
+.help-index .left .box .tit{background:url(../images/14.gif) repeat-x 0px -169px; height:36px; border-bottom:1px #D5D5D5 solid;}
+.help-index .left .box .tit h3{font-family:"microsoft yahei","ËÎÌו"; font-size:15px; padding-left:15px; padding-top:8px; color: #FF6600}
+.help-index .left .box .txt{ padding:5px;}
+.help-index .left .box .txt ul{ padding-left:8px;}
+.help-index .left .box .txt li{ padding-left:8px; height:23px; line-height:23px;background:url(../images/01.gif) no-repeat 0px -29px;}
+.help-index .right{ width:767px; float:left;}
+.help-index .right .topso{ width:755px;border:1px #D5D5D5 solid; margin-bottom:8px; height:50px; padding-top:10px; padding-left:10px;}
+.help-index .right .topso .keybox{ width:416px; background-color:#E9E9E9; padding-left:4px; padding-top:4px; height:36px; float:left}
+.help-index .right .topso .keybox .keyinputbox{ width:342px; float:left}
+.help-index .right .topso .keybox .keyinputbox input{ width:330px; border:1px  #CCCCCC solid; background-color:#FFFFFF; height:22px; padding-left:10px; padding-top:6px; border-right:0px; line-height:18px;}
+.help-index .right .topso .keybox .subinputbox{ width:70px; height:31px; float:left;}
+.help-index .right .topso .keybox .subinputbox input{ width:70px; height:31px;background:url(../images/51.gif) no-repeat; border:0px; color:#FFFFFF; font-family:"microsoft yahei","ËÎÌו"; font-size:15px; line-height:31px; *margin-top:1px;}
+.help-index .right .topso .hotkey{ float:left; width:300px; padding-left:15px; padding-top:10px;} 
+.help-index .right .topso .hotkey a{ margin-right:10px;}
+.help-index .right .txt{ width:745px;border:1px #D5D5D5 solid; padding:10px;}
+.help-index .right .txt .tit{ margin-bottom:5px; padding-left:5px;}
+.help-index .right .txt .tit h3{font-family:"microsoft yahei","ËÎÌו"; font-size:15px; color: #FF6600}
+.help-index .right .txt ul{padding-left:5px;}
+.help-index .right .txt li{ font-size:14px; line-height:25px; height:25px;background:url(../images/01.gif) no-repeat 0px -12px; padding-left:8px;}
+.help-index .right .txt .showtit{text-align:center; font-size:23px; line-height:180%;  font-weight:bold; color:#000000;margin-top:15px; margin-bottom:12px; }
+.help-index .right .txt .showtxt { padding:15px; font-size:14px;line-height:180%;}
+.highlight { color: #FF0000; font-weight:bold}

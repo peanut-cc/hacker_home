@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.user.selectlayer.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript"> 
+$(document).ready(function()
+{
+	showyearbox(".date_input");
+	showmenu("#education_cn","#menu3","#education");
+	//表单默认的按钮
+	var info="{#$resume_basic.fullname#}";
+	if (info=="")
+	{
+		$("#submitsave").css("display","");
+		$("#submitlocation").css("display","none");
+	}
+	else
+	{
+		$("#submitsave").css("display","none");
+		$("#submitlocation").css("display","");
+		$("#Form1 :input").click(function(){
+			$("#submitsave").css("display","");
+			$("#submitlocation").css("display","none");	
+		})
+	}
+});
+//验证
+$(document).ready(function() {
+ $("#Form1").validate({
+// debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   start:{
+    required: true
+   },
+   endtime: {
+	required:true
+   },
+   school: {
+   required:true
+   },
+   speciality: "required",
+   education:{
+   required:true
+   }  
+	},
+    messages: {
+    start: {
+    required: "请输入开始日期"
+   },
+   endtime: {
+    required: jQuery.format("请输入结束日期")
+   },
+   school: {
+    required: jQuery.format("请输入学校名称")
+   },
+    speciality: {
+    required: jQuery.format("请输入专业名称")
+   },
+    education: {
+	required: "请选择学历"
+   }
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;编辑简历&nbsp;>>&nbsp;修改教育经历
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>我的简历</h1>
+		</div>
+	<form id="Form1" name="Form1" method="post" action="?act=save_resume_education_edit"  >
+      <table width="100%" border="0" cellpadding="0" cellspacing="0"  >      
+        <tr>
+          <td height="22" valign="top">
+		  <table width="100%" border="0" cellspacing="0" cellpadding="4"  >
+            <tr>
+              <td height="50" bgcolor="#F5FAFC" style="border-bottom:1px #ACC9D0 dashed;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:14px; color:#0033CC">修改教育经历</span> <span style="color:#999999">(带<strong  style="color:#FF0000">*</strong>的为必填)</span></td>
+              </tr>            
+          </table>
+		    <table width="100%" border="0" cellspacing="0" cellpadding="4" style="margin-bottom:150px; line-height:180%; margin-top:10px;">
+				 <tr>
+                <td width="268" height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>开始日期：</td>
+                <td>
+				<div>
+				<input name="start" type="text" class="input_text_200 date_input" id="start" maxlength="18"   value="{#$education_edit.start#}"/>
+                    <span style="color:#666666">(如：2003年4月)</span>
+					</div>
+					</td>
+              </tr>
+              <tr>
+                <td width="268" height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>结束日期：</td>
+                <td>
+				<div>
+				<input name="endtime" type="text" class="input_text_200 date_input" id="endtime" maxlength="18"    value="{#$education_edit.endtime#}"/>
+                    <span style="color:#666666">(如：2006年9月)</span>
+					
+					</div>
+					</td>
+              </tr>
+              <tr>
+                <td width="268" height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>学校名称：</td>
+                <td width="1164"><input name="school" type="text" class="input_text_200" id="school" maxlength="30"  value="{#$education_edit.school#}"/></td>
+              </tr>
+              <tr>
+                <td width="268" height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>专业名称：</td>
+                <td><input name="speciality" type="text" class="input_text_200" id="speciality" maxlength="20"  value="{#$education_edit.speciality#}" /></td>
+              </tr>
+              <tr>
+                <td width="268" height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>选择学历：</td>
+                <td>
+				<div>
+		<input type="text" value="{#$education_edit.education_cn#}"  readonly="readonly" name="education_cn" id="education_cn" class="input_text_200 input_text_200_selsect"/>
+		<input name="education" id="education" type="hidden" value="{#$education_edit.education#}" />
+		<div id="menu3" class="menu">
+			<ul>
+			{#qishi_get_classify set="类型:QS_education,列表名:c_education"#}{#foreach from=$c_education item=list#}
+			<li id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+			{#/foreach#}
+			</ul>
+		</div>
+		  </div>
+				</td>
+              </tr>
+              <tr>
+                <td height="60" align="center" >
+				<input name="id" type="hidden" id="id" value="{#$education_edit.id#}" />
+				<input name="pid" type="hidden" id="pid" value="{#$education_edit.pid#}" />
+                  <input name="go_resume_show" type="hidden"   value="{#$go_resume_show#}" />
+				  </td>
+                <td height="60" ><input type="submit" name="save" value="保存修改"  class="user_submit"/></td>
+              </tr>
+            </table></td>
+          <td width="150" valign="top" class="resume_right_box" >
+		 {#include file="member_personal/personal_right.htm"#}
+		  </td>
+        </tr>
+      </table>
+          </form>
+		  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

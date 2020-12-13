@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#tabshow li:nth-child(2)>a").addClass("selected");
+});
+//验证
+$(document).ready(function() {
+ $("#Form1").validate({
+//debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   photo:{
+    required:true,
+	   accept:"jpg|gif|png|bmp"
+   }
+	},
+    messages: {
+    photo: {
+     required:jQuery.format("请上传照片"),
+	accept:jQuery.format("您上传的文件格式不正确")
+   }
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+$("#up").click(function() {
+	if ($("#Form1").valid())
+	{
+	$("#upform").hide();
+	$("#upform_wait").show();
+	}
+});
+
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;创建简历&nbsp;>>&nbsp;第七步 - 上传您的形象照片
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>我的简历</h1>
+		</div>
+	<form id="Form1" name="Form1" method="post" action="?act=make7_save"  enctype="multipart/form-data" >
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" >
+        <tr>
+          <td height="22" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="4" >
+            <tr>
+              <td height="50" colspan="2" bgcolor="#F5FAFC" style=" border-bottom:1px #CCCCCC dashed; color:#003399">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:14px;">第七步 - 上传您的形象照片</span><span style="color:#999999"> </span></td>
+              </tr>
+			  </table>
+			  <table width="100%" border="0" cellspacing="0" cellpadding="4" style="margin-bottom:200px; line-height:180%;" id="upform">
+			  <tr>
+              <td width="133" height="10"></td>
+              <td width="360"></td>
+            </tr>
+            <tr>
+              <td height="23" align="right" valign="top">请上传您的照片：</td>
+              <td>&nbsp;<input type="file" name="photo" id="photo" onKeyDown="alert('请点击右侧“浏览”选择您电脑上的照片！');return false"  style="width:260px; height:22px; border:1px #7797A8 solid; font-size:12px;">
+                <br />
+                <div style="color:#666666; padding-top:6px;">(允许上传的照片格式为:jpg,gif,png,bmp,大小不能超过{#$QISHI.resume_photo_max#}KB)</div></td>
+            </tr>
+            <tr>
+              <td height="23" align="right" ><input name="pid" type="hidden" id="pid" value="{#$pid#}" /></td>
+              <td height="60" >
+			  <input type="submit" name="disabledsubmit" id="up" value="上传照片" class="user_submit"/>&nbsp;&nbsp;&nbsp;&nbsp;
+			  <input type="button" name="Submit" value="我不想上传照片" class="user_long_submit" onclick="window.location='?act=addcomplete&pid={#$pid#}'"/>
+			  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <input type="button" name="next" value="返回上一步" class="user_submit"  onclick="window.location='?act=make6&pid={#$pid#}'"/>
+			  </td>
+            </tr>
+          </table>
+		  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:300px; margin-top:50px;line-height:180%; display:none" id="upform_wait">
+  <tr>
+    <td height="50" align="center"><img src="{#$QISHI.site_template#}images/30.gif"  border="0"/></td>
+  </tr>
+  <tr>
+    <td height="20" align="center">正在上传，请稍后...</td>
+  </tr>
+</table>	  
+		  </td>
+          <td width="150" valign="top" class="resume_right_box" >
+		 {#include file="member_personal/personal_right.htm"#}
+		  </td>
+        </tr>
+      </table>
+          </form>
+		  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

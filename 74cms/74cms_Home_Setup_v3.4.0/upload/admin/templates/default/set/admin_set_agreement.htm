@@ -1,0 +1,40 @@
+{#include file="sys/admin_header.htm"#}
+
+<link rel="stylesheet" href="kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="kindeditor/lang/zh_CN.js"></script>
+<div class="admin_main_nr_dbox">
+  <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+	{#include file="set/admin_set_config_nav.htm"#}
+  <div class="clear"></div>
+</div> 
+
+<div class="toptit">会员注册协议</div>
+  <form action="?act=set_save" method="post"   name="form1" id="form1">
+  {#$inputtoken#}
+<table width="100%" border="0" cellspacing="0" cellpadding="0"  >
+
+            <tr>
+              <td width="441"><textarea name="agreement" style=" width:700px;height:400px; font-size:12px; line-height:180%"  id="agreement">{#$text.agreement#}</textarea>
+                   <script>
+      var editor;
+      KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="agreement"]', {
+          allowFileManager : true
+        });
+      });
+    </script>             </td>
+            </tr>
+            <tr>
+              <td height="50">
+			  
+                <input name="submit2" type="submit" class="admin_submit"    value="保存修改"/>
+              </td>
+            </tr>
+          </table>
+  </form>
+</div>
+{#include file="sys/admin_footer.htm"#}
+</body>
+</html>

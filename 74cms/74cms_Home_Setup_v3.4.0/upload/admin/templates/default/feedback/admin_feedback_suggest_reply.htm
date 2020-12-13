@@ -1,0 +1,55 @@
+{#include file="sys/admin_header.htm"#}
+<div class="admin_main_nr_dbox">
+<div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+<div class="toptit">回复信息</div>
+<form id="form1" name="form1" method="post" action="?act=reply_save">
+{#$inputtoken#}
+  <table width="100%" border="0" cellpadding="4" cellspacing="0" class="admin_table"  >
+    <tr>
+      <td width="120" height="30" align="right"  style="border:0px;" >发表用户：</td>
+      <td  style="border:0px;"> {#$feedback.username#} </td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  >发表用户类型：</td>
+      <td   >
+	  {#if $feedback.usertype=="1"#}企业会员{#/if#}
+		{#if $feedback.usertype=="2"#}个人会员{#/if#}
+	  </td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  >信息类型：</td>
+      <td   >
+	  {#if $feedback.infotype=="1"#}意见{#/if#}
+		{#if $feedback.infotype=="2"#}建议{#/if#}
+		{#if $feedback.infotype=="3"#}求助{#/if#}
+		{#if $feedback.infotype=="4"#}投诉{#/if#}
+	  </td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  >发表内容：</td>
+      <td    class="link_lan" >{#$feedback.feedback|nl2br#}&nbsp;&nbsp;<span style="color:#999999">({#$feedback.addtime|date_format:"%Y-%m-%d | %H:%M"#})</span></td>
+    </tr>
+	  <tr>
+      <td height="30" align="right"  >  管理员回复：</td>
+      <td    class="link_lan" >
+	  <textarea name="reply" style="width:400px; height:80px; font-size:12px; line-height:180%" onpropertychange="if(this.value.length>200){this.value=this.value.slice(0,200)}">{#$feedback.reply#}</textarea>	  
+	   </td>
+    </tr>
+	  <tr>
+	    <td height="30" align="right"  >&nbsp;</td>
+	    <td height="50"   class="link_lan"  >
+	      <input type="hidden" name="feedbackid"  value="{#$feedback.id#}" />
+          <input type="hidden" name="url"  value="{#$url#}" />
+          <input name="submit3" type="submit" class="admin_submit"    value="确定"/>
+<input name="submit22" type="button" class="admin_submit"    value="返 回" onclick="Javascript:window.history.go(-1)"/>
+        </td>
+    </tr>
+  </table>
+  </form>
+  </div>
+{#include file="sys/admin_footer.htm"#}
+</body>
+</html>

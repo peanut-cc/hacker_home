@@ -1,0 +1,169 @@
+<script type="text/javascript">
+$(document).ready(function()
+{
+//
+$("form[name=sendrecommendjobs]").submit(function(e) {
+	e.preventDefault();
+	var reg = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+	var sendemail=$('#sendemail').val();
+	var realname=$('#realname').val();
+	if (realname=='')
+	{
+		$(".ajax_login_err").html("请填写您的姓名！");	
+		$(".ajax_login_err").show();
+	}
+	else if (!reg.test(sendemail))
+	{
+		$(".ajax_login_err").html("邮箱格式不正确！");
+		$(".ajax_login_err").show();
+	}
+	{#if $verify_recommendresume=="1"#}
+	else if($("#postcaptcha").val()=="" || $("#postcaptcha").val()=="点击获取验证码")
+	{	
+		$(".ajax_login_err").html("请填写验证码！");
+		$(".ajax_login_err").show();
+	}
+	{#/if#}
+	else
+	{
+		$(".ajax_login_err").hide();
+		$('#sendinput').hide();
+		$('#sendwaiting').show();
+		$.post("{#$QISHI.site_dir#}plus/ajax_recommend.php", {"resumename": "{#$resume.1#}","resumeurl": "{#$QISHI.site_domain#}{#$resume.0#}","realname": realname,"sendemail":sendemail,"message":$("#message").val(),"postcaptcha":$("#postcaptcha").val(),"time": new Date().getTime(),"act":"send_recommendresume"},
+	 	function (data,textStatus)
+	 	 {
+			if (data=="true")
+			{
+			$(".ajax_login_err").hide();
+			$('#sendinput').hide();
+			$('#sendwaiting').hide();
+			$('#sendreturn').show();
+			$('#sendreturn #txt').html('发送成功！');
+			}
+			else if(data=="errcaptcha_false")
+			{
+			$("#imgdiv img").attr("src",$("#imgdiv img").attr("src")+"1");
+			$(".ajax_login_err").html("验证码错误！");
+			$(".ajax_login_err").show();
+			$('#sendinput').show();
+			$('#sendwaiting').hide();
+			}
+			else
+			{
+			$('#sendinput').hide();
+			$('#sendwaiting').hide();
+			$('#sendreturn').show();
+			$('#sendreturn #txt').html('发送失败，请联系网站管理员！');
+			}
+	 	 })	
+		
+	}
+});
+
+//验证码部分
+{#if $verify_recommendresume=="1"#}
+function imgcaptcha(inputID,imgdiv)
+{
+	$(inputID).focus(function(){
+		if ($(inputID).val()=="点击获取验证码")
+		{
+		$(inputID).val("");
+		$(inputID).css("color","#333333");
+		}
+		$(inputID).parent("div").css("position","relative");
+		//设置验证码DIV
+		$(imgdiv).css({ position: "absolute", left:  $(inputID).width(), "bottom": "0px" , "z-index": "10", "background-color": "#FFFFFF", "border": "1px #A3C8DC solid","display": "none","margin-left": "15px"});
+		$(imgdiv).show();
+		if ($(imgdiv).html()=='')
+		{
+		$(imgdiv).append("<img src=\"{#$QISHI.site_dir#}include/imagecaptcha.php?t={#$random#}\" id=\"getcode\" align=\"absmiddle\"  style=\"cursor:pointer; margin:3px;\" title=\"看不请验证码？点击更换一张\"  border=\"0\"/>");
+		}
+		$(imgdiv+" img").click(function()
+		{
+			$(imgdiv+" img").attr("src",$(imgdiv+" img").attr("src")+"1");
+		});
+		$(document).click(function(event)
+		{
+			var clickid=$(event.target).attr("id");
+			if (clickid!="getcode" &&  clickid!="postcaptcha")
+			{
+			$(imgdiv).hide();
+			$(inputID).parent("div").css("position","");
+			}			
+		});
+	});
+}
+imgcaptcha("#postcaptcha","#imgdiv");
+//验证码结束
+{#/if#}
+
+
+//
+});
+</script>
+<div class="ajax_login_err"></div>
+<form name="sendrecommendjobs" method="post" action="">
+<table width="100%" border="0" cellspacing="3" cellpadding="0" id="sendinput">
+  <tr>
+    <td width="80" height="25" align="right">您的姓名：</td>
+    <td>
+      <input type="text" name="realname"  id="realname" class="input_text_200" value="{#$info.realname#}">    </td>
+  </tr>
+  <tr>
+    <td height="25" align="right">您的邮箱：</td>
+    <td><strong>{#$user.email#}</strong></td>
+  </tr>
+  <tr>
+    <td height="25" align="right">好友邮箱：</td>
+    <td><input type="text" name="sendemail" id="sendemail" class="input_text_200" ></td>
+  </tr>
+  <tr>
+    <td align="right">邮件信息：</td>
+    <td  style="line-height:180%" id="emailbody">我在<a href="{#$QISHI.site_domain#}{#$QISHI.site_dir#}" target="_blank">{#$QISHI.site_name#}</a>上看到了一份求职简历："<a href="{#$QISHI.site_domain#}{#$resume.0#}" target="_blank">{#$resume.1#}的求职简历</a>"，向你强烈推荐！
+如果你感兴趣，可以去看看。 </td>
+  </tr>
+  <tr>
+    <td align="right">您的留言：</td>
+    <td> 
+    <textarea name="message" id="message"  class="input_textarea_200"></textarea></td>
+  </tr>
+  		
+
+   {#if $verify_recommendresume=="1"#}
+		  <tr>
+			<td align="right">验证码：</td>
+			<td>
+				  <div>
+					<div id="imgdiv"></div>
+					<input  class="input_text_150" name="postcaptcha" id="postcaptcha" type="text" value="点击获取验证码" style="color:#999999;width:120px"/>
+				  </div>			  
+			</td>
+		  </tr>
+ {#/if#}
+	
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td height="50">
+	<input type="submit" name="Submit"  id="login" class="but80" value="发送" />
+	</td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="5" cellpadding="0" id="sendwaiting"  style="display:none">
+  <tr>
+    <td align="center" height="60"><img src="{#$QISHI.site_template#}images/30.gif"  border="0"/></td>
+  </tr>
+  <tr>
+    <td align="center" >请稍后...</td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="5" cellpadding="0" id="sendreturn"  style="display:none">
+  <tr>
+    <td align="center" height="40"  id="txt" style="font-size:14px;">
+	
+	</td>
+  </tr>
+  <tr>
+    <td align="center" ><input type="button" name="Submit" class="but80 DialogClose" value="确定" /></td>
+  </tr>
+</table>
+</form>

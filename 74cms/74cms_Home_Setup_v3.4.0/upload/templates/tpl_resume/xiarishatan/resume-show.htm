@@ -1,0 +1,282 @@
+{#qishi_resume_show set="列表名:show,简历ID:GET[id]"#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$show.fullname#}的个人简历 - {#$QISHI.site_name#}</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$user_tpl#}css/css.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.dialog.js" type='text/javascript' ></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+		var id="{#$show.id#}";
+		var tsTimeStamp= new Date().getTime();
+		$.get("{#$QISHI.site_dir#}plus/ajax_click.php", { "id": id,"time":tsTimeStamp,"act":"resume_click"},
+			function (data,textStatus)
+			 {			
+				$(".click").html(data);
+			 }
+		);
+		$.get("{#$QISHI.site_dir#}plus/ajax_contact.php", { "id": id,"time":tsTimeStamp,"act":"resume_contact"},
+			function (data,textStatus)
+			 {			
+				$("#resume_contact").html(data);
+				//下载简历
+				$("#download").click(function(){
+				var url="{#$QISHI.site_dir#}user/user_download_resume.php?id="+id+"&act=download&t="+tsTimeStamp;
+				dialog("下载简历","url:get?"+url,"500px","auto","");
+				});	
+				//邀请面试
+				$("#invited").click(function(){
+				var url="{#$QISHI.site_dir#}user/user_invited.php?id="+id+"&act=invited&t="+tsTimeStamp;
+				dialog("邀请面试","url:get?"+url,"500px","auto","");
+				});	
+				//添加都人才库
+				$(".add_resume_pool").click(function(){
+				var url="{#$QISHI.site_dir#}user/user_favorites_resume.php?id="+id+"&act=add&t="+tsTimeStamp;
+				dialog("添加到人才库","url:get?"+url,"500px","auto","");				
+				});	
+			 }
+		);
+	$("#newbuddy").click(function(){
+	dialog("加为好友","url:get?{#$QISHI.site_dir#}user/user_buddy.php?tuid={#$show.uid#}","350px","auto","");
+	});
+	$("#addpms").click(function(){
+	var url="{#$QISHI.site_dir#}user/user_pms.php?tuid={#$show.uid#}";
+	dialog("发送短消息","url:get?"+url,"400px","auto","");
+	});
+});
+</script>
+</head>
+<body>
+  <table  border="0" align="center" cellpadding="0" cellspacing="0"  class="resume_show" >
+  <tr>
+    <td class="link_lan">&nbsp;&nbsp;<a href="{#$QISHI.site_domain#}{#$QISHI.site_dir#}">{#$QISHI.site_name#}</a><span  style="color:#999999">&nbsp;&nbsp;({#$QISHI.site_domain#})</span></td>
+    <td   class="link_bku top_a">
+	<a href="{#$QISHI.site_domain#}{#$QISHI.site_dir#}">网站首页</a>
+    <a href="{#$QISHI.site_domain#}{#$QISHI.site_dir#}resume/resume-doc.php?resume_id={#$show.id#}&uid={#$show.uid#}">转为word</a> 
+    <a href="javascript:window.print();">打印简历</a>  
+	<a href="javascript:void(0)"  class="add_resume_pool">添加到人才库</a>
+	 <a href="javascript:void(0)" id="addpms">发短消息</a>
+	<a href="javascript:void(0)" id="newbuddy">加为好友</a>
+	</td>
+  </tr>
+</table>
+  <table  border="0" align="center" cellpadding="7" cellspacing="1" bgcolor="#CCCCCC" class="resume_show">
+  <tr>
+    <td  colspan="5"  bgcolor="#FFFFFF"   class="btit">
+	<div class="qrcode"><img src="{#$QISHI.site_dir#}plus/url_qrcode.php?url={#"QS_resumeshow,id:"|cat:$show.id|qishi_url#}" alt="二维码"/></div>
+	
+	<h1>{#$show.fullname#}的个人简历{#if $show.talent=="2"#} <img src="{#$QISHI.site_template#}images/66.gif"   border="0" align="absmiddle"  alt="高级人才"/>{#/if#}</h1>
+	<div class="tip">
+			<span style="color: #009900">更新日期：{#$show.refreshtime|date_format:"%Y-%m-%d"#}</span>
+			<br />
+	学历：{#$show.education_cn#}	&nbsp;&nbsp;工作经验：{#$show.experience_cn#}&nbsp;&nbsp;浏览：<span class="click"></span>次	</div>
+    </td>
+    </tr>
+  <tr>
+    <td colspan="5" bgcolor="#FAFAFA" class="title"><strong>基本信息</strong></td>
+    </tr>
+  <tr>
+    <td width="80" align="right" bgcolor="#FAFAFA">
+	真实姓名：</td>
+    <td bgcolor="#FFFFFF">{#if $show.display_name=="2"#}<span style="color:#FF6600">[用户已隐藏]</span>{#/if#}{#$show.fullname#}</td>
+    <td width="80" align="right" bgcolor="#FAFAFA">
+	性别：</td>
+    <td bgcolor="#FFFFFF">{#$show.sex_cn#}</td>
+    <td width="140" rowspan="6" align="center" bgcolor="#FFFFFF"><img src="{#$show.photosrc#}" width="120" height="150" /></td>
+  </tr>
+  <tr>
+    <td align="right" bgcolor="#FAFAFA">年龄：</td>
+    <td bgcolor="#FFFFFF">{#$show.age#} 岁</td>
+    <td align="right" bgcolor="#FAFAFA">身高：</td>
+    <td bgcolor="#FFFFFF">{#if $show.height=="0"#}未知{#else#}{#$show.height#}CM{#/if#}</td>
+  </tr>
+  <tr>
+    <td align="right" bgcolor="#FAFAFA">婚姻状况：</td>
+    <td bgcolor="#FFFFFF">{#$show.marriage_cn#}</td>
+    <td align="right" bgcolor="#FAFAFA">户籍所在：</td>
+    <td bgcolor="#FFFFFF">{#$show.householdaddress#}</td>
+  </tr>
+  <tr>
+    <td align="right" bgcolor="#FAFAFA">最高学历：</td>
+    <td bgcolor="#FFFFFF">{#$show.education_cn#}</td>
+    <td align="right" bgcolor="#FAFAFA">工作经验：</td>
+    <td bgcolor="#FFFFFF">{#$show.experience_cn#}</td>
+  </tr>
+  <tr>
+    <td align="right" bgcolor="#FAFAFA">联系地址：</td>
+    <td bgcolor="#FFFFFF">{#$show.address#}</td>
+    <td align="right" bgcolor="#FAFAFA">浏览次数：</td>
+    <td bgcolor="#FFFFFF"><span class="click"></span>次</td>
+  </tr>
+  <tr>
+    <td align="right" bgcolor="#FAFAFA">刷新时间：</td>
+    <td bgcolor="#FFFFFF">{#$show.refreshtime|date_format:"%Y-%m-%d"#}</td>
+    <td align="right" bgcolor="#FAFAFA">简历等级：</td>
+    <td bgcolor="#FFFFFF">
+	{#if $show.talent=="2"#}
+	高级
+	{#else#}
+	普通
+	{#/if#}
+	</td>
+  </tr>
+</table>
+  <table  border="0" align="center" cellpadding="7" cellspacing="1" bgcolor="#CCCCCC" class="resume_show">
+    <tr>
+      <td colspan="2" bgcolor="#FAFAFA" class="title"><strong>求职意向</strong></td>
+    </tr>
+    <tr>
+      <td width="120" align="right" bgcolor="#FAFAFA">最近工作过的职位：</td>
+      <td bgcolor="#FFFFFF">{#$show.recentjobs#}</td>
+    </tr>
+    <tr>
+      <td align="right" bgcolor="#FAFAFA">期望岗位性质：</td>
+      <td bgcolor="#FFFFFF">{#$show.nature_cn#}</td>
+    </tr>
+	<tr>
+      <td align="right" bgcolor="#FAFAFA">期望工作地：</td>
+      <td bgcolor="#FFFFFF">{#$show.district_cn#}</td>
+    </tr>
+    <tr>
+      <td align="right" bgcolor="#FAFAFA">期望月薪：</td>
+      <td bgcolor="#FFFFFF">{#$show.wage_cn#}</td>
+    </tr>
+    <tr>
+      <td align="right" bgcolor="#FAFAFA">期望从事的岗位：</td>
+      <td bgcolor="#FFFFFF">{#$show.intention_jobs#}</td>
+    </tr>
+    <tr>
+      <td align="right" bgcolor="#FAFAFA">期望从事的行业：</td>
+      <td bgcolor="#FFFFFF">{#$show.trade_cn#}</td>
+    </tr>
+</table>
+  <table  border="0" align="center" cellpadding="7" cellspacing="1" bgcolor="#CCCCCC" class="resume_show">
+    <tr>
+      <td colspan="2" bgcolor="#FAFAFA" class="title"><strong>技能特长</strong></td>
+    </tr>
+    <tr>
+      <td width="80" align="right" bgcolor="#FAFAFA">技能特长：</td>
+      <td bgcolor="#FFFFFF">{#$show.specialty|nl2br#}</td>
+    </tr>
+</table>
+  <table  border="0" align="center" cellpadding="7" cellspacing="1" bgcolor="#CCCCCC" class="resume_show">
+    <tr>
+      <td colspan="2" bgcolor="#FAFAFA" class="title"><strong>教育经历</strong></td>
+    </tr>
+	{#foreach from=$show.education_list item=list#}
+	  <tr>
+      <td colspan="2" bgcolor="#FAFAFA"><strong>{#$list.school#} </strong>({#$list.education_cn#})</td>
+    </tr>
+    <tr>
+      <td width="80" align="right" bgcolor="#FAFAFA">起止年月：</td>
+      <td bgcolor="#FFFFFF">{#$list.start#}至{#$list.endtime#}&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="right" bgcolor="#FAFAFA">学校名称：</td>
+      <td bgcolor="#FFFFFF">{#$list.school#}</td>
+    </tr>
+    <tr>
+      <td align="right" bgcolor="#FAFAFA">专业名称：</td>
+      <td bgcolor="#FFFFFF">{#$list.speciality#}</td>
+    </tr>
+    <tr>
+      <td align="right" bgcolor="#FAFAFA">获得学历：</td>
+      <td bgcolor="#FFFFFF">{#$list.education_cn#}</td>
+    </tr>
+	{#/foreach#}
+  </table>
+  <table  border="0" align="center" cellpadding="7" cellspacing="1" bgcolor="#CCCCCC" class="resume_show">
+    <tr>
+      <td colspan="2" bgcolor="#FAFAFA" class="title"><strong>工作经历</strong></td>
+    </tr>
+	{#if $show.work_list#}
+	{#foreach from=$show.work_list item=list#}
+	 <tr>
+      <td colspan="2" bgcolor="#FAFAFA"><strong>{#$list.companyname#}</strong> - {#$list.jobs#}</td>
+    </tr>
+    <tr>
+      <td width="80" align="right" bgcolor="#FAFAFA">起止日期：</td>
+      <td bgcolor="#FFFFFF">{#$list.start#}至{#$list.endtime#}&nbsp;</td>
+    </tr>
+	<tr>
+      <td align="right"  bgcolor="#FAFAFA">企业名称：</td>
+      <td bgcolor="#FFFFFF">{#$list.companyname#}</td>
+    </tr>
+	<tr>
+      <td align="right" bgcolor="#FAFAFA">从事职位：</td>
+      <td bgcolor="#FFFFFF">{#$list.jobs#}</td>
+    </tr>
+	<tr>
+      <td align="right" bgcolor="#FAFAFA">业绩表现：</td>
+      <td bgcolor="#FFFFFF">{#$list.achievements#}</td>
+    </tr>
+	<tr>
+      <td align="right"  bgcolor="#FAFAFA">企业介绍：</td>
+      <td bgcolor="#FFFFFF">{#$list.companyprofile#}</td>
+    </tr>
+	{#/foreach#}
+	{#else#}
+    <tr>
+      <td colspan="2" bgcolor="#FFFFFF">没有填写工作经历。</td>
+    </tr>
+	{#/if#}
+</table>
+  <table  border="0" align="center" cellpadding="7" cellspacing="1" bgcolor="#CCCCCC" class="resume_show">
+    <tr>
+      <td colspan="2" bgcolor="#FAFAFA" class="title"><strong>培训经历</strong></td>
+    </tr>
+	{#if $show.training_list#}
+	{#foreach from=$show.training_list item=list#}
+	 <tr>
+      <td colspan="2" bgcolor="#FAFAFA"><strong>{#$list.agency#}</strong> - {#$list.course#}</td>
+    </tr>
+    <tr>
+      <td width="80" align="right" bgcolor="#FAFAFA">起止日期：</td>
+      <td bgcolor="#FFFFFF">{#$list.start#}至{#$list.endtime#}</td>
+    </tr>
+	<tr>
+      <td align="right"  bgcolor="#FAFAFA">培训机构：</td>
+      <td bgcolor="#FFFFFF">{#$list.agency#}</td>
+    </tr>
+	<tr>
+      <td align="right" bgcolor="#FAFAFA">培训课程：</td>
+      <td bgcolor="#FFFFFF">{#$list.course#}</td>
+    </tr>
+	<tr>
+      <td align="right" bgcolor="#FAFAFA">培训描述：</td>
+      <td bgcolor="#FFFFFF">{#$list.description#}</td>
+    </tr>
+	{#/foreach#}
+	{#else#}
+    <tr>
+      <td colspan="2" bgcolor="#FFFFFF">没有填写培训经历。</td>
+    </tr>
+	{#/if#}
+</table>
+
+<table  border="0" align="center" cellpadding="7" cellspacing="1" bgcolor="#CCCCCC" class="resume_show resume_contact" >
+    <tr>
+      <td bgcolor="#FAFAFA" class="title"><strong>联系方式</strong></td>
+    </tr>
+    <tr>
+      <td bgcolor="#FFFFFF">
+	  <div id="resume_contact"></div>
+	  </td>
+    </tr>
+</table>
+<table  height="100" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</body>
+</html>

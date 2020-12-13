@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>手机频道 - {#$QISHI.site_name#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/mobile.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script type="text/javascript">
+(function($){$.fn.slides=function(option){option=$.extend({},$.fn.slides.option,option);return this.each(function(){$('.'+option.container,$(this)).children().wrapAll('<div class="slides_control"/>');var elem=$(this),control=$('.slides_control',elem),total=control.children().size(),width=control.children().outerWidth(),height=control.children().outerHeight(),start=option.start-1,effect=option.effect.indexOf(',')<0?option.effect:option.effect.replace(' ','').split(',')[0],paginationEffect=option.effect.indexOf(',')<0?effect:option.effect.replace(' ','').split(',')[1],next=0,prev=0,number=0,current=0,loaded,active,clicked,position,direction;if(total<2){return;}
+if(start<0){start=0;};if(start>total){start=total-1;};if(option.start){current=start;};if(option.randomize){control.randomize();}
+$('.'+option.container,elem).css({overflow:'hidden',position:'relative'});control.css({position:'relative',width:(width*3),height:height,left:-width});control.children().css({position:'absolute',top:0,left:width,zIndex:0,display:'none'});if(option.autoHeight){control.animate({height:control.children(':eq('+start+')').outerHeight()},option.autoHeightSpeed);}
+if(option.preload&&control.children()[0].tagName=='IMG'){elem.css({background:'url('+option.preloadImage+') no-repeat 50% 50%'});var img=$('img:eq('+start+')',elem).attr('src')+'?'+(new Date()).getTime();$('img:eq('+start+')',elem).attr('src',img).load(function(){$(this).fadeIn(option.fadeSpeed,function(){$(this).css({zIndex:5});elem.css({background:''});loaded=true;});});}else{control.children(':eq('+start+')').fadeIn(option.fadeSpeed,function(){loaded=true;});}
+if(option.bigTarget){control.children().css({cursor:'pointer'});control.children().click(function(){animate('next',effect);return false;});}
+if(option.hoverPause&&option.play){control.children().bind('mouseover',function(){stop();});control.children().bind('mouseleave',function(){pause();});}
+if(option.generateNextPrev){$('.'+option.container,elem).after('<a href="#" class="'+option.prev+'">Prev</a>');$('.'+option.prev,elem).after('<a href="#" class="'+option.next+'">Next</a>');}
+$('.'+option.next,elem).click(function(e){e.preventDefault();if(option.play){pause();};animate('next',effect);});$('.'+option.prev,elem).click(function(e){e.preventDefault();if(option.play){pause();};animate('prev',effect);});
+$('.'+option.paginationClass+' li a:eq('+start+')',elem).parent().addClass('current');$('.'+option.paginationClass+' li a',elem).click(function(){if(option.play){pause();};clicked=$(this).attr('rel');if(current!=clicked){animate('pagination',paginationEffect,clicked);}
+return false;});if(option.play){playInterval=setInterval(function(){animate('next',effect);},option.play);elem.data('interval',playInterval);};function stop(){clearInterval(elem.data('interval'));};function pause(){if(option.pause){clearTimeout(elem.data('pause'));clearInterval(elem.data('interval'));pauseTimeout=setTimeout(function(){clearTimeout(elem.data('pause'));playInterval=setInterval(function(){animate("next",effect);},option.play);elem.data('interval',playInterval);},option.pause);elem.data('pause',pauseTimeout);}else{stop();}};function animate(direction,effect,clicked){if(!active&&loaded){active=true;switch(direction){case'next':prev=current;next=current+1;next=total===next?0:next;position=width*2;direction=-width*2;current=next;break;case'prev':prev=current;next=current-1;next=next===-1?total-1:next;position=0;direction=0;current=next;break;case'pagination':next=parseInt(clicked,10);prev=$('.'+option.paginationClass+' li.current a',elem).attr('rel');if(next>prev){position=width*2;direction=-width*2;}else{position=0;direction=0;}
+current=next;break;}
+if(effect==='fade'){option.animationStart();if(option.crossfade){control.children(':eq('+next+')',elem).css({zIndex:10}).fadeIn(option.fadeSpeed,function(){control.children(':eq('+prev+')',elem).css({display:'none',zIndex:0});$(this).css({zIndex:0});option.animationComplete(next+1);active=false;});}else{option.animationStart();control.children(':eq('+prev+')',elem).fadeOut(option.fadeSpeed,function(){if(option.autoHeight){control.animate({height:control.children(':eq('+next+')',elem).outerHeight()},option.autoHeightSpeed,function(){control.children(':eq('+next+')',elem).fadeIn(option.fadeSpeed);});}else{control.children(':eq('+next+')',elem).fadeIn(option.fadeSpeed,function(){if($.browser.msie){$(this).get(0).style.removeAttribute('filter');}});}
+option.animationComplete(next+1);active=false;});}}else{control.children(':eq('+next+')').css({left:position,display:'block'});if(option.autoHeight){option.animationStart();control.animate({left:direction,height:control.children(':eq('+next+')').outerHeight()},option.slideSpeed,function(){control.css({left:-width});control.children(':eq('+next+')').css({left:width,zIndex:5});control.children(':eq('+prev+')').css({left:width,display:'none',zIndex:0});option.animationComplete(next+1);active=false;});}else{option.animationStart();control.animate({left:direction},option.slideSpeed,function(){control.css({left:-width});control.children(':eq('+next+')').css({left:width,zIndex:5});control.children(':eq('+prev+')').css({left:width,display:'none',zIndex:0});option.animationComplete(next+1);active=false;});}}
+if(option.pagination){$('.'+option.paginationClass+' li.current',elem).removeClass('current');$('.'+option.paginationClass+' li a:eq('+next+')',elem).parent().addClass('current');}}};});};$.fn.slides.option={preload:false,preloadImage:'/img/loading.gif',container:'slides_container',generateNextPrev:false,next:'next',prev:'prev',pagination:true,generatePagination:true,paginationClass:'pagination',fadeSpeed:350,slideSpeed:350,start:1,effect:'slide',crossfade:false,randomize:false,play:0,pause:0,hoverPause:false,autoHeight:false,autoHeightSpeed:350,bigTarget:false,animationStart:function(){},animationComplete:function(){}};$.fn.randomize=function(callback){function randomizeOrder(){return(Math.round(Math.random())-0.5);}
+return($(this).each(function(){var $this=$(this);var $children=$this.children();var childCount=$children.length;if(childCount>1){$children.hide();var indices=[];for(i=0;i<childCount;i++){indices[indices.length]=i;}
+indices=indices.sort(randomizeOrder);$.each(indices,function(j,k){var $child=$children.eq(k);var $clone=$child.clone(true);$clone.show().appendTo($this);if(callback!==undefined){callback($child,$clone);}
+$child.remove();});}}));};})(jQuery);
+//
+$(document).ready(function()
+{
+	function imgaeschange(obj)
+	{
+	$(obj).slides({
+				preload: true,
+				play: 2000,
+				pause: 2500,
+				hoverPause: true,
+				animationStart: function(){
+					$(obj+' .caption').animate({
+						bottom:-35
+					},100);
+				},
+				animationComplete: function(current){
+					$(obj+' .caption').animate({
+						bottom:0
+					},200);
+					if (window.console && console.log) {
+						// example return of current slide number
+						//console.log(current);
+					};
+				}
+			});
+	}
+	imgaeschange('.android_main .m_imgbox ');
+	imgaeschange('.touchscreen_main .m_imgbox ');
+	imgaeschange('.weixin_main .m_imgbox ');
+	$('.touchscreen_main,.weixin_main').css('display','none');	
+	//
+	$('.m_head .list').click(function(){
+		$('.m_head .list').removeClass('s');
+		$(this).addClass('s');
+		$('.displaybox').css('display','none');
+		$('.'+$(this).attr('id')).css('display','block');
+	})
+});
+</script>
+</head>
+<body>
+<div class="head_top">
+	<div class="head_top_box">
+			<div class="head_top_box_left link_lan"><span id="top_loginform"></span></div>
+			<div class="head_top_box_right link_bk">
+			{#include file="top-nav.htm"#}
+			</div>
+			<div class="clear"></div>
+	</div>
+</div>
+<div class="m_head">
+	<div class="head_logo">
+		<a href="{#$QISHI.site_dir#}"><img src="{#$QISHI.upfiles_dir#}{#$QISHI.web_logo#}" alt="{#$QISHI.site_name#}" border="0" align="absmiddle" /></a>
+	</div>
+    <div class="m_libox">
+	  <div class="list li1 s" id="android_main">Android</div>
+	  <div class="list li2" id="touchscreen_main">触屏版 </div>
+	  <div class="list li3" id="weixin_main">微信版</div>
+	  <div class="clear"></div>
+	</div>
+</div>
+<!--安卓展示 -->
+<div class="android_main displaybox" style="display:block">
+  <div class="left">
+		<div class="m_imgbox">
+			<div class="slides_container">
+					<div><img src="{#$QISHI.site_template#}images/m_a_1.jpg"  width="250"  height="460" border="0"></div>
+					<div><img src="{#$QISHI.site_template#}images/m_a_2.jpg"  width="250"  height="460" border="0"></div>
+					<div><img src="{#$QISHI.site_template#}images/m_a_3.jpg" width="250"  height="460"  border="0"></div>
+					<div><img src="{#$QISHI.site_template#}images/m_a_4.jpg"  width="250"  height="460" border="0"></div>
+			</div>
+			<a href="#" class="prev"><img src="{#$QISHI.site_template#}images/m_arrow-next.png" width="24" height="43" alt="下一张" border="0"></a>
+			<a href="#" class="next"><img src="{#$QISHI.site_template#}images/m_arrow-prev.png" width="24" height="43" alt="上一张" border="0"></a>
+		</div>
+ </div>
+  <div class="right">
+			<div class="tit">{#$QISHI.site_name#}</div>
+			<div class="tit_s">Android新版功能：(1.0版)</div>
+	<div class="txt">
+			1.随时随地搜索高薪职位<br />
+			2.在线投递简历<br />
+			3.随时随地搜索人才<br />
+			4.在线邀请面试<br />
+			5.全方位隐私保护，求职更安全<br />
+			6.摇一摇搜索职位<br />
+	</div>
+			<div class="down">
+			 <a href="{#$QISHI.site_domain#}{#$QISHI.site_dir#}android/apk/KnightCMS.apk" title="下载到电脑"></a></div>
+			<div class="dimensionalbarcode" title="二维码扫描下载"><img src="{#$QISHI.site_domain#}{#$QISHI.site_dir#}plus/url_qrcode.php?url={#$QISHI.site_domain#}{#$QISHI.site_dir#}android/apk/KnightCMS.apk" alt="二维码"/></div>
+			<div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<!--触摸版展示 -->
+<div class="touchscreen_main displaybox"   >
+  <div class="left">
+		<div class="m_imgbox">
+			<div class="slides_container">
+					<div><img src="{#$QISHI.site_template#}images/m_t_1.jpg" width="250"  height="460"  border="0"></div>
+					<div><img src="{#$QISHI.site_template#}images/m_t_2.jpg" width="250"  height="460"  border="0"></div>
+					<div><img src="{#$QISHI.site_template#}images/m_t_3.jpg" width="250"  height="460"  border="0"></div>
+			</div>
+			<a href="#" class="prev"><img src="{#$QISHI.site_template#}images/m_arrow-next.png" width="24" height="43" alt="下一张" border="0"></a>
+			<a href="#" class="next"><img src="{#$QISHI.site_template#}images/m_arrow-prev.png" width="24" height="43" alt="上一张" border="0"></a>
+		</div>
+ </div>
+  <div class="right">
+			<div class="tit">{#$QISHI.site_name#}手机触屏版</div>
+			<div class="tit_s">手机浏览器访问地址：<span>{#$QISHI.site_domain#}{#$QISHI.site_dir#}wap</span></div>
+	<div class="txt">
+				<strong>功能：</strong><br />
+				1.随时随地搜索职位<br />
+				2.个人会员中心<br />
+				3.多条件组合搜索<br />
+				<strong>特点：</strong><br />
+				无需下载，超省流量<br />
+				无需安装，想用马上用<br />
+				保存书签，一键即可访问<br />
+				<strong>适用手机：</strong><br />
+				安卓、苹果、WinPhone、Symbian、BlackBerry等<br />
+				<strong>适用浏览器：</strong><br />
+				uc、qq、海豚、chrome、safari等主流手机浏览器<br />
+	</div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<!--微信展示 -->
+<div class="weixin_main displaybox">
+  <div class="left">
+		<div class="m_imgbox">
+			<div class="slides_container">
+					<div><img src="{#$QISHI.site_template#}images/m_w_1.jpg" width="250"  height="460"  border="0"></div>
+					<div><img src="{#$QISHI.site_template#}images/m_w_2.jpg" width="250"  height="460"  border="0"></div>
+			</div>
+			<a href="#" class="prev"><img src="{#$QISHI.site_template#}images/m_arrow-next.png" width="24" height="43" alt="下一张" border="0"></a>
+			<a href="#" class="next"><img src="{#$QISHI.site_template#}images/m_arrow-prev.png" width="24" height="43" alt="上一张" border="0"></a>
+		</div>
+ </div>
+<div class="right">
+			<div class="tit">{#$QISHI.site_name#}官方微信</div>
+			<div class="tit_s">微信找工作，最私密、最方便的选择！</div>
+			<div class="txt">
+			使用步骤：<br />
+			1.打开微信<br />
+			2.选择“朋友们”<br />
+			3.选择“添加朋友”<br />
+			4.选择“扫一扫”<br />
+			5.将手机摄像头对准下方二维码，添加成功<br />
+			</div>
+			<div class="weixingimg">
+			 <img src="{#$QISHI.upfiles_dir#}{#$QISHI.weixin_img#}"  border="0"/>
+			</div>
+</div>
+<div class="clear"></div>
+</div>
+{#include file="footer.htm"#}
+</body>
+</html>

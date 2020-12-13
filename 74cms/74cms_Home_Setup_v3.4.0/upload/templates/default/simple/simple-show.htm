@@ -1,0 +1,116 @@
+{#qishi_simple_show set="列表名:show,ID:GET[id]"#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />{#qishi_pageinfo set="列表名:page,调用:QS_simplelist"#}
+<title>{#$show.jobname#} - {#$QISHI.site_name#}</title>
+<meta name="description" content="{#$show.description#}">
+<meta name="keywords" content="{#$show.keywords#}">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/simple.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.dialog.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript'></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+		var id="{#$smarty.get.id#}";
+		var tsTimeStamp= new Date().getTime();
+		$.get("{#$QISHI.site_dir#}plus/ajax_click.php", { "id": id,"time":tsTimeStamp,"act":"simple_click"},
+			function (data,textStatus)
+			 {			
+				$("#click").html(data);
+			 }
+		);
+	$(".delsimple").click(function(){
+	var url="{#$QISHI.site_dir#}plus/ajax_simple.php?act=delsimple&id="+id;
+	dialog("删除信息","url:get?"+url,"300px","auto","");				
+	});
+	$(".refreshsimple").click(function(){
+	var url="{#$QISHI.site_dir#}plus/ajax_simple.php?act=refreshsimple&id="+id;
+	dialog("刷新信息","url:get?"+url,"300px","auto","");				
+	});	
+	$(".editsimple").click(function(){
+	var url="{#$QISHI.site_dir#}plus/ajax_simple.php?act=editsimple&id="+id;
+	dialog("编辑信息","url:get?"+url,"600px","auto","");				
+	});	
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#"QS_simplelist"|qishi_url#}">微招聘</a>&nbsp;>>&nbsp;{#$show.jobname#}
+</div> 
+<div class="simple-show">
+  <div class="left">
+    <div class="show">
+		<h1>{#$show.jobname#}</h1>		
+		<div class="comname"><strong>{#$show.comname#}</strong>
+		  <div class="edit link_orange"><a href="javascript:void(0)" class="delsimple" id="{#$li.id#}">删除</a><a href="javascript:void(0)" class="refreshsimple" id="{#$li.id#}">刷新</a><a href="javascript:void(0)" class="editsimple" id="{#$li.id#}">编辑</a></div>
+		</div>		
+		<div class="txtbox">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+			<td width="200" height="25">招聘人数：{#if $show.amount=="0"#}若干{#else#}{#$show.amount#}{#/if#} 人</td>
+			<td>浏览次数：<span id="click">1</span> 次</td>
+		  </tr>
+		  <tr>
+			<td height="25">更新时间：{#$show.refreshtime|date_format:"%Y-%m-%d %H:%M"#}</td>
+			<td>有效期截至：{#if $show.deadline=="0"#}
+	长期有效
+	{#else#}
+	{#$show.deadline|date_format:"%Y-%m-%d"#}	
+	{#/if#}</td>
+		  </tr>
+		</table>
+		</div>		
+		<div class="txttit"><strong>具体要求</strong></div>
+		<div class="txtbox">
+		{#$show.detailed|nl2br#}
+		</div>	
+		<div class="txttit"><strong>联系方式</strong></div>
+		<div class="txtbox">
+		<ul>
+		<li>联系人：{#$show.contact#}</li>
+		<li>联系电话：{#$show.tel#}</li>
+		<li>QQ：{#$show.qq#}</li>
+		<li>Email：{#$show.email#}</li>
+		<li>联系地址：{#$show.address#}</li>
+		</ul>
+		</div>
+		<div class="txtbox" style="color:#FF0000; margin-top:10px; margin-bottom:30px;">防骗提醒： 招聘单位无权向求职者收取任何费用，如有单位在面试过程中向您收取押金、保证金、体检费、材料费、成本费等违规费用，指定医院体检等均为诈骗行为，欢迎举报。</div>
+    </div>
+  </div>
+  <div class="right">
+  	<div class="listbox link_lan">
+			<div class="tit"><strong>最新微招聘</strong></div>	
+			{#qishi_simple_list  set="列表名:simplelist,显示数目:5,填补字符:...,职位名长度:12,企业名长度:18,描述长度:45,排序:id>desc"#}
+{#foreach from=$simplelist item=li#}		
+		    	<div class="txt">
+				<ul>
+				<li style="position:relative"><strong><a href="{#$li.simple_url#}" target="_blank">{#$li.jobname#}</a></strong>&nbsp;&nbsp;&nbsp;{#if $li.amount=="0"#}若干{#else#}{#$li.amount#}{#/if#}人
+				  <div class="date">{#$li.refreshtime_cn#}</div>
+				</li>
+				<li>发布公司：{#$li.comname#}</li>
+				<li>有效期截至：
+	{#if $li.deadline=="0"#}
+	长期有效
+	{#else#}
+	{#$li.deadline|date_format:"%Y-%m-%d"#}	
+	{#/if#}
+	&nbsp;&nbsp;&nbsp;点击：{#$li.click#}次</li>
+				<li style="color:#999999">{#$li.detailed#}</li>
+				</ul>
+	  </div>
+			{#/foreach#}
+  	</div>
+	</div>
+  <div class="clear"></div>
+</div>
+{#include file="footer.htm"#}
+</body>
+</html>

@@ -1,0 +1,48 @@
+RewriteEngine On
+RewriteBase /
+# RewriteπÊ‘Ú
+
+RewriteRule ^index\.htm$ index\.php
+
+RewriteRule ^jobs/jobs-show-([0-9]+)\.htm$ jobs/jobs-show\.php\?id=$1
+RewriteRule ^jobs/jobs-list-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)\.htm$ jobs/jobs-list\.php\?category=$1&subclass=$2&district=$3&sdistrict=$4&settr=$5&trade=$6&wage=$7&nature=$8&scale=$9&inforow=$10&sort=$11&key=$12&page=$13
+RewriteRule ^jobs/jobs-contrast-(.*)\.htm$ jobs/jobs-contrast\.php\?id=$1
+RewriteRule ^jobs/map-search-([0-9]+)\.htm$ jobs/map-search\.php\?id=$1
+RewriteRule ^jobs/jobtag-search-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*).htm$ jobs/jobtag-search\.php\?category=$1&subclass=$2&district=$3&sdistrict=$4&jobtag=$5&inforow=$6&page=$7
+RewriteRule ^jobs/street-search-(.*)-(.*)-(.*)-(.*).htm$ jobs/street-search\.php\?streetid=$1&sort=$2&inforow=$3&page=$4
+RewriteRule ^jobs/officebuilding-search-(.*)-(.*)-(.*)-(.*).htm$ jobs/officebuilding-search\.php\?officebuildingid=$1&sort=$2&inforow=$3&page=$4
+
+RewriteRule ^company/company-list-(.*)-(.*)-([0-9]+)\.htm$ company/index\.php\?trade=$1&inforow=$2&page=$3
+RewriteRule ^company/company-show-([0-9]+)\.htm$ company/company-show\.php\?id=$1
+RewriteRule ^company/company-jobs-([0-9]+)-([0-9]+)\.htm$ company/company-jobs\.php\?id=$1&page=$2
+RewriteRule ^company/company-comment-([0-9]+)-([0-9]+)\.htm$ company/company-comment\.php\?id=$1&page=$2
+RewriteRule ^company/company-comment-show-([0-9]+)\.htm$ company/company-comment-show\.php\?id=$1
+RewriteRule ^company/company-img-([0-9]+)-([0-9]+)\.htm$ company/company-img\.php\?id=$1&page=$2
+RewriteRule ^company/company-news-([0-9]+)-([0-9]+)\.htm$ company/company-news\.php\?id=$1&page=$2
+RewriteRule ^company/company-news-show-([0-9]+)\.htm$ company/company-news-show\.php\?id=$1
+
+RewriteRule ^resume/resume-show-([0-9]+)\.htm$ resume/resume-show\.php\?id=$1
+RewriteRule ^resume/resume-list-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)\.htm$ resume/resume-list\.php\?category=$1&subclass=$2&district=$3&sdistrict=$4&experience=$5&education=$6&sex=$7&photo=$8&talent=$9&inforow=$10&sort=$11&key=$12&page=$13
+RewriteRule ^resume/resumetag-search-(.*)-(.*)-(.*)-(.*)-(.*)-(.*)-(.*).htm$ resume/resume-search\.php\?category=$1&subclass=$2&district=$3&sdistrict=$4&resumetag=$5&inforow=$6&page=$7
+
+RewriteRule ^news/news-list-([0-9]+)-([0-9]+)\.htm$ news/news-list\.php\?id=$1&page=$2
+RewriteRule ^news/news-search-(.*)-([0-9]+)\.htm$ news/news-search\.php\?key=$1&page=$2
+RewriteRule ^news/news-show-([0-9]+)\.htm$ news/news-show\.php\?id=$1
+
+RewriteRule ^explain/explain-show-([0-9]+)\.htm$ explain/explain-show\.php\?id=$1
+
+RewriteRule ^notice/notice-list-([0-9]+)-([0-9]+)\.htm$ notice/notice-list\.php\?id=$1&page=$2
+RewriteRule ^notice/notice-show-([0-9]+)\.htm$ notice/notice-show\.php\?id=$1
+
+RewriteRule ^hrtools/hrtools-list-([0-9]+)\.htm$ hrtools/hrtools-list\.php\?id=$1
+
+RewriteRule ^jobfair/jobfair-list-([0-9]+)\.htm$ jobfair/jobfair-list\.php\?page=$1
+RewriteRule ^jobfair/jobfair-show-([0-9]+)\.htm$ jobfair/jobfair-show\.php\?id=$1
+RewriteRule ^jobfair/jobfair-exhibitors-([0-9]+)-([0-9]+)\.htm$ jobfair/jobfair-exhibitors\.php\?id=$1&page=$2
+
+RewriteRule ^simple/simple-list-(.*)-(.*)-([0-9]+)\.htm$ simple/simple-list\.php\?key=$1&keytype=$2&page=$3
+RewriteRule ^simple/simple-show-([0-9]+)\.htm$ simple/simple-show\.php\?id=$1
+
+RewriteRule ^help/help-list-([0-9]+)-([0-9]+)\.htm$ help/help-list\.php\?id=$1&page=$2
+RewriteRule ^help/help-search-(.*)-([0-9]+)\.htm$ help/help-search\.php\?key=$1&page=$2
+RewriteRule ^help/help-show-([0-9]+)\.htm$ help/help-show\.php\?id=$1

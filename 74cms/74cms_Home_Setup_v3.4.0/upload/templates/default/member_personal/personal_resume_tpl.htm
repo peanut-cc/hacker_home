@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#tabshow li:nth-child(2)>a").addClass("selected");
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;<a href="personal_resume.php?act=resume_list">简历管理</a>&nbsp;>>&nbsp;模版设置</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>模版设置</h1>
+		</div>
+	<form id="Form1" name="Form1" method="post" action="?act=tpl_save">
+	<input name="pid" type="hidden" value="{#$pid#}" />
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" >
+        
+		<tr>
+              <td height="50" colspan="2" bgcolor="#F5FAFC" style=" border-bottom:1px #CCCCCC dashed; color:#003399">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:14px;">设置模版：{#$resume_basic.title#}</span> </span></td>
+            </tr>
+	 
+		  <tr>
+          <td  style="border-bottom:1px #C9D9E7 dashed; padding-left:5px;">
+		  <script type="text/javascript"> 
+$(document).ready(function()
+{
+	$(".tpl_list").hover(
+  function () {
+    $(this).css("background-color","#E4F4FC");
+  },
+  function () {
+    $(this).css("background-color","");
+  }
+);
+});
+</script>
+		{#foreach  from=$resumetpl item=li#}
+		<div style=" line-height:180%; padding:3px; float:left;"  class="link_lan tpl_list">
+		  <table width="225" border="0" cellspacing="3" cellpadding="0" class="link_lan">
+            <tr>
+              <td><a href="{#$resume_url#}&style={#$li.tpl_dir#}"  target="_blank"><img src="{#$QISHI.site_dir#}templates/tpl_resume/{#$li.tpl_dir#}/thumbnail.jpg" alt="{#$li.tpl_name#}" width="225" height="136" border="1"  style="border: #CCCCCC;"/></a></td>
+              </tr>
+            <tr>
+              <td align="center">
+			  {#$li.tpl_name#}
+			  <a href="{#$resume_url#}&style={#$li.tpl_dir#}"  target="_blank">[预览]</a>
+			  </td>
+              </tr>
+			  <tr>
+              <td align="center">
+			   <label>
+			  <input name="tpl" type="radio" value="{#$li.tpl_dir#}" {#if $mytpl==$li.tpl_dir#}checked="checked"{#/if#}/>
+			  使用此模版			  </label>			 </td>
+              </tr>
+          </table>
+		</div>
+		{#/foreach#}
+        <div class="clear"></div>		
+	</td>
+          </tr>
+ 
+		  <tr>
+          <td height="40"  style=" padding-left:10px;" >
+            <input type="submit" name="Submit" value="保存设置"   class="user_submit"/>
+			&nbsp;&nbsp;&nbsp;
+                  
+                  <input type="button" name="next" value="返回简历管理"  class="user_long_submit" onclick="window.location='?act=resume_list'"/>			</td>
+          </tr>
+		  <tr>
+		    <td height="240"  ><input name="pid" type="hidden" value="{#$pid#}" />&nbsp;</td>
+	      </tr>
+      </table>
+        </form>
+	  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#if $smarty.get.trade#}{#"QS_trade,"|cat:$smarty.get.trade|qishi_categoryname#} - {#/if#}黄页  - {#$QISHI.site_name#}</title>
+<meta name="description" content="{#if $smarty.get.trade#}{#"QS_trade,"|cat:$smarty.get.trade|qishi_categoryname#}，{#/if#}{#$QISHI.site_name#} - 黄页">
+<meta name="keywords" content="{#$QISHI.site_name#},黄页">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/company.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+ $(".list:odd").css("background-color","#F4F5FB");
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#"QS_companylist"|qishi_url#}">黄页</a>
+</div>
+<div class="companysel link_lan">
+<div class="tit">
+<h3>搜索企业</h3>
+</div>
+<div class="listbox">	
+ <div class="bleft" >按行业：</div>
+	<div class="bright">
+		<ul class="link_bk">
+		 {#qishi_get_classify set="列表名:c_jobs,类型:QS_trade,显示数目:100"#}{#foreach from=$c_jobs item=li#}				
+		<li><a href="{#"QS_companylist,trade:"|cat:$li.id|qishi_url#}" >{#$li.categoryname#}</a></li>
+		{#/foreach#}
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+{#if $smarty.get.trade#}
+  <div class="myselbox"  style="display:block;">
+		  <div class="left">已选条件：</div>
+		  <div class="optcentet">
+		  <a href="{#"QS_companylist"|qishi_url#}"  title="点击取消"><u>行业:</u>{#"QS_trade,"|cat:$smarty.get.trade|qishi_categoryname#}</a>
+		  <div class="clear"></div>
+		  </div>
+		  <div class="right"><div class="clearoptall"><a  href="{#"QS_companylist"|qishi_url#}" class="clearall">清除所有</a></div></div>
+		  <div class="clear"></div>
+  </div>
+  {#/if#}
+</div>
+<!--企业列表 -->
+<div class="company_list">	
+	<div class="sort">
+		  <div class="txt link_bk">
+		  <span>排序：</span>
+		   <a href="javascript:void(0);" class="select">默认</a>
+		  <div class="pagerow"><span>每页显示：</span>
+		  <a href="{#"QS_companylist,inforow:10-page:1-trade:"|cat:$smarty.get.trade|qishi_url#}"  {#if $smarty.get.inforow=="10" || $smarty.get.inforow==""#}class="select"{#/if#}>10</a>
+		  <a href="{#"QS_companylist,inforow:20-page:1-trade:"|cat:$smarty.get.trade|qishi_url#}" {#if $smarty.get.inforow=="20"#}class="select"{#/if#}>20</a>
+		  <a href="{#"QS_companylist,inforow:30-page:1-trade:"|cat:$smarty.get.trade|qishi_url#}" {#if $smarty.get.inforow=="30"#}class="select"{#/if#}>30</a>
+		  </div>
+		  </div>
+	</div>
+{#qishi_company_list  set="分页显示:1,列表名:company,显示数目:GET[inforow],填补字符:...,企业名长度:30,描述长度:50,行业:GET[trade],黄页:1,排序:id>desc"#}
+{#foreach from=$company item=list#}
+		<div class="list link_lan">
+          <div class="cname"><a href="{#$list.url#}" target="_blank">{#$list.companyname_#}</a></div>
+		  <div class="tli link_bku">所属行业：<a href="{#"QS_companylist,trade:"|cat:$list.trade|qishi_url#}">{#$list.trade_cn#}</a></div>
+		  <div class="tli">所在地区：{#$list.district_cn#}</div>
+		  <div class="tli"> 企业性质：{#$list.nature_cn#}</div>
+		  <div class="clear"></div>
+		  <div class="tli">注册资金：{#if $list.registered#}{#$list.registered#}万{#$list.currency#}{#else#}未填写{#/if#}</div>
+		  <div class="tli">公司规模：{#$list.scale_cn#}</div>
+		  <div class="tli">  添加时间：{#$list.addtime|date_format:"%Y-%m-%d"#}</div>
+		  <div class="clear"></div>
+		  <div class="briefly">{#$list.briefly#}</div>
+		  <div class="logo"><img src="{#$list.logo#}" border="0" /></div>
+  </div>
+{#/foreach#}
+		{#if !$company#}
+		<div class="noinfo">
+		<span>抱歉，没有符合此条件的信息。</span><br />
+您可以：<br />
+重新修改搜索条件后再进行搜索。 <br />
+适当减少一些搜索条件，以便能够获得更多的结果。 <br />
+		</div>
+		{#/if#}
+</div>
+
+<table width="" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>{#if $page#}
+		<div class="page link_bk">
+		{#$page#}
+		</div>
+		{#/if#}</td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

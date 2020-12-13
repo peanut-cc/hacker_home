@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.vtip-min.js" type='text/javascript' language="javascript"></script>
+ <script src="{#$QISHI.site_template#}js/jquery.QSdialog.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.reasontip-min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript"> 
+$(document).ready(function()
+{
+	vtip_reason("{#$QISHI.site_dir#}","jobs_reason");
+	//职位延期
+	$(".delay").click(function(){
+	var id=$(this).attr("id");
+	var tsTimeStamp= new Date().getTime();
+	var url="{#$QISHI.site_dir#}user/user_delay_jobs.php?id="+id+"&act=delay&t="+tsTimeStamp;
+	dialog("职位延期","url:get?"+url,"500px","auto","");
+	});	
+	{#if $QISHI.operation_mode=="1" && $points_rule.jobs_refresh.value>"0"#}
+		$("#refresh").click(function(){
+			var length=$("#form1 :checkbox[checked]").length;
+			var refresh_point="{#$points_rule.jobs_refresh.value#}";
+			var total_point=length*refresh_point;
+			alert("刷新职位可提高职位排名，每条职位消耗{#$points_rule.jobs_refresh.value#}{#$QISHI.points_quantifier#}{#$QISHI.points_byname#}，您选择了"+length+"条职位，总共需要消耗"+total_point+"{#$QISHI.points_quantifier#}{#$QISHI.points_byname#}，确定刷新吗？")
+		});
+	{#/if#}
+})
+</script>
+ 
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a> &nbsp;>>&nbsp;<a href="company_jobs.php?act=jobs">职位管理</a>&nbsp;>>&nbsp;已发布的职位
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>已发布的职位</h1>
+		</div>
+		{#if $jobs#}
+	 <div class="us_list_tip link_lan"  style="margin-top:13px;">
+		您可以通过企业推广来提高招聘效果。
+		</div>
+		{#/if#}
+	   <div class="us_tab">
+			<a href="?act={#$act#}&jobtype=" {#if $smarty.get.jobtype==""#}class="select"{#/if#}>所有职位{#if $total.2>0#}<span>({#$total.2#})</span>{#/if#}</a>
+              <a href="?act={#$act#}&jobtype=1" {#if $smarty.get.jobtype=="1"#}class="select"{#/if#}>显示中{#if $total.0>0#}<span>({#$total.0#})</span>{#/if#}</a>
+              <a href="?act={#$act#}&jobtype=2" {#if $smarty.get.jobtype=="2"#}class="select"{#/if#}>不显示{#if $total.1>0#}<span>({#$total.1#})</span>{#/if#}</a><div style="padding-right:10px; text-align:right; float:right" ><a href="{#"QS_helplist,id:9"|qishi_url#}" target="_blank" style="width: auto; border:0px; background-color: #FFFFFF; color:#FF0000; text-align:right">为什么审核未通过?</a></div>
+			  <div class="clear"></div>
+	    </div>
+	    <form id="form1" name="form1" method="post" action="?act=jobs_perform">
+		{#foreach from=$jobs item=li#}
+		  <div class="us_joblist link_lan">
+		  <div class="tit c"><input name="y_id[]" type="checkbox" id="y_id"  value="{#$li.id#}"/></div>
+			  <div class="tit h"><a href="{#$li.jobs_url#}" target="_blank">{#$li.jobs_name#}</a></div>
+			  <div class="tit">刷新时间：{#$li.refreshtime|date_format:"%Y-%m-%d %H:%M"#} </div>
+			  <div class="tit">(通过消耗{#if $li.add_mode=="1"#}{#$QISHI.points_byname#}{#else#}服务内容{#/if#}添加)</div>
+			  {#if $li.stick=="1"#}    <div class="tit vtip" title="此职位已置顶，正在推广中..." style="color: #FF6600">[已置顶]</div>{#/if#}
+			  {#if $li.recommend=="1"#}<div class="tit vtip" title="此职位已推荐，正在推广中..." style="color: #339900">[已推荐]</div>{#/if#}
+			  {#if $li.highlight=="1"#}<div class="tit vtip" title="此职位已变色，正在推广中..." style="color: #CC66CC">[已变色]</div>{#/if#}
+			  {#if $li.emergency=="1"#}<div class="tit vtip" title="此职位已紧急，正在推广中..." style="color: #FF9900">[已紧急]</div>{#/if#}
+			  <div class="clear"></div>		  
+			  <div class="click">浏览：{#$li.click#}次</div>
+		  </div>
+		   <div class="us_joblisttxt link_lan">
+	   		 <div class="floatbox link_bk">
+			 应聘简历：<a href="company_recruitment.php?act=apply_jobs&jobsid={#$li.id#}" {#if $li.countresume>0#}style="color:#FF0000"{#/if#}>({#$li.countresume#})</a><br />
+		
+			 </div>
+			 <div class="floatbox date">
+			 添加时间：{#$li.addtime|date_format:"%Y-%m-%d"#}<br />
+			到期时间：{#if $li.deadline<$smarty.now#}<span style="color: #FF0000">已经到期</span>{#else#}{#$li.deadline|date_format:"%Y-%m-%d"#}{#/if#}
+			<span class="delay" style="cursor:pointer;color:red" id="{#$li.id#}"> [延期]</span>			
+			 </div>
+			 <div class="floatbox audit">
+			 {#if $li.audit==1#}
+				<span style="color: #009900">审核通过</span>
+				{#elseif  $li.audit==2#}
+				<span style="color: #FF6600">审核中</span>
+				{#else#}
+				<span style="color: #FF0000">
+				审核未通过
+					 <img src="{#$QISHI.site_template#}images/99.gif"  border="0"  style="cursor:pointer;" id="{#$li.id#}"  class="reason" align="absmiddle"/>				
+				</span>
+				{#/if#}<br />
+				{#if $li.audit<>'1'#}
+ 				<span style="color: #FF3300" >
+					不显示
+					 <img src="{#$QISHI.site_template#}images/99.gif"  border="0"  style="cursor:pointer;" class="vtip" title="职位审核未通过" align="absmiddle"/>	
+				</span><!--职位审核未通过 -->
+				{#elseif  $li.display=='2'#}
+				<span style="color: #FF3300" >
+				不显示
+				<img src="{#$QISHI.site_template#}images/99.gif"  border="0"  style="cursor:pointer;" class="vtip" title="职位暂停" align="absmiddle"/>
+				</span><!--职位暂停 -->
+				{#elseif  $li.deadline<$smarty.now#}
+				<span style="color: #FF3300" >
+				不显示
+				<img src="{#$QISHI.site_template#}images/99.gif"  border="0"  style="cursor:pointer;" class="vtip" title="已经到期" align="absmiddle"/>
+				</span><!--已经到期 -->
+				{#elseif  $li.add_mode=="2" && $li.setmeal_deadline< $smarty.now && $li.setmeal_deadline<>"0" #}
+				<span style="color: #FF3300">
+				不显示
+				<img src="{#$QISHI.site_template#}images/99.gif"  border="0"  style="cursor:pointer;" class="vtip" title="您的服务已经到期，服务到期时间为{#$li.setmeal_deadline|date_format:"%Y-%m-%d"#}" align="absmiddle"/>
+				</span><!--您的服务已经到期，服务到期时间为{#$li.setmeal_deadline#} -->
+				{#else#}
+				<span style="color: #009900">显示中</span>
+				{#/if#}
+			 </div>
+ 			 <div class="floatbox refresh">						
+			 <a href="?act=jobs_perform&refresh=1&y_id={#$li.id#}" {#if $QISHI.operation_mode=="1" && $points_rule.jobs_refresh.value>0#} onclick="return confirm('刷新职位可提高职位排名，每次消耗 {#$points_rule.jobs_refresh.value#} {#$QISHI.points_quantifier#}{#$QISHI.points_byname#}，确定刷新吗？')"{#/if#}>刷新职位</a><br />
+<a href="{#"QS_resumelist,category:"|cat:$li.category|cat:"-subclass:"|cat:$li.subclass|qishi_url#}"  target="_blank">匹配简历</a>
+			 </div>
+			 <div class="floatbox edit">
+			 <a href="?act=editjobs&id={#$li.id#}">修改</a><br />
+			<a href="?act=jobs_perform&delete=1&y_id={#$li.id#}" onclick="return confirm('您确定删除吗?')">删除</a>
+			 </div>
+			 <div class="floatbox promotion">
+			 
+			 {#if $li.stick=="1"#}
+				<a href="javascript:void(0);" title="此职位已置顶，正在推广中..." class="vtip" style="color:#999999">置顶</a>&nbsp;&nbsp;
+				{#else#}
+				<a href="company_promotion.php?act=promotion_add&promotionid=3&jobsid={#$li.id#}&jobsname={#$li.jobs_name_#}&golist=1" title="推广后将会置顶职位，可有效提高招聘效果" class="vtip">置顶</a>&nbsp;&nbsp;
+				{#/if#}
+				
+				{#if $li.recommend=="1"#}
+				<a href="javascript:void(0);" title="此职位已推荐，正在推广中..." class="vtip" style="color:#999999">推荐</a>&nbsp;&nbsp;
+				{#else#}
+				<a href="company_promotion.php?act=promotion_add&promotionid=1&jobsid={#$li.id#}&jobsname={#$li.jobs_name_#}&golist=1" title="推广后将会显示推荐字样，使职位更加醒目" class="vtip">推荐</a>&nbsp;&nbsp;
+				{#/if#}<br />
+				{#if $li.highlight#}
+				<a href="javascript:void(0);" title="此职位已变色，正在推广中..." class="vtip" style="color:#999999">变色</a>&nbsp;&nbsp;
+				{#else#}
+				<a href="company_promotion.php?act=promotion_add&promotionid=4&jobsid={#$li.id#}&jobsname={#$li.jobs_name_#}&golist=1" title="推广后职位名称会变色，使职位更加醒目" class="vtip">变色</a>&nbsp;&nbsp;
+				{#/if#}				
+				{#if $li.emergency=="1"#}
+				<a href="javascript:void(0);" title="此职位已紧急，正在推广中..." class="vtip" style="color:#999999">紧急</a>&nbsp;&nbsp;
+				{#else#}
+				<a href="company_promotion.php?act=promotion_add&promotionid=2&jobsid={#$li.id#}&jobsname={#$li.jobs_name_#}&golist=1" title="推广后将会显示紧急字样，使职位更加醒目" class="vtip">紧急</a>&nbsp;&nbsp;
+				{#/if#}
+			 </div>
+			 <div class="clear"></div>
+		   </div>
+		    {#/foreach#}
+			{#if $jobs#}
+			  <div class="us_joblistcheckbox link_lan">
+			  <a  href="javascript:void(0);" id="selectAll">[全选]</a>
+			  <a  href="javascript:void(0);" id="uncheckAll">[全不选]</a>
+			  <a  href="javascript:void(0);" id="opposite">[反选]</a>
+			  </div>
+			<script type="text/javascript">
+			$(document).ready(function()
+			{
+				$("#selectAll").click(function()
+				{	
+					$("form[id=form1] :checkbox").attr("checked",true);
+				});
+				$("#uncheckAll").click(function()
+				{	
+					$("form[id=form1] :checkbox").attr("checked",false);
+				});
+				$("#opposite").click(function()
+				{	
+					$("form[id=form1] :checkbox").each(function()
+					{
+					$(this).attr("checked")?$(this).attr("checked",false):$(this).attr("checked",true);
+					});
+				});
+			});
+			</script>
+          <table width="100%" border="0" cellspacing="10" cellpadding="0">
+              <tr>
+                <td>
+				<input type="button" name="next" value="发布职位"  class="user_submit" onclick="window.location='?act=addjobs'"/>
+				  &nbsp;
+				<input type="submit" name="refresh" value="刷新职位"   class="user_submit" id="refresh"/>
+               &nbsp;
+                  <input name="display1" type="submit"  class="user_submit" value="设为开始" />
+           &nbsp;
+                  <input type="submit" name="display2" value="设为暂停" class="user_submit"  />
+            &nbsp;
+                  <input type="submit" name="delete" value="删除职位" class="user_submit"  onclick="return confirm('您确定删除吗?')"/></td>
+              </tr>
+          </table>
+		   <table border="0" align="center" cellpadding="0" cellspacing="0" class="link_bk">
+              <tr>
+                <td height="50" align="center"> <div class="page link_bk">{#$page#}</div></td>
+              </tr>
+          </table>
+            {#else#}
+			{#if $smarty.get.jobtype=="2"#}
+			<div class="us_list_no_content link_lan">没有你要找的信息！</div>
+			{#else#}
+			<div class="us_list_no_content link_lan">您没有发布职位！<a href="company_jobs.php?act=addjobs">立即发布</a></div>
+			{#/if#}
+			
+			<br />
+		  {#/if#}
+         
+        </form>
+	</div>
+    </td>
+  </tr>
+</table>
+
+
+{#include file="footer.htm"#}
+</body>
+</html>

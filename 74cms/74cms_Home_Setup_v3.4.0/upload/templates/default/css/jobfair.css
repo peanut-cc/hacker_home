@@ -1,0 +1,39 @@
+.jobfair {width:983px; margin:0 auto; border:1px solid #FFE8DA; margin-top:8px; position:relative}
+.jobfair .left { float:left; width:126px; height:135px;background:url(../images/87.gif) no-repeat; margin-bottom:10px; text-align:center; color:#FFFFFF}
+.jobfair .left .week{ width:100%; height:25px; line-height:25px; margin-top:32px;}
+.jobfair .left .day{ width:100%; height:50px; line-height:50px; font-family:Arial, Helvetica, sans-serif; font-weight:bold; font-size:55px;}
+.jobfair .left .date{ width:100%; height:20px; margin-top:3px;}
+.jobfair .center { float:left; width:620px; line-height:190%; padding-top:8px; padding-left:8px; padding-bottom:10px;}
+.jobfair .center strong{ font-size:14px;}
+.jobfair .right { float:left; width:180px; padding-top:40px;}
+.jobfair .right a{ color:#FFFFFF;background:url(../images/88.gif) no-repeat; width:66px; height:27px; display:block; line-height:27px; text-align:center; text-decoration:none; margin-bottom:10px; float:left; margin-left:10px;}
+.jobfair .right a:hover {text-decoration: underline;background:url(../images/88.gif) no-repeat 0px -28px;}
+.jobfair .hold{position:absolute; right:0px; top:0px; width:50px; height:50px;background:url(../images/89.gif) no-repeat; color:#FFFFFF}
+/*-----详细页----------*/
+.jobfairshow{ width:985px;margin:0 auto; margin-top:8px;}
+.jobfairshow .left{ width:710px; float:left;}
+.jobfairshow .left .show{ width:680px;border:1px solid #E4E4E4;background:url(../images/16.jpg) repeat-x; padding:10px;}
+.jobfairshow .left .show h1{text-align:center; font-size:23px; line-height:180%;  font-weight:bold; color:#000000;margin-top:15px; margin-bottom:12px; }
+.jobfairshow .left .show .date{width: 600px;text-align:center; height:28px; line-height:28px; border-top:1px #E4E4E4 solid; border-bottom:1px #E4E4E4 solid; margin-left:34px; }
+.jobfairshow .left .show .txt { padding:20px; font-size:14px;line-height:180%;position:relative}
+.jobfairshow .left .show .txt .hold{position:absolute; right:20px; top:40px;  border:1px #FF9900 solid; background-color:#FEF9E7; padding-left:20px; padding-top:20px; padding-right:20px;}
+.jobfairshow .left .show .txt .hold a{ color:#FFFFFF;background:url(../images/88.gif) no-repeat; width:66px; height:27px; display:block; line-height:27px; text-align:center; text-decoration:none; margin-bottom:20px; font-size:12px;}
+.jobfairshow .left .show .txt .hold a:hover {text-decoration: underline;background:url(../images/88.gif) no-repeat 0px -28px;}
+.jobfairshow .right{ width:275px; float:left; overflow:hidden}
+.jobfairshow .right .listbox{width:273;border:1px solid #E4E4E4; margin-bottom:8px;}
+.jobfairshow .right .listbox .tit{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px;}
+.jobfairshow .right .listbox .tit strong {font-size:14px;  color:#666666; padding-left:15px;}
+.jobfairshow .right .listbox .txt {line-height:180%; border-bottom:1px #CCCCCC  dashed; margin:10px;}
+.jobfairshow .right .listbox .txt li { padding-left:12px;line-height:180%;background:url(../images/01.gif) no-repeat 5px 10px;}
+/*-----参会企业----------*/
+.exhibitors{ width:985px;margin:0 auto; margin-top:8px;}
+.exhibitors .left{ width:710px; float:left;}
+.exhibitors .left .show{ width:700px;border:1px solid #E4E4E4;background:url(../images/16.jpg) repeat-x;}
+.exhibitors .left .show .tit{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px;}
+.exhibitors .left .show .tit strong {font-size:14px;  color:#666666; padding-left:15px;}
+.exhibitors .left .show .list{padding:8px; border-bottom:1px  #E4E4E4 solid; padding-left:15px;}
+.exhibitors .right{ width:275px; float:left; overflow:hidden}
+.exhibitors .right .listbox{width:273;border:1px solid #E4E4E4; margin-bottom:8px;}
+.exhibitors .right .listbox .tit{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px;}
+.exhibitors .right .listbox .tit strong {font-size:14px;  color:#666666; padding-left:15px;}
+.exhibitors .right .listbox .txt {line-height:180%;  margin:15px; margin-top:5px;}

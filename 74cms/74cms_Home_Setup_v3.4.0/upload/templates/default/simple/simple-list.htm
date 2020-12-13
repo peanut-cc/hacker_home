@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />{#qishi_pageinfo set="列表名:page,调用:QS_simplelist"#}
+<title>{#$page.title#}</title>
+<meta name="description" content="{#$page.description#}">
+<meta name="keywords" content="{#$page.keywords#}">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/simple.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.dialog.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript'></script>
+<script src="{#$QISHI.site_template#}js/jquery.highlight-3.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.vtip-min.js" type='text/javascript' ></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	var key=$('#key').val();
+	$('.striking').highlight(key);
+	$(function(){
+	var _wrap=$('#tip ul');
+	var _interval=3000;
+	var _moving;
+	_wrap.hover(function(){
+	clearInterval(_moving);
+	},function(){
+	_moving=setInterval(function(){
+	var _field=_wrap.find('li:first');
+	var _h=_field.height();
+	_field.animate({marginTop:-_h+'px'},300,function(){
+	_field.css('marginTop',0).appendTo(_wrap);
+	})
+	},_interval)
+	}).trigger('mouseleave');
+	});
+	//发布
+	$("#add").click(function(){
+	var url="{#$QISHI.site_dir#}plus/ajax_simple.php";
+	dialog("发布微招聘","url:get?"+url,"600px","auto","");				
+	});	
+	
+	$('#simple_form_search input[id="key"]').focus(function()
+	{
+		if ($(this).val()=="请输入关键字...")
+		{
+		$(this).val('');
+		}
+			$(this).keydown(function(e)
+			{
+			if(e.keyCode==13)
+			{
+			simple_search_location(1);
+			}
+			});
+	});
+	
+	$("#simple_form_search .simpleso").click(function()
+	{
+	var keytype=$(this).attr('id');
+	simple_search_location(keytype);
+	});
+
+function simple_search_location(keytype)
+{
+	if ($("#simple_form_search #key").val()=='请输入关键字...')
+	{
+	$("#simple_form_search #key").val("");
+	}
+	$("body").append('<div id="pageloadingbox">页面加载中....</div><div id="pageloadingbg"></div>');
+	$("#pageloadingbg").css("opacity", 0.5);
+	$.get("{#$QISHI.site_dir#}plus/ajax_search_location.php", {"act":"QS_simplelist","key":$("#simple_form_search #key").val(),"keytype":keytype},
+			function (data,textStatus)
+			 {
+				 window.location.href=data;
+			 }
+		);
+}
+	//
+	$(".edit").hover(
+	  function () {
+		$(this).addClass("hover");
+		$(this).find('u').show();
+	  },
+	  function () {
+		$(this).removeClass("hover");
+		$(this).find('u').hide();
+	  }
+	);
+	$(".delsimple").click(function(){
+	var url="{#$QISHI.site_dir#}plus/ajax_simple.php?act=delsimple&id="+$(this).attr("id");
+	dialog("删除信息","url:get?"+url,"300px","auto","");				
+	});
+	$(".refreshsimple").click(function(){
+	var url="{#$QISHI.site_dir#}plus/ajax_simple.php?act=refreshsimple&id="+$(this).attr("id");
+	dialog("刷新信息","url:get?"+url,"300px","auto","");				
+	});	
+	$(".editsimple").click(function(){
+	var url="{#$QISHI.site_dir#}plus/ajax_simple.php?act=editsimple&id="+$(this).attr("id");
+	dialog("编辑信息","url:get?"+url,"600px","auto","");				
+	});	
+	
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#"QS_simplelist"|qishi_url#}">微招聘</a>
+</div> 
+<div class="simpletop link_lan">
+<div class="tit">
+	<div class="left"><h3>搜索职位</h3></div>
+    <div class="right"><h3>免注册发布招聘</h3></div>
+	<div class="clear"></div>
+</div>
+  <div class="txtleft">		
+    <div id="simple_form_search">    
+    <div class="keydiv"><input name="key" type="text"  class="keyinput" id="key"  value="{#$smarty.get.key|default:"请输入关键字..."#}" maxlength="8"/></div>
+	<div class="sbut link_greenu">
+	<input name="keytype" type="hidden" id="keytype" value="1" />
+	<input name="" type="button" class="but80 simpleso" id="1" value="搜职位" />
+	&nbsp;&nbsp;&nbsp;
+	<input name="" type="button" class="but80 simpleso" id="2" value="搜全文" />
+	{#if $smarty.get.key#}&nbsp;&nbsp;&nbsp;<a href="{#"QS_simplelist"|qishi_url#}">[清除关键字]</a>{#/if#}
+	</div>
+	</div>
+    <div class="tip" id="tip">
+		<ul>
+		<li>提醒：凡需先交费或先交税的，可能是骗子信息，谨防上当受骗。</li>
+		<li>提醒：接到面试通知请核对公司信息，切勿心切误中骗子的圈套。</li>
+		<li>提醒：适当精简关键字可获得更多的搜索结果。</li>
+		<li>提醒：公司招聘时都会搜索简历库，<a href="{#$QISHI.site_dir#}user/user_reg.php?act=form&type=2">免费注册简历</a>得到更多机会。</li>
+		
+		</ul>
+	</div>
+  </div>
+  <div class="txtright">
+	<p>为方便一些普工类用户(如饭店,店面,个体户等)发布招聘信息,特设定了无需注册即可发布简短招聘的功能，<strong>非普工类企业发布将不予审核通过</strong>。</p>
+    <p>如果您不是普工类企业，我们强烈建议您 <a href="{#$QISHI.site_dir#}user/user_reg.php?act=form&type=1">注册</a> 成为我们的企业会员，仅需几秒钟您就可以享受到快捷有效网络招聘服务。</p>	
+    <div class="but">
+	<input id="add" type="button" value="发布微招聘" class="but100" />
+	<a href="{#$QISHI.site_dir#}user/user_reg.php?act=form&type=1">注册成为企业会员</a>	</div>
+  </div>
+  <div class="clear"></div>
+</div>
+
+<div class="simple link_lan">
+{#qishi_simple_list  set="分页显示:1,列表名:simplelist,显示数目:15,填补字符:...,职位名长度:12,企业名长度:18,描述长度:52,关键字:GET[key],关键字类型:GET[keytype],排序:refreshtime>desc"#}
+{#foreach from=$simplelist item=li#}
+  <div class="list">
+  	<div class="refreshtime">{#$li.refreshtime_cn#}</div>
+	<div class="jobname striking"><strong><a href="{#$li.simple_url#}" target="_blank">{#$li.jobname#}</a></strong><span class="amount">{#if $li.amount=="0"#}若干{#else#}{#$li.amount#}{#/if#}人</span></div>	
+    <div class="comname striking">{#$li.comname#} </div>
+	<div class="deadline">有效期截至：
+	{#if $li.deadline=="0"#}
+	长期有效
+	{#else#}
+	{#$li.deadline|date_format:"%Y-%m-%d"#}	
+	{#/if#}
+	&nbsp;&nbsp;&nbsp;点击：{#$li.click#}次 
+	</div>	
+    <div class="detailed striking">{#$li.detailed#}</div>	
+    <div class="view link_greenu">
+	<div class="show"><a href="{#$li.simple_url#}" target="_blank">详细</a></div>
+	<div class="edit"><u><a href="javascript:void(0)" class="delsimple" id="{#$li.id#}">删除</a></u><u><a href="javascript:void(0)" class="refreshsimple" id="{#$li.id#}">刷新</a></u><span><a href="javascript:void(0)" class="editsimple" id="{#$li.id#}">编辑</a></span></div>
+	<div class="clear"></div>
+	</div>
+  </div>
+{#/foreach#}
+<div class="clear"></div>
+{#if !$simplelist#}<div class="noinfo">
+		<span>抱歉，没有符合此条件的信息。</span><br />
+您可以：<br />
+重新修改搜索条件后再进行搜索。 <br />
+适当减少一些搜索条件，以便能够获得更多的结果。 <br />
+		</div>
+		{#/if#}
+  
+</div>
+{#if $page#}
+<table width="" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+		<div class="page link_bk">
+		{#$page#}
+		</div>
+		</td>
+  </tr>
+</table>
+{#/if#}
+{#include file="footer.htm"#}
+</body>
+</html>

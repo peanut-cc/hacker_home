@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+		
+<script src="{#$QISHI.site_template#}js/jquery.reasontip-min.js" type='text/javascript' language="javascript"></script>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#tabshow li:nth-child(2)>a").addClass("selected");
+	
+	vtip_reason("{#$QISHI.site_dir#}","resume_reason");
+
+});
+</script>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;编辑简历
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>预览简历 - <span style="color:#FF6600">{#$resume_basic.title#}</span></h1>
+		</div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+	  <tr>
+          <td height="30" bgcolor="#F5FAFC"  style="border-bottom:1px #C9D9E7 solid;"><span style="color:#0066CC; padding-left:20px;"><strong>基本设置</strong></span></td>
+          </tr>
+		  <tr>
+          <td style="border-bottom:1px #C9D9E7 solid;">
+		  <table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="link_lan">
+		    <tr>
+              <td height="30" class="link_lan">简历名称：{#$resume_basic.title#}&nbsp;&nbsp;&nbsp;<a href="?act=resume_privacy&pid={#$resume_basic.id#}" >[设置隐私]</a> </td>
+              <td class="link_lan">简历公开：
+			  {#if $resume_basic.display=="1"#}
+			  公开&nbsp;&nbsp;&nbsp;<a href="?act=resume_privacy&pid={#$resume_basic.id#}"  >[修改]</a> 
+			  {#else#}
+			  半公开&nbsp;&nbsp;&nbsp;<a href="?act=resume_privacy&pid={#$resume_basic.id#}" >[修改]</a> 
+			  {#/if#}</td>
+	            </tr>
+            <tr>
+              <td height="30" class="link_lan">姓名：
+			  {#if $resume_basic.display_name == "2"#}
+			  {#$resume_basic.number#}&nbsp;&nbsp;&nbsp;<a href="?act=resume_privacy&pid={#$resume_basic.id#}"  >[姓名显示方式]</a> 
+			  {#elseif $resume_basic.display_name == "3"#}
+			  {#$resume_basic.lastname#}&nbsp;&nbsp;&nbsp;<a href="?act=resume_privacy&pid={#$resume_basic.id#}"  >[姓名显示方式]</a> 
+			  {#else#}
+			  {#$resume_basic.fullname#}&nbsp;&nbsp;&nbsp; <a href="?act=resume_privacy&pid={#$resume_basic.id#}"  >[姓名显示方式]</a>
+			  {#/if#}			 </td>
+              <td>
+			  简历审核状态：
+			  {#if $resume_basic.audit=="1"#}已通过审核{#/if#}
+			{#if $resume_basic.audit=="2"#}正在审核中{#/if#}
+			{#if $resume_basic.audit=="3"#}
+		
+				审核未通过请修改
+				 <img src="{#$QISHI.site_template#}images/99.gif"  border="0" class="reason vtip" id="{#$resume_basic.id#}" align="absmiddle" style="cursor:pointer;"  />
+	
+			{#/if#}
+			</td>
+              </tr>
+            <tr>
+              <td height="30" >
+			  简历完整度：{#$resume_basic.complete_percent#}%
+			  <span style="color: #999999">(完整指数小于60%的简历系统将视为无效简历)</span>
+			  </td>
+              <td>照片审核状态：
+			   {#if $resume_basic.photo_img<>""#}
+				  {#if $resume_basic.photo_audit=="1"#}已通过审核{#/if#}
+				  {#if $resume_basic.photo_audit=="2"#}正在审核中{#/if#}
+				  {#if $resume_basic.photo_audit=="3"#}审核未通过，请修改{#/if#}
+				  {#else#}
+					未上传照片
+				  {#/if#}			  </td>
+            </tr>
+            <tr>
+              <td height="30" class="link_lan">
+			  创建时间：{#$resume_basic.addtime|date_format:"%Y.%m.%d"#}</td>
+              <td>照片公开状态：
+			  {#if $resume_basic.photo_img<>""#}
+				  	 {#if $resume_basic.photo_display=="1"#}
+				     公开&nbsp;&nbsp;&nbsp;<a href="?act=resume_privacy&pid={#$resume_basic.id#}" >[设置]</a> 
+					 {#else#}
+					 不公开&nbsp;&nbsp;&nbsp;<a href="?act=resume_privacy&pid={#$resume_basic.id#}" >[设置]</a> 
+				  	{#/if#}
+					{#else#}
+					未上传照片
+				  {#/if#}			  </td>
+            </tr>
+            <tr>
+              <td height="30" >
+			  刷新时间：{#$resume_basic.refreshtime|date_format:"%Y.%m.%d %H:%M"#}&nbsp;&nbsp;&nbsp;<a href="?act=refresh" >[刷新]</a> 
+			  &nbsp;&nbsp;&nbsp;<span style="color: #999999">(刷新可以提升简历排名)</span>
+			  </td>
+              <td>简历等级：
+			  {#if $resume_basic.talent=="2"#}
+			  <span style="color:#FF6600">高级</span>
+			  {#else#}
+				  普通&nbsp;&nbsp;&nbsp;<a href="?act=talent" >[升级]</a> 
+				  {#/if#}
+				  </td>
+            </tr>
+            <tr>
+              <td height="30" >
+			 浏览次数：{#$resume_basic.click#}次
+			  </td>
+              <td></td>
+            </tr>
+          </table>
+		  </td>
+        </tr>
+        <tr>
+          <td height="30" bgcolor="#F5FAFC"  style="border-bottom:1px #C9D9E7 solid;"><span style="color:#0066CC; padding-left:20px;"><strong>基本信息</strong></span></td>
+          </tr>
+        <tr>
+          <td height="22" style="border-bottom:1px #C9D9E7 solid;">
+		  
+		  
+		  
+		  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="3">
+            <tr>
+              <td valign="top">
+			  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="8">
+		    <tr>
+              <td class="link_lan">姓名：
+			  {#if $resume_basic.display_name == "2"#}
+			  {#$resume_basic.number#}
+			  {#else#}
+			  {#$resume_basic.fullname#}
+			  {#/if#} </td>
+              <td class="link_lan">性别：{#$resume_basic.sex_cn#}</td>
+	            </tr>
+            
+            <tr>
+              <td>年龄：{#$resume_basic.age#} 岁</td>
+              <td>身高：
+			  {#if $resume_basic.height=="0"#}
+			  未填写
+			  {#else#}
+			  {#$resume_basic.height#} CM
+			  {#/if#}			  </td>
+              </tr>
+            <tr>
+              <td>学历：{#$resume_basic.education_cn#}</td>
+              <td>婚姻状况：{#if $resume_basic.marriage==1#}未婚{#/if#}{#if $resume_basic.marriage==2#}已婚{#/if#}{#if $resume_basic.marriage==3#}保密{#/if#}</td>
+              </tr>
+            <tr>
+              <td>工作经验：{#$resume_basic.experience_cn#}</td>
+              <td>户口所在地：{#$resume_basic.householdaddress#}</td>
+              </tr>
+            <tr>
+              <td>联系电话：{#$resume_basic.telephone#}</td>
+              <td>电子邮箱：
+			  {#$user.email#}
+			  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			  {#if $user.email_audit=="1"#}
+			<a href="personal_user.php?act=user_email" style="color:#009900"> [已认证]</a>
+			{#else#}
+			<a href="personal_user.php?act=user_email"> [点击认证]</a>
+			{#/if#}			  </td>
+              </tr>
+            <tr>
+              <td>通讯 Q Q：{#$resume_basic.qq#}</td>
+              <td>通讯地址：{#$resume_basic.address#}</td>
+            </tr>
+
+			
+			<tr>
+			  <td colspan="2">特长标签：{#$resume_basic.tagcn#}</td>
+			  </tr>
+			  <tr>
+			  <td colspan="2">个人主页/博客：{#$resume_basic.website#}</td>
+			  </tr>
+          </table>
+			  </td>
+              <td width="150" valign="top" >
+			  <div style="position:relative">
+			  <div style="position:absolute; right:10px; top:10px;">
+			  <table border="0" align="center" cellpadding="0" cellspacing="1" style="line-height:180%" >
+                <tr>
+                  <td><table border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#CCCCCC" class="link_lan">
+                    <tr>
+                      <td bgcolor="#FFFFFF">{#if $resume_basic.photo_img<>""#} <img src="{#$QISHI.resume_photo_dir_thumb#}{#$resume_basic.photo_img#}?wd={#$random#}" />{#else#}<img src="{#$QISHI.resume_photo_dir_thumb#}no_photo.gif" />{#/if#}</td>
+                    </tr>
+                    
+                  </table></td>
+                </tr>
+                <tr>
+                  <td height="35" align="center" class="link_lan">
+				  <a href="?act=photo_cutting&show=ok&pid={#$resume_basic.id#}">修改照片</a>				  </td>
+                </tr>
+              </table>
+			  </div>
+			  </div>
+			  
+			  </td>
+            </tr>
+          </table>
+		  <div align="center" style="padding:15px; padding-top:6px;">
+		    <input name="" type="button" value="修改" class="but80"  onclick="window.location='?act=make1&pid={#$resume_basic.id#}&go_resume_show=1'" />		    
+		    </div>
+			
+			</td>
+        </tr>
+        <tr>
+          <td height="30" bgcolor="#F5FAFC"  style="border-bottom:1px #C9D9E7 solid;"><span style="color:#0066CC; padding-left:20px;"><strong>求职意向</strong></span></td>
+        </tr>
+        <tr>
+          <td style="border-bottom:1px #C9D9E7 solid;">
+		    {#if $resume_basic.intention_jobs#}
+		  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="10">
+            <tr>
+              <td>最近工作过的职位：{#$resume_basic.recentjobs#}</td>
+              </tr>
+            <tr>
+              <td>期望岗位性质：{#$resume_basic.nature_cn#}</td>
+              </tr>
+			  <tr>
+              <td >期望工作地：{#$resume_basic.district_cn#}</td>
+              </tr>
+            <tr>
+              <td>期望月薪：{#$resume_basic.wage_cn#}</td>
+            </tr>
+            <tr>
+              <td>期望从事的岗位：{#$resume_basic.intention_jobs#}</td>
+            </tr>
+            <tr>
+              <td>期望从事的行业：{#$resume_basic.trade_cn#}</td>
+            </tr>
+          </table>
+		   {#else#}
+			<div style="height:40px; line-height:40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您没有填写求职意向。</div>
+            {#/if#}
+			
+			  <div align="center" style="padding:15px; padding-top:6px;">
+		    <input name="" type="button" value="修改" class="but80"  onclick="window.location='?act=make2&pid={#$resume_basic.id#}&go_resume_show=1'" />		    
+		    </div>
+			
+			
+		  </td>
+        </tr>
+		<tr>
+          <td height="30" bgcolor="#F5FAFC"  style="border-bottom:1px #C9D9E7 solid;"><span style="color:#0066CC; padding-left:20px;"><strong>技能特长</strong></span></td>
+        </tr>
+		<tr>
+          <td   style="border-bottom:1px #C9D9E7 solid;">
+		  {#if $resume_basic.specialty#} 
+		  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="10">
+            <tr>
+              <td style="line-height:180%"> {#$resume_basic.specialty|nl2br#}</td>
+              </tr>
+          </table>
+		  {#else#}
+			<div style="height:40px; line-height:40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您没有填写特长描述。</div>
+            {#/if#}
+			
+			
+			  <div align="center" style="padding:15px; padding-top:6px;">
+		    <input name="" type="button" value="修改" class="but80"  onclick="window.location='?act=make3&pid={#$resume_basic.id#}&go_resume_show=1'" />		    
+		    </div>
+			
+			
+			
+		  </td>
+        </tr>
+		<tr>
+          <td height="30" bgcolor="#F5FAFC"  style="border-bottom:1px #C9D9E7 solid;"><span style="color:#0066CC; padding-left:20px;"><strong>教育经历</strong></span></td>
+        </tr>
+		<tr>
+          <td   style="border-bottom:1px #C9D9E7 solid;">
+		  {#if $resume_education#}
+            <table width="100%" border="0" cellspacing="1" cellpadding="5"  class="link_lan">
+              <tr>
+                <td width="180" height="23" align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399; ">起止年月</td>
+                <td align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">学校名称</td>
+                <td align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">专业名称</td>
+                <td align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">学历</td>
+                <td width="120" align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">编辑</td>
+              </tr>
+			   {#foreach from=$resume_education item=list#}
+  <tr>
+    <td height="23" align="center">{#$list.start#}至{#$list.endtime#}</td>
+    <td align="center">{#$list.school#}</td>
+    <td align="center">{#$list.speciality#}</td>
+    <td align="center">{#$list.education_cn#}</td>
+    <td align="center"><a href="?act=edit_education&id={#$list.id#}&pid={#$list.pid#}&go_resume_show=1">修改</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="?act=del_education&id={#$list.id#}&pid={#$list.pid#}&go_resume_show=1">删除</a></td>
+  </tr>
+              {#/foreach#}
+            </table>
+			{#else#}
+			<div style="height:40px; line-height:40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您没有填写教育经历。</div>
+            {#/if#} 
+			
+			 <div align="center" style="padding:15px; padding-top:6px;">
+		    <input name="" type="button" value="修改" class="but80"  onclick="window.location='?act=make4&pid={#$resume_basic.id#}&go_resume_show=1'" />		    
+		    </div>
+			
+			
+			
+			</td>
+        </tr>
+		<tr>
+          <td height="30" bgcolor="#F5FAFC"  style="border-bottom:1px #C9D9E7 solid;"><span style="color:#0066CC; padding-left:20px;"><strong>工作经历</strong></span></td>
+        </tr>
+		<tr>
+		  <td  style="border-bottom:1px #C9D9E7 solid;">
+		  {#if $resume_work#}
+            <table width="100%" border="0" cellspacing="1" cellpadding="5"  class="link_lan">
+              <tr>
+                <td width="180" height="23" align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399; ">起止年月</td>
+                <td align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">公司名称</td>
+                <td align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">职位名称</td>
+                <td width="120" align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">编辑</td>
+              </tr>
+			  {#foreach from=$resume_work item=list#}
+  <tr>
+    <td height="23" align="center">{#$list.start#}至{#$list.endtime#}</td>
+    <td align="center">{#$list.companyname#}</td>
+    <td align="center">{#$list.jobs#}</td>
+    <td align="center"><a href="?act=edit_work&amp;id={#$list.id#}&pid={#$list.pid#}&go_resume_show=1">修改</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="?act=del_work&amp;id={#$list.id#}&pid={#$list.pid#}&go_resume_show=1">删除</a></td>
+  </tr>
+              {#/foreach#}
+            </table>
+			{#else#}
+			<div style="height:40px; line-height:40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您没有填写工作经历。</div>
+            {#/if#} 
+			
+			
+			
+			 <div align="center" style="padding:15px; padding-top:6px;">
+		    <input name="" type="button" value="修改" class="but80"  onclick="window.location='?act=make5&pid={#$resume_basic.id#}&go_resume_show=1'" />		    
+		    </div>
+			</td>
+		  </tr>
+		  <tr>
+          <td height="30" bgcolor="#F5FAFC"  style="border-bottom:1px #C9D9E7 solid;"><span style="color:#0066CC; padding-left:20px;"><strong>培训经历</strong></span></td>
+        </tr>
+		  <tr>
+		    <td height="35">{#if $resume_training#}
+              <table width="100%" border="0" cellspacing="1" cellpadding="5"  class="link_lan">
+                <tr>
+                  <td width="180" height="23" align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399; ">起止年月</td>
+                  <td align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">机构名称</td>
+                  <td align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">培训课程</td>
+                  <td width="120" align="center" style=" border-bottom:1px #CCCCCC dashed; color:#003399;">编辑</td>
+                </tr>
+				{#foreach from=$resume_training item=list#}
+  <tr>
+    <td height="23" align="center">{#$list.start#}至{#$list.endtime#}</td>
+    <td align="center">{#$list.agency#}</td>
+    <td align="center">{#$list.course#}</td>
+    <td align="center"><a href="?act=edit_training&amp;id={#$list.id#}&pid={#$list.pid#}&go_resume_show=1">修改</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="?act=del_training&amp;id={#$list.id#}&pid={#$list.pid#}&go_resume_show=1">删除</a></td>
+  </tr>
+                {#/foreach#}
+              </table>
+			  {#else#}
+			<div style="height:40px; line-height:40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您没有填写培训经历。</div>
+            {#/if#}
+			
+			 <div align="center" style="padding:15px; padding-top:6px;">
+		    <input name="" type="button" value="修改" class="but80"  onclick="window.location='?act=make6&pid={#$resume_basic.id#}&go_resume_show=1'" />		    
+		    </div>
+			
+			 </td>
+	      </tr>
+      </table>
+		  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

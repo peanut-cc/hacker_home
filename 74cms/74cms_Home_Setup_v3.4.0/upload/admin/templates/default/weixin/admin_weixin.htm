@@ -1,0 +1,59 @@
+{#include file="sys/admin_header.htm"#}
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+	 {#include file="weixin/admin_weixin_nav.htm"#}
+  <div class="clear"></div>
+</div>
+<div class="toptip link_lan"  >
+	<h2>提示：</h2>
+	<p>
+网站接入微信公众平台后，用户只需要使用微博账号密码就可登录，简化用户注册流程，更有效率的提高转化用户流量；
+<br />
+设置微信公众平台前，网站需首先进行申请，获得对应的AppSecret，以保证后续流程中可正确对网站与用户进行验证与授权。 
+现在就去<a href="https://mp.weixin.qq.com/" target="_blank">申请</a></p>
+</div>
+
+<div class="toptit">微信公众平台设置</div>
+ 
+    <form action="?act=set_weixin_save" method="post" enctype="multipart/form-data" name="form1" id="form1">
+ {#$inputtoken#}
+    <table width="700" border="0" cellspacing="6" cellpadding="1" style=" margin-bottom:3px;">
+	<tr>
+      <td width="150" align="right">开启微信公众平台：</td>
+      <td  >
+	  <label>
+        <input name="weixin_apiopen" type="radio"  value="1"  {#if $config.weixin_apiopen=="1"#}checked=checked {#/if#}/>开启</label>
+&nbsp;&nbsp;
+<label>
+        <input name="weixin_apiopen" type="radio"  value="0"  {#if $config.weixin_apiopen=="0"#}checked=checked {#/if#}/>关闭</label>
+		&nbsp;&nbsp;
+</td>
+    </tr>
+	<tr>
+      <td width="150" align="right">AppSecret：</td>
+      <td  >
+	 	<input name="weixin_appsecret" type="text"  class="input_text_400"  value="{#$config.weixin_appsecret#}"  />
+	  </td>
+    </tr>
+    <tr>
+      <td align="right">微信二维码图片： </td>
+      <td><input name="weixin_img" type="file" id="weixin_img" style="width:150px; font-size:12px; padding:3px;" onKeyDown="alert('请点击右侧“浏览”选择您电脑上的图片！');return false"/>&nbsp;&nbsp;&nbsp;{#if $config.weixin_img#} <input type="button" name="Submit" value="查看二维码" class="vtip" title="<img src={#$upfiles_dir#}{#$config.weixin_img#}?t={#$rand#}  border=0  align=absmiddle>"  style=" font-size:12px;"/>{#/if#}         </td>
+    </tr>
+	<tr>
+	  <td align="right" valign="top">&nbsp;</td>
+	  <td> 
+	    <input name="submit" type="submit" class="admin_submit"    value="保存"/>
+	  </td>
+	  </tr>
+  </table>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    </form>
+</div>
+{#include file="sys/admin_footer.htm"#}
+</body>
+</html>

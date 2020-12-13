@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$show.companyname#} - {#$show.companyname#} -  {#$QISHI.site_name#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+{#include file="wap/header.htm"#}
+<div class="wap_login link_lan">
+{#if $smarty.session.username#}
+欢迎：{#$smarty.session.username#}登录，<a href="wap_user.php">[会员中心]</a>&nbsp;&nbsp;<a href="wap_login.php?act=logout">[退出]</a>
+{#else#}
+<a href="wap_login.php">个人会员登录</a>&nbsp;&nbsp;<a href="wap_user_reg.php">注册</a>
+{#/if#}
+</div>
+<div class="wap_tit">
+职位信息
+</div>
+<div class="wap_txt link_lan">
+[职位名称]{#$show.jobs_name#}<br />
+[招聘公司]<a href="wap-company-show.php?id={#$show.company_id#}">{#$show.companyname#}</a><br />
+[职位类型]{#$show.nature_cn#}<br />
+[薪金待遇]{#$show.wage_cn#}/月<br />
+[招聘人数]{#$show.amount#}人<br />
+[性别要求]{#$show.sex_cn#}<br />
+[学历要求]{#$show.education_cn#}<br />
+[工作地区]{#$show.district_cn#}<br />
+[所属行业]{#$show.trade_cn#}<br />
+[工作经验]{#$show.experience_cn#}<br />
+[查看次数]{#$show.click#}次<br />
+[刷新日期]{#$show.refreshtime|date_format:"%Y-%m-%d"#}<br />
+[截止日期]{#$show.deadline|date_format:"%Y-%m-%d"#}<br />
+[职位描述]{#$show.contents|nl2br#}<br />
+</div>
+<div class="wap_tit">
+联系方式
+</div>
+{#if $QISHI.visitor_jobs=='1' || $smarty.session.username#}
+	<div class="wap_txt link_lan">
+	[联 系 人]{#$show.contact.contact#}<br />
+	[联系电话]{#$show.contact.telephone#}<br />
+	[联系邮箱]{#$show.contact.email#}<br />
+	[联系地址]{#$show.contact.address#}<br />
+	[联系 QQ]{#$show.contact.qq#}<br />
+	<a href="wap_user.php?act=add_favorites&id={#$show.id#}">[收藏此职位]</a>
+	</div>
+{#else#}
+	<div class="wap_txt link_lan">
+	请<a href="wap_login.php">[登录]</a>后查看联系方式<br />
+	没有帐号？<a href="wap_user_reg.php">[免费注册]</a>
+	</div>
+{#/if#}
+<div class="wap_tit">
+企业信息
+</div>
+<div class="wap_txt link_lan">
+[企业性质]{#$show.company.nature_cn#}<br />
+[所属行业]{#$show.company.trade_cn#}<br />
+[所属行业]{#$show.company.trade_cn#}<br />
+[注册资金]{#if $show.company.registered#}{#$show.company.registered#}{#$show.company.currency#}{#else#}未填写{#/if#}<br />
+[公司规模]{#$show.company.scale_cn#}<br />
+[所在地区]{#$show.company.district_cn#}
+</div>
+<div class="wap_tit">
+公司简介
+</div>
+<div class="wap_txt link_lan">
+{#$show.company.contents|nl2br#}
+<br />
+<a href="{#$goback#}">返回上一页</a>
+</div>
+{#include file="wap/footer.htm"#}
+</body>
+</html>

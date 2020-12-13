@@ -1,0 +1,56 @@
+<div class="head_top">
+	<div class="head_top_box">
+			<div class="head_top_box_left link_lan"><span id="top_loginform"></span></div>
+			<div class="head_top_box_right link_bk">
+			{#include file="top-nav.htm"#}
+			</div>
+			<div class="clear"></div>
+	</div>
+</div>
+<div class="head">
+	<div class="head_logo">
+		<a href="{#$QISHI.site_dir#}"><img src="{#$QISHI.upfiles_dir#}{#$QISHI.web_logo#}" alt="{#$QISHI.site_name#}" border="0" align="absmiddle" /></a>
+ 	</div>
+	<div class="head_logo_right">
+			{#qishi_ad set="显示数目:1,调用名称:QS_alltopimg,列表名:ad"#}
+			{#foreach from=$ad item=list#}
+			<a href="{#$list.img_url#}"><img src="{#$list.img_path#}" alt="{#$list.img_explain#}" border="0" align="absmiddle" /></a>
+			{#/foreach#}
+	</div>
+	<div class="clear"></div>
+</div>
+<!--导航 -->
+<div class="floatnav">
+<div class="nav">
+	<div class="left"></div>
+	<div class="center">
+		<div class="clist">
+		{#qishi_nav set="调用名称:QS_top,列表名:list"#}
+		{#foreach from=$list item=list#}
+		<a href="{#$list.url#}" target="{#$list.target#}" {#if $list.tag==$page_select && $list.tag!=""#}class="select"{#/if#}><u>{#$list.title#}</u></a>
+		{#/foreach#}
+		</div>
+	</div>
+	<div class="right"></div>
+	<div class="clear"></div>
+</div>
+</div>
+<!--导航end -->
+<script type="text/javascript">
+$(document).ready(function()
+{	
+	var nav=$(".floatnav");
+	var headHeight=nav.height()+45;
+	$(window).scroll(function()
+	{
+	if($(this).scrollTop()>headHeight)
+	{
+	nav.addClass("navFix");
+	}
+	else
+	{
+	nav.removeClass("navFix");
+	}
+	});
+});
+</script>

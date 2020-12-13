@@ -1,0 +1,26 @@
+<div class="footer">
+<div class="link_bk"><a onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('{#$QISHI.site_domain#}');" href="javascript:">设为首页</a>&nbsp;|&nbsp;<a href="javascript:" onclick="window.external.addFavorite(parent.location.href,document.title);">加入收藏</a>
+{#qishi_explain_list set="列表名:explain,分类ID:1"#}{#foreach from=$explain item=list#}&nbsp;|&nbsp;<a href="{#$list.url#}" target="_blank">{#$list.title#}</a>{#/foreach#}</div>
+<div class="link_bk">
+联系地址：{#$QISHI.address#} 联系电话：{#$QISHI.bootom_tel#} 网站备案：<a href="http://www.miibeian.gov.cn/" target="_blank">{#$QISHI.icp#}</a>  {#$QISHI.statistics#}</div>
+<div class="link_bk">{#$QISHI.bottom_other#}</div>
+<div class="link_bk" style="font-size:10px;"> Powered by <a href="http://www.74cms.com/" target="_blank" style="color:#009900"><em> 74cms v{#$QISHI.version#}</em></a></div>
+</div>
+<script type="text/javascript">
+(function() {
+    var $backToTopTxt = "返回顶部", $backToTopEle = $('<div class="backToTop"></div>').appendTo($("body"))
+        .text($backToTopTxt).attr("title", $backToTopTxt).click(function() {
+            $("html, body").animate({ scrollTop: 0 }, 120);
+    }), $backToTopFun = function() {
+        var st = $(document).scrollTop(), winh = $(window).height();
+        (st > 0)? $backToTopEle.show(): $backToTopEle.hide();
+        //IE6下的定位
+        if (!window.XMLHttpRequest) {
+            $backToTopEle.css("top", st + winh - 166);
+        }
+    };
+    $(window).bind("scroll", $backToTopFun);
+    $(function() { $backToTopFun(); });
+})();
+</script>
+

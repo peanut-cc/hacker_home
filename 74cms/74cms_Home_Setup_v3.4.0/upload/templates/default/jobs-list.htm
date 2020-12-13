@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#if $smarty.get.key#}{#$smarty.get.key#} - {#/if#}{#if $smarty.get.category#}{#"QS_jobs,"|cat:$smarty.get.category|qishi_categoryname#} - {#/if#}{#if $smarty.get.subclass#}{#"QS_jobs,"|cat:$smarty.get.subclass|qishi_categoryname#} - {#/if#}{#if $smarty.get.district#}{#"QS_district,"|cat:$smarty.get.district|qishi_categoryname#} - {#/if#}{#if $smarty.get.sdistrict#}{#"QS_district,"|cat:$smarty.get.sdistrict|qishi_categoryname#} - {#/if#}{#if $smarty.get.trade#}{#"QS_trade,"|cat:$smarty.get.trade|qishi_categoryname#} - {#/if#}{#if $smarty.get.settr#}{#$smarty.get.settr#}天内 - {#/if#}{#if $smarty.get.nature#}{#"QS_jobs_nature,"|cat:$smarty.get.nature|qishi_categoryname#} - {#/if#}职位列表  - {#$QISHI.site_name#}</title>
+<meta name="description" content="{#$QISHI.site_name#}招聘岗位">
+<meta name="keywords" content="{#$QISHI.site_name#},职位信息">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/jobs.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.dialog.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.highlight-3.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.vtip-min.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.jobs-list.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_dir#}data/cache_classify.js" type='text/javascript' charset="utf-8"></script>
+<script type="text/javascript"> 
+$(document).ready(function()
+{
+	jobslist();
+	jobscontrast("{#$QISHI.site_dir#}");
+	apply_jobs("{#$QISHI.site_dir#}");
+	favorites("{#$QISHI.site_dir#}");
+	recommend_jobs("{#$QISHI.site_dir#}");
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#"QS_jobs"|qishi_url#}">招聘信息</a>&nbsp;>>&nbsp;搜索结果
+</div>
+<div class="jobs-nav" id="typenav">
+  <a href="{#"QS_jobslist"|qishi_url#}" class="select">全能搜索</a>
+  <a href="{#"QS_officebuilding"|qishi_url#}" >按写字楼搜索</a>
+  <a href="{#"QS_street"|qishi_url#}">按道路搜索</a>
+   <a href="{#"QS_jobtag"|qishi_url#}" >按标签搜索</a>
+  <div class="clear"></div>
+</div>
+<div class="jobsearchbox" id="jobsearchbox"><div class="loading"></div></div>
+<script src="{#$QISHI.site_template#}js/jquery.jobs-search.js" type='text/javascript'></script>
+<script type="text/javascript">
+	var getstr="{#$smarty.get.category#},{#$smarty.get.subclass#},{#$smarty.get.district#},{#$smarty.get.sdistrict#},{#$smarty.get.settr#},{#$smarty.get.trade#},{#$smarty.get.wage#},{#$smarty.get.nature#},{#$smarty.get.scale#},{#$smarty.get.inforow#}";
+	var defaultkey="请输入职位名称、公司名称{#if $QISHI.jobsearch_type=='1'#}、技能特长、学校等{#/if#}关键字...";
+	var getkey="{#$smarty.get.key#}";
+	if (getkey=='')
+	{
+	getkey=defaultkey;
+	}
+	allaround('{#$QISHI.site_template#}','{#$QISHI.site_dir#}','{#"QS_jobslist"|qishi_url#}',getkey,getstr);
+</script>
+<div class="jobs_list_tip link_greenu" id="jobs_list_tip">
+<ul>
+<li>提醒：凡需先交纳押金、保证金、体检费、材料费、成本费等费用或到指定医院体检等，可能是骗子信息，谨防上当受骗。</li>
+<li>提醒：您知道吗？公司招聘时都会搜索简历库，<a href="{#"QS_user,2"|qishi_url#}personal_resume.php?act=resume_list" target="_blank">免费发布简历</a>，获取更多机会！</li>
+</ul>
+</div>
+<!--职位列表 -->
+{#qishi_jobs_list  set="分页显示:1,列表名:jobslist,显示数目:GET[inforow],填补字符:...,职位名长度:13,企业名长度:19,描述长度:135,关键字:GET[key],职位分类:GET[jobcategory],职位大类:GET[category],职位小类:GET[subclass],地区分类:GET[citycategory],地区大类:GET[district],地区小类:GET[sdistrict],道路:GET[streetid],写字楼:GET[officebuildingid],行业:GET[trade],日期范围:GET[settr],学历:GET[education],工作经验:GET[experience],工资:GET[wage],职位性质:GET[nature],公司规模:GET[scale],排序:GET[sort]"#}
+<div class="jobs_list">
+  <form action="" method="post"  name="formjobslist" id="formjobslist"  target="_blank">
+    <div class="tit">
+	 			<label><input name="selectall" type="checkbox" value="" id="selectall"/>&nbsp;全选</label>
+	  			<div class="titsub deliver" >投递简历</div>
+				<div class="titsub collect" >收藏职位</div>
+				<div class="titsub contrast" >对比职位</div> 
+				<div class="pageminnav link_lan">{#$pagemin#}</div>
+	 			<div class="clear"></div>
+	</div>	
+	<div class="sort">
+		  <div class="txt link_bk">
+		  <span>排序：</span>
+		  {#if  $smarty.get.key!=""#}
+		   <a href="javascript:void(0)" class="select">相关度</a>
+		  {#else#}
+		  <a href="{#"QS_jobslist,sort:stickrtime-page:1-category:"|cat:$smarty.get.category|cat:"-subclass:"|cat:$smarty.get.subclass|cat:"-district:"|cat:$smarty.get.district|cat:"-sdistrict:"|cat:$smarty.get.sdistrict|cat:"-settr:"|cat:$smarty.get.settr|cat:"-trade:"|cat:$smarty.get.trade|cat:"-wage:"|cat:$smarty.get.wage|cat:"-nature:"|cat:$smarty.get.nature|cat:"-scale:"|cat:$smarty.get.scale|cat:"-inforow:"|cat:$smarty.get.inforow|qishi_url#}" {#if $smarty.get.sort=="stickrtime" || $smarty.get.sort==""#}class="select"{#/if#}>默认</a>
+		  <a href="{#"QS_jobslist,sort:rtime-page:1-category:"|cat:$smarty.get.category|cat:"-subclass:"|cat:$smarty.get.subclass|cat:"-district:"|cat:$smarty.get.district|cat:"-sdistrict:"|cat:$smarty.get.sdistrict|cat:"-settr:"|cat:$smarty.get.settr|cat:"-trade:"|cat:$smarty.get.trade|cat:"-wage:"|cat:$smarty.get.wage|cat:"-nature:"|cat:$smarty.get.nature|cat:"-scale:"|cat:$smarty.get.scale|cat:"-inforow:"|cat:$smarty.get.inforow|qishi_url#}" {#if $smarty.get.sort=="rtime"#}class="select"{#/if#}>更新时间</a>
+		  <a href="{#"QS_jobslist,sort:hot-page:1-category:"|cat:$smarty.get.category|cat:"-subclass:"|cat:$smarty.get.subclass|cat:"-district:"|cat:$smarty.get.district|cat:"-sdistrict:"|cat:$smarty.get.sdistrict|cat:"-settr:"|cat:$smarty.get.settr|cat:"-trade:"|cat:$smarty.get.trade|cat:"-wage:"|cat:$smarty.get.wage|cat:"-nature:"|cat:$smarty.get.nature|cat:"-scale:"|cat:$smarty.get.scale|cat:"-inforow:"|cat:$smarty.get.inforow|qishi_url#}" {#if $smarty.get.sort=="hot"#}class="select"{#/if#}>热度</a>
+		  <a href="{#"QS_jobslist,sort:wage-page:1-category:"|cat:$smarty.get.category|cat:"-subclass:"|cat:$smarty.get.subclass|cat:"-district:"|cat:$smarty.get.district|cat:"-sdistrict:"|cat:$smarty.get.sdistrict|cat:"-settr:"|cat:$smarty.get.settr|cat:"-trade:"|cat:$smarty.get.trade|cat:"-wage:"|cat:$smarty.get.wage|cat:"-nature:"|cat:$smarty.get.nature|cat:"-scale:"|cat:$smarty.get.scale|cat:"-inforow:"|cat:$smarty.get.inforow|qishi_url#}" {#if $smarty.get.sort=="wage"#}class="select"{#/if#}>工资</a>
+		  <a href="{#"QS_jobslist,sort:scale-page:1-category:"|cat:$smarty.get.category|cat:"-subclass:"|cat:$smarty.get.subclass|cat:"-district:"|cat:$smarty.get.district|cat:"-sdistrict:"|cat:$smarty.get.sdistrict|cat:"-settr:"|cat:$smarty.get.settr|cat:"-trade:"|cat:$smarty.get.trade|cat:"-wage:"|cat:$smarty.get.wage|cat:"-nature:"|cat:$smarty.get.nature|cat:"-scale:"|cat:$smarty.get.scale|cat:"-inforow:"|cat:$smarty.get.inforow|qishi_url#}" {#if $smarty.get.sort=="scale"#}class="select"{#/if#}>公司规模</a>
+		  {#/if#}
+		  <div class="pagerow"><span>每页显示：</span>
+		  <a href="{#"QS_jobslist,inforow:10-page:1-category:"|cat:$smarty.get.category|cat:"-subclass:"|cat:$smarty.get.subclass|cat:"-district:"|cat:$smarty.get.district|cat:"-sdistrict:"|cat:$smarty.get.sdistrict|cat:"-settr:"|cat:$smarty.get.settr|cat:"-trade:"|cat:$smarty.get.trade|cat:"-wage:"|cat:$smarty.get.wage|cat:"-nature:"|cat:$smarty.get.nature|cat:"-scale:"|cat:$smarty.get.scale|cat:"-sort:"|cat:$smarty.get.sort|qishi_url#}"  {#if $smarty.get.inforow=="10" || $smarty.get.inforow==""#}class="select"{#/if#}>10</a>
+		  <a href="{#"QS_jobslist,inforow:20-page:1-category:"|cat:$smarty.get.category|cat:"-subclass:"|cat:$smarty.get.subclass|cat:"-district:"|cat:$smarty.get.district|cat:"-sdistrict:"|cat:$smarty.get.sdistrict|cat:"-settr:"|cat:$smarty.get.settr|cat:"-trade:"|cat:$smarty.get.trade|cat:"-wage:"|cat:$smarty.get.wage|cat:"-nature:"|cat:$smarty.get.nature|cat:"-scale:"|cat:$smarty.get.scale|cat:"-sort:"|cat:$smarty.get.sort|qishi_url#}" {#if $smarty.get.inforow=="20"#}class="select"{#/if#}>20</a>
+		  <a href="{#"QS_jobslist,inforow:30-page:1-category:"|cat:$smarty.get.category|cat:"-subclass:"|cat:$smarty.get.subclass|cat:"-district:"|cat:$smarty.get.district|cat:"-sdistrict:"|cat:$smarty.get.sdistrict|cat:"-settr:"|cat:$smarty.get.settr|cat:"-trade:"|cat:$smarty.get.trade|cat:"-wage:"|cat:$smarty.get.wage|cat:"-nature:"|cat:$smarty.get.nature|cat:"-scale:"|cat:$smarty.get.scale|cat:"-sort:"|cat:$smarty.get.sort|qishi_url#}" {#if $smarty.get.inforow=="30"#}class="select"{#/if#}>30</a>
+		  </div>
+		  </div>
+	</div>
+{#foreach from=$jobslist item=list#}
+		<div class="list link_lan">
+			  <div class="li_left_check"><input name="jid" type="checkbox" value="{#$list.id#}"  />
+			  </div>
+		  <div class="li_left">
+							<div class="jobname striking">
+							<a href="{#$list.jobs_url#}" target="_blank">{#$list.jobs_name#}</a>
+							{#if $list.stick=="1"#}<img src="{#$QISHI.site_template#}images/56.gif" border="0" align="absmiddle" title="置顶信息"  class="vtip"/>{#/if#}
+							{#if $list.emergency=="1"#}<img src="{#$QISHI.site_template#}images/61.gif" border="0" align="absmiddle" title="紧急招聘" class="vtip"/>{#/if#}
+							{#if $list.recommend=="1"#} <img src="{#$QISHI.site_template#}images/62.gif" border="0" align="absmiddle" title="推荐职位" class="vtip"/>{#/if#}
+							{#if $list.graduate=="1"#} <img src="{#$QISHI.site_template#}images/69.gif" border="0" align="absmiddle" title="欢迎应届生投递简历" class="vtip"/>{#/if#}
+							</div>
+							<div class="com striking">
+							<a href="{#$list.company_url#}" target="_blank">{#$list.companyname#}</a>
+							{#if $list.company_audit=="1"#} <img src="{#$QISHI.site_template#}images/79.gif" border="0" align="absmiddle" title="企业已通过审核" class="vtip"/>{#/if#}
+							{#if $QISHI.operation_mode=="2" &&  $list.setmeal_id>1 #} <img src="{#$QISHI.site_dir#}data/setmealimg/{#$list.setmeal_id#}.gif" border="0" align="absmiddle"   title="{#$list.setmeal_name#}" class="vtip" />{#/if#}
+							</div>
+							<div class="wage">{#$list.wage_cn#}</div>
+							
+							<div class="date">						
+							{#$list.refreshtime_cn#}
+							</div>
+							<div class="clear"></div>							
+							<div class="txt striking">
+							<p class="link_bku">工作地点：<a href="{#"QS_jobslist,district:"|cat:$list.district|cat:"-sdistrict:"|cat:$list.sdistrict|qishi_url#}">{#$list.district_cn#}</a>{#if $list.street_cn#}&nbsp;&nbsp;<a href="{#"QS_street,streetid:"|cat:$list.street|qishi_url#}" >{#$list.street_cn#}</a>{#/if#}{#if $list.officebuilding_cn#}&nbsp;&nbsp;<a href="{#"QS_officebuilding,officebuildingid:"|cat:$list.officebuilding|qishi_url#}" >{#$list.officebuilding_cn#}</a>{#/if#}&nbsp;&nbsp;&nbsp;&nbsp;学历要求：{#$list.education_cn|default:"不限"#}  | 性别要求：{#$list.sex_cn#}  | 招聘人数：{#$list.amount#}人   | 点击：{#$list.click#}次</p>
+							<p style="color: #999999" class="striking">{#$list.briefly#}</p>
+							</div>							
+				            <div class="tag">
+							  <div class="left link_greenu"><a href="{#"QS_jobslist,category:"|cat:$list.category|cat:"-subclass:"|cat:$list.subclass|qishi_url#}">[查看类似职位]</a><a href="javascript:void(0)" class="app_jobs" id="{#$list.id#}">[投简历]</a><a href="javascript:void(0)" class="add_favorites" id="{#$list.id#}">[加入收藏]</a><a href="javascript:void(0)" class="recommend" url='{#$list.jobs_url|escape:"url"#}|{#$list.jobs_name#}'>[推荐给好友]</a></div>
+							  <div class="right striking link_bku">标签：{#foreach from=$list.tag item=tagli#}<a href="{#"QS_jobtag,jobtag:"|cat:$tagli.0|qishi_url#}">{#$tagli.1#}</a>{#foreachelse#} 无{#/foreach#}</div>
+							  <div class="clear"></div>
+							</div>
+		  </div>		  
+		  <div class="li_right">
+			 <img src="{#$QISHI.site_template#}images/53.gif" border="0"  class="app_jobs" id="{#$list.id#}"/> 
+		  </div>
+				  <div class="clear"></div>
+		</div>
+{#/foreach#}
+		{#if !$jobslist#}<div class="noinfo">
+		<span>抱歉，没有符合此条件的信息。</span><br />
+您可以：<br />
+重新修改搜索条件后再进行搜索。 <br />
+适当减少一些搜索条件，以便能够获得更多的结果。 <br />
+		</div>
+		{#/if#}
+    <div class="tit" style="border-top:0px;">
+	 <label> <input name="selectall" type="checkbox" value="" id="selectall"/>&nbsp;全选</label>
+	  			<div class="titsub deliver">投递简历</div>
+				  <div class="titsub collect">收藏职位</div>
+				  <div class="titsub contrast">对比职位</div>
+	  <div class="clear"></div>
+	</div>
+  </form> 
+</div>
+
+<table width="" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>{#if $page#}
+		<div class="page link_bk">
+		{#$page#}
+		</div>
+		{#/if#}</td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

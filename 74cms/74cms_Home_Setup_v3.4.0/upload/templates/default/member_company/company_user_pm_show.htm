@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+//验证
+$(document).ready(function() {
+ $("#Form1").validate({
+ //debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   replytext:{
+    required: true,
+	minlength:1,
+    maxlength:150
+   }
+	},
+    messages: {
+    replytext: {
+    required: "请输入内容",
+    minlength: jQuery.format("内容不能小于{0}个字符"),
+	maxlength: jQuery.format("内容不能大于{0}个字符")
+   }
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+});
+})
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;账户管理 &nbsp;>>&nbsp;消息管理
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>消息管理</h1>
+		</div>
+		<div class="us_tab">
+			<a href="?act=pm&new=1" {#if $smarty.get.new=="1"#}class="select"{#/if#}>未读<span>({#$total1#})</span></a>
+              <a href="?act=pm&msgtype=1" {#if $smarty.get.msgtype=="1"#}class="select"{#/if#}>系统消息<span>({#$total2#})</span></a>
+              <a href="?act=pm&msgtype=2" {#if $smarty.get.msgtype=="2"#}class="select"{#/if#}>私人消息<span>({#$total3#})</span></a>
+			  <div class="clear"></div>
+	    </div>
+	<table width="97%" border="0" align="center" cellpadding="8" cellspacing="0" bgcolor="#F6F6F6" class="link_lan" style=" margin-bottom:10px;">
+  <tr>
+    <td width="40" >
+	  <a href="?act=pm&msgtype={#$smarty.get.msgtype#}&new={#$smarty.get.new#}">&lt;&lt;返回</a></td>
+    <td >
+	{#if $show.msgtype=='1'#}
+	<strong>系统消息</strong>  <span style="color:#999999; padding-left:20px;">{#$show.dateline|date_format:"%Y-%m-%d %H:%M:%S"#}</span>
+	{#else#}
+	<strong>{#$show.msgfrom#}</strong>发送给 <strong>{#$show.msgtoname#}</strong> 的消息 <span style="color:#999999; padding-left:20px;">{#$show.dateline|date_format:"%Y-%m-%d %H:%M:%S"#}</span>
+	{#/if#}
+
+	 </td>
+    <td width="50" align="center" ><a href="?act=pm_del&pmid={#$show.pmid#}&msgtype={#$smarty.get.msgtype#}&new={#$smarty.get.new#}" onclick="return confirm('你确定要清空吗？')">清空</a></td>
+  </tr>
+</table> 
+{#if $show.msgtype=='1'#}
+<table width="98%" border="0" align="center" cellpadding="10" cellspacing="0" style="line-height:180%;" class="link_lan">
+  <tr>
+    <td>{#$show.message|nl2br#}</td>
+    </tr>
+</table>
+{#else#}
+<div style="padding-bottom:15px;line-height:180%;">
+<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="60" height="49" align="center" valign="top">
+	{#if $show.avatars#}
+	<img src="{#$QISHI.site_dir#}data/avatar/48/{#$show.avatars#}" border="0" width="48" height="48"/>
+	{#else#}
+	<img src="{#$QISHI.site_dir#}data/avatar/_no_photo.gif" border="0" />
+	 {#/if#}	</td>
+    <td width="7" class="pmboxleft"></td>
+    <td >
+	
+	<table border="0" cellspacing="0" cellpadding="0"  class="pmboxlefttext">
+  <tr>
+    <td>
+	
+	<strong>{#$show.msgfrom#}</strong><span style="color:#999999; padding-left:20px;">{#$show.replytime|date_format:"%Y-%m-%d %H:%M:%S"#}</span>
+      <br />
+      {#$show.message|nl2br#}
+	  </td>
+  </tr>
+</table>
+ 
+ </td>
+    
+  </tr>
+</table>
+</div>
+
+{#foreach from=$reply item=list#}
+<div style="padding-bottom:15px;line-height:180%;">
+{#if $show.msgfromuid==$list.replyuid#}
+<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="60" height="49" align="center" valign="top">
+	{#if $list.avatars#}
+	<img src="{#$QISHI.site_dir#}data/avatar/48/{#$list.avatars#}" border="0" width="48" height="48"/>
+	{#else#}
+	<img src="{#$QISHI.site_dir#}data/avatar/_no_photo.gif" border="0" />
+	 {#/if#}	</td>
+    <td width="7" class="pmboxleft"></td>
+    <td >
+	
+	<table border="0" cellspacing="0" cellpadding="0"  class="pmboxlefttext">
+  <tr>
+    <td>
+	
+	<strong>{#$list.replyusername#}</strong><span style="color:#999999; padding-left:20px;">{#$list.replytime|date_format:"%Y-%m-%d %H:%M:%S"#}</span>
+	{#if $list.new=='1'#}<span style="color: #FF6600; padding-left:15px;">[新]</span>{#/if#}
+      <br />
+      {#$list.replytext|nl2br#}
+	  </td>
+  </tr>
+</table>
+ </td>
+  </tr>
+</table>
+{#else#}
+<table width="85%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="right" >
+	
+	<table border="0" cellspacing="0" cellpadding="0"  class="pmboxrighttext">
+  <tr>
+    <td>
+	
+	<strong>{#$list.replyusername#}</strong><span style="color:#999999; padding-left:20px;">{#$list.replytime|date_format:"%Y-%m-%d %H:%M:%S"#}</span>
+	{#if $list.new=='1'#}<span style="color: #FF6600; padding-left:15px;">[新]</span>{#/if#}
+      <br />
+      {#$list.replytext|nl2br#}
+	  </td>
+  </tr>
+</table>
+ </td>    
+	 <td width="7" class="pmboxright"></td>
+	<td width="60" height="49" align="center" valign="top">
+	{#if $list.avatars#}
+	<img src="{#$QISHI.site_dir#}data/avatar/48/{#$list.avatars#}" border="0" width="48" height="48"/>
+	{#else#}
+	<img src="{#$QISHI.site_dir#}data/avatar/_no_photo.gif" border="0" />
+	 {#/if#}	</td>
+   
+  </tr>
+</table>
+{#/if#}
+</div>
+	  {#/foreach#}
+	  
+	  <form action="?act=pm_reply_save" method="post" id="Form1" >
+	   <table width="100%" border="0" cellpadding="5" cellspacing="0" bgcolor="#F7F7F7" style=" border-top:1px #E8E8E8 solid">
+       <tr>
+         <td width="50">&nbsp;</td>
+         <td height="90" valign="bottom"><textarea name="replytext"  id="replytext" style="width:400px; height:60px; font-size:12px; line-height:180%; margin-bottom:6px;" ></textarea></td>
+       </tr>
+       <tr>
+         <td>&nbsp;</td>
+         <td height="45" valign="top"><input type="submit" name="Submit" value="回复"  class="user_submit" />
+           <input name="pmid" type="hidden" value="{#$show.pmid#}" /></td>
+       </tr>
+     </table>  
+	  </form>
+	 {#/if#} 
+	 
+     </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

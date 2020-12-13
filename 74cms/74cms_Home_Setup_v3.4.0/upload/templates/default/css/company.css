@@ -1,0 +1,39 @@
+/*-----企业列表------*/
+.companysel{width:983px; margin:0 auto; border:1px solid #D5D5D5; margin-top:6px;  line-height:180%;font-size:12px; }
+.companysel .tit{background:url(../images/14.gif) repeat-x 0px -169px; height:36px; border-bottom:1px #D5D5D5 solid;}
+.companysel .tit h3{font-family:"microsoft yahei","宋体"; font-size:15px; padding-left:15px; padding-top:8px; color: #FF6600}
+.companysel .listbox{ padding-bottom:10px;}
+.companysel .listbox .bleft{ float:left; width:65px; text-align:right; height:20px; padding-top:10px; color:#FF6600}
+.companysel .listbox .bright{ float:left; width:905px; padding-top:10px; padding-left:5px;}
+.companysel .listbox .bright li{ float:left; height:23px; line-height:23px; width:140px; padding-left:5px; overflow:hidden;}
+.myselbox{width:983px;  margin:0 auto; border-top:1px #D5D5D5 solid;background-color:#F2F2F2; display:none;padding-bottom:5px; }
+.myselbox .left{float:left; width:80px; text-align:right; padding-top:6px;}
+.myselbox .optcentet{float:left; width:805px; padding-left:5px;}
+.myselbox .optcentet a{display:block;float:left; color:#FF6600; border:1px #FF9900 solid; height:19px;  line-height:19px; padding-left:5px; padding-right:20px; text-decoration:none; margin-right:8px;background:url(../images/51.gif) no-repeat right -274px;background-color:#FFFFFF;white-space: nowrap; margin-top:5px;}
+.myselbox .optcentet a u{ color:#666666; text-decoration:none}
+.myselbox .optcentet a:hover{background:url(../images/51.gif) no-repeat right -297px;background-color: #FFFBD9; border-color:#FF6600}
+.myselbox .right{float:left; width:90px;}
+.myselbox .right a{display:block;color:#009900; border:1px #ADC581 solid; height:19px;  line-height:19px; padding-left:23px; width:55px; text-decoration:none;  background:url(../images/51.gif) no-repeat 0px -320px;background-color:#FFFFFF;white-space: nowrap; margin-top:5px;}
+.myselbox .right a:hover{background-color: #F1FEDA; border-color: #009900}
+.company_list{width:985px; margin:0 auto; margin-top:8px;}
+.company_list .pageminnav{ float:right;}
+.company_list .pageminnav a {border: 1px solid #dddddd;display:block;height:20px; line-height:20px; margin-right:5px; float:left;padding-left:5px; padding-right:5px;  }
+.company_list .pageminnav a:hover { border:1px #0066CC solid; color: #0066CC}
+.company_list .pageminnav span {display:block; padding-top:5px; margin-right:5px; float:left;padding-left:5px; padding-right:5px;  }
+.company_list .sort{width:983px; border-left:1px #D5D5D5 solid; border-right:1px #D5D5D5 solid;background:url(../images/14.gif) repeat-x 0px -185px; border-top:1px #D5D5D5 solid;}
+.company_list .sort .txt{width:970px; height:27px;background:url(../images/14.gif) repeat-x 0px -240px; line-height:27px; padding-left:13px;}
+.company_list .sort .txt span{display:block; float:left; padding-right:10px;border-right:1px #D5D5D5 solid}
+.company_list .sort .txt a{ display:block; float:left; padding-left:13px; padding-right:18px; height:26px;border-right:1px #D5D5D5 solid;background:url(../images/51.gif) no-repeat right -215px; border-left:1px  #FFFFFF solid}
+.company_list .sort .txt a.select{ background-color:#FFFFFF; height:27px; background-position:right -244px; color:#FF6600}
+.company_list .sort .pagerow{ float:right;}
+.company_list .sort .pagerow span{display:block;float:left; border:0px;}
+.company_list .sort .pagerow a{ display:block; float:left; width:15px; height:15px; line-height:15px; padding:0px; margin-right:8px; border:1px #CCCCCC solid; background:none; font-size:10px; text-align:center; margin-top:5px;}
+.company_list .sort .pagerow a.select{ border-color:#FF6600; width:15px; height:15px;}
+.company_list .list{width:965px; border-bottom:1px #D5D5D5 solid; color:#666666; padding-top:6px; padding-bottom:6px;border-left:1px #D5D5D5 solid;border-right:1px #D5D5D5 solid; position:relative; padding-left:18px;}
+.company_list .list .cname{ font-size:14px; height:28px; line-height:28px; font-weight:bold;font-family:"microsoft yahei","宋体";}
+.company_list .list .tli{ width:200px; height:20px; line-height:20px; color:#666666; float:left}
+.company_list .list .briefly{ color: #999999;height:23px; line-height:23px;word-break:break-all;word-wrap:break-word; width:650px;}
+.company_list .list .logo{ position:absolute; right:10px; top:10px;}
+.company_list .noinfo{ padding:10px; width:965px;line-height:180%; padding-bottom:150px;}
+.company_list .noinfo span{ font-size:14px; font-weight:bold; color:#FF6600}
+ 

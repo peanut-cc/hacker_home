@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />{#qishi_pageinfo set="列表名:page,调用:QS_index"#}
+<title>{#$page.title#}</title>
+<meta name="description" content="{#$page.description#}">
+<meta name="keywords" content="{#$page.keywords#}">
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/default.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.KinSlideshow.min.js" type="text/javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.lazyload.js" type="text/javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.comtip-min.js" type="text/javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.vtip-min.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_template#}js/jquery.index.js" type='text/javascript' ></script>
+<script type="text/javascript"> 
+$(document).ready(function()
+{
+	index("{#$QISHI.site_dir#}","{#$QISHI.site_template#}");
+ });
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">网站首页</a>
+</div>
+<div class="d1">
+  <div class="left">
+    <div class="box">
+      <div class="tit"><h3>搜索职位</h3><div class="st" id="countinfo"></div><div class="clear"></div></div>	  
+	  <div class="search">
+  		<div class="left">
+		  <div class="keybox">
+				<div class="keyinputbox">
+				<input name="key" type="text" id="index-search-key" maxlength="25" value="请输入职位名称、公司名称{#if $QISHI.jobsearch_type=='1'#}、技能特长、学校等{#/if#}关键字..." style="color: #CCCCCC"/>
+				</div>			
+				<div class="subinputbox"><input type="button" id="index-search-button" value="搜职位" />
+				</div>
+				<div class="clear"></div>
+					<script src="{#$QISHI.site_template#}js/jquery.autocomplete.js" type="text/javascript"></script>
+					<script language="javascript" type="text/javascript">
+					 $(document).ready(function()
+					{
+						  var a = $('#index-search-key').autocomplete({ 
+							serviceUrl:'{#$QISHI.site_dir#}plus/ajax_common.php?act=hotword',
+							minChars:1, 
+							maxHeight:400,
+							width:360,
+							zIndex: 9999,
+							deferRequestBy: 0 
+						  });
+					
+					});
+					  </script>
+		  </div>		  
+		  <div class="hotkey link_bk">
+		   {#qishi_hotword set="显示数目:5,列表名:list"#}
+			 热门关键字：{#foreach from=$list item=li#}<a href="{#"QS_jobslist,key:"|cat:$li.w_word_code|qishi_url#}" target="_blank">{#$li.w_word#}</a>&nbsp;&nbsp;&nbsp;{#/foreach#}
+		  </div>
+  		</div>
+		<div class="right link_orange">
+		  <div class="tipbox"><a href="{#"QS_jobslist,sort:rtime"|qishi_url#}" target="_blank">最近更新职位</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{#"QS_officebuilding"|qishi_url#}"  target="_blank">写字楼搜索职位</a></div>
+		  <div class="tipbox" style="margin-top:10px;"><a href="{#"QS_street"|qishi_url#}" target="_blank">道路搜索职位</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{#"QS_jobtag"|qishi_url#}" target="_blank">按标签搜索职位</a></div>
+		</div>
+		<div class="clear"></div>
+	  </div>
+    </div>
+  </div>
+  <div class="right">
+  	<div class="but"><a href="{#"QS_user,1"|qishi_url#}company_jobs.php?act=addjobs" target="_blank"></a><a href="{#"QS_user,2"|qishi_url#}personal_resume.php?act=resume_list" target="_blank" class="resumebut"></a>
+	</div>	
+	<div class="selbox">
+				  <div class="tit link_bk" id="tabs1">
+				  <a  href="{#"QS_noticelist,id:1"|qishi_url#}" class="select" id="txt1">公告</a>
+				  <a  href="{#"QS_help"|qishi_url#}" id="txt2">新手上路</a>
+				  <a  href="{#"QS_news"|qishi_url#}" id="txt3">最新资讯</a>
+				  <div class="clear"></div>
+				  </div>
+				  <div class="txt tabs1show" id="showtxt1" style="display:block">
+								<ul class="link_bk">
+								{#qishi_notice_list set="列表名:notice,显示数目:3,标题长度:18,分类:1,填补字符:..."#}
+								{#foreach from=$notice item=list#}
+								<li><a href="{#$list.url#}" target="_blank">{#$list.title#}</a></li>
+								{#/foreach#}
+								</ul>
+				  </div>
+				  <div class="txt tabs1show" id="showtxt2" >
+								<ul class="link_bk">
+								{#qishi_help_list set="列表名:help,显示数目:3,标题长度:18,填补字符:..."#}
+								{#foreach from=$help item=list#}
+								<li><a href="{#$list.url#}" target="_blank">{#$list.title#}</a></li>
+								{#/foreach#}
+								</ul>
+				  </div>
+				  <div class="txt tabs1show" id="showtxt3">
+							<ul class="link_bk">
+							{#qishi_news_list set="列表名:news,显示数目:3,标题长度:18,填补字符:...,排序:id>desc"#}
+							{#foreach from=$news item=list#}
+							<li><a href="{#$list.url#}" target="_blank">{#$list.title#}</a></li>
+							{#/foreach#}
+							</ul>
+				  </div>
+	</div>
+	<div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="d2">
+  <div class="left">
+    <div class="box">
+      <div class="tit">
+			<div class="left">
+				<div class="tbox"><h3>最新下载简历</h3></div>	  
+				<div class="more link_orangeu">谁下载了我的简历？马上 <a href="{#"QS_login"|qishi_url#}" target="_blank">登录</a> 查看</div>
+				<div class="clear"></div>
+			</div>
+			<div class="right">
+				<div class="tbox"><h3>本周热点职位</h3></div>	  
+				<div class="more link_bk"><a href="{#"QS_jobslist,sort:hot-settr:7"|qishi_url#}" target="_blank">更多</a></div>
+				<div class="clear"></div>				
+			</div>
+			<div class="clear"></div>
+      </div>	  
+      		<div class="lefttxt">
+				<ul class="link_lan" id="downinfo">载入中...</ul>
+			</div>
+			<div class="righttxt">
+				<ul class="link_bk">
+				{#qishi_jobs_list set="列表名:jobslist,显示数目:4,填补字符:...,职位名长度:10,排序:hot>desc,日期范围:7"#}
+				{#foreach from=$jobslist item=list#}
+				<li><a href="{#$list.jobs_url#}" target="_blank">{#$list.jobs_name#}</a><u>(浏览{#$list.click #}次)</u></li>
+				{#/foreach#}
+				</ul>
+			</div>
+			<div class="clear"></div>
+    </div>
+  </div>
+  <div class="right"> 
+ 		<div class="banner" style="visibility:hidden;">
+		 {#qishi_ad set="显示数目:6,调用名称:QS_indexfocus,列表名:ad"#}{#foreach from=$ad item=list#}
+        <a href="{#$list.img_url#}" target="_blank"><img src="{#$list.img_path#}" alt="{#$list.img_explain#}" width="280" height="135" border="0" /></a>
+		{#/foreach#}
+		</div>		
+  </div>
+  <div class="clear"></div>
+</div>
+ <!-- 格子广告-->
+{#qishi_ad set="显示数目:36,调用名称:QS_indexcentreimg,列表名:ad,文字长度:12"#}
+{#if $ad#}
+<div class="adimg lazyload link_bk">
+	{#foreach from=$ad item=list#}
+	<div class="list adcomtip" id="{#$list.img_uid#}">
+		<div class="imgbox"><a target="_blank" href="{#$list.img_url#}"><img original="{#$list.img_path#}" src="{#$QISHI.site_template#}images/84.gif"></a></div>
+		<div class="text"><a target="_blank" href="{#$list.img_url#}">{#$list.img_explain#}</a></div>
+	</div>
+	{#/foreach#}
+	<div class="clear"></div>
+</div>
+{#/if#}
+<!-- 广告 end-->
+<div class="d3">
+  <div class="left">
+    <div class="box">
+      <div class="tit">
+			<div class="tbox"><strong>推荐职位</strong></div>
+			<div class="morebox link_bk"><a href="{#"QS_helplist,id:10"|qishi_url#}" target="_blank">我也要出现在这里！</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{#"QS_jobslist"|qishi_url#}" target="_blank">更多职位</a></div>
+			<div class="clear"></div>			
+      </div>	  
+      	{#qishi_companyjobs_list set="列表名:company,显示数目:24,显示职位:3,职位名长度:4,企业名长度:12,推荐:1,排序:refreshtime>desc"#}
+		{#foreach from=$company item=list#}
+		<div class="list link_lan">
+			<a href="{#$list.company_url#}" target="_blank">{#$list.companyname#}</a><span style="color: #666666">({#$list.refreshtime|date_format:"%m-%d"#})</span>
+			{#if $QISHI.operation_mode=="2" && $list.setmeal_id>1#}<img src="{#$QISHI.site_dir#}data/setmealimg/{#$list.setmeal_id#}.gif" border="0" align="absmiddle" title="{#$list.setmeal_name#}" class="vtip" />{#/if#}
+			<br />
+			<span style="color:#009900">聘:</span><span class="link_bk">
+			{#foreach from=$list.jobs item=jobslist#}
+			 <a href="{#$jobslist.jobs_url#}" target="_blank">{#$jobslist.jobs_name#}</a> 
+			{#/foreach#}
+			</span>
+		</div>
+		{#/foreach#}
+		<div class="clear"></div>
+			
+    </div>
+  </div>
+  <div class="right"> 
+ 		<div class="topbox link_lan" id="">
+		<div class="tit"><h3>紧急招聘</h3></div>
+				<div id="emergencybox" class="emergencybox">
+							{#qishi_jobs_list set="列表名:jobs,显示数目:9,填补字符:...,职位名长度:12,紧急招聘:1,排序:rtime>desc"#}
+							{#foreach from=$jobs item=jobslist#}
+								<div  class="list">
+									<a href="{#$jobslist.jobs_url#}" target="_blank" class="jobsname">{#$jobslist.jobs_name#}</a>
+									&nbsp;	
+									<span>({#$jobslist.amount#}人)</span>					
+									&nbsp;
+									<img src="{#$QISHI.site_template#}images/61.gif" border="0" align="absmiddle" title="紧急招聘"  class="vtip"/>						
+									<br />
+									更新日期：{#$jobslist.refreshtime_cn#} 待遇：{#$jobslist.wage_cn#}
+								</div>
+							{#/foreach#}							
+				</div>
+		</div>
+		<div class="tagbox" >
+		<div class="tit">
+		  <div class="left"><h3>热门职位标签</h3></div>
+		  <div class="more link_bk"><a href="{#"QS_jobtag"|qishi_url#}" target="_blank">更多</a></div>
+		  </div>
+		  <ul class="link_bku">
+		  {#qishi_get_classify set="列表名:cat,类型:QS_jobtag,显示数目:15"#}{#foreach from=$cat item=list#}				
+			  <li><a href="{#"QS_jobtag,jobtag:"|cat:$list.id|qishi_url#}" target="_blank">{#$list.categoryname#}</a></li>
+			  {#/foreach#}
+			 </ul>
+			 <div class="clear"></div>
+		</div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!-- 格子广告-->
+{#qishi_ad set="显示数目:6,调用名称:QS_indexfootimg,列表名:ad,文字长度:10"#}
+{#if $ad#}
+<div class="link_bk adimg lazyload">
+	{#foreach from=$ad item=list#}
+	<div class="list adcomtip" id="{#$list.img_uid#}">
+		<div class="imgbox"><a target="_blank" href="{#$list.img_url#}"><img original="{#$list.img_path#}" src="{#$QISHI.site_template#}images/84.gif"></a></div>
+		<div class="text"><a target="_blank" href="{#$list.img_url#}">{#$list.img_explain#}</a></div>
+	</div>
+	{#/foreach#}
+	<div class="clear"></div>
+</div>
+{#/if#}
+<div class="d4" id="selectjobscategory">
+  	<div class="tit">
+			  <div class="left"><h3>最新职位</h3></div>			  
+	          <div class="center">
+			  <span id="0" class="select">最近更新</span>
+			  {#qishi_get_classify set="列表名:c_jobs,类型:QS_jobs"#}{#foreach from=$c_jobs item=list#}				
+			  <span id="{#$list.id#}">{#$list.categoryname#}</span>
+			  {#/foreach#}
+			  <div class="clear"></div>
+			  </div>
+			  <div class="right link_bk"><a href="{#"QS_jobslist"|qishi_url#}" target="_blank">更多</a></div>
+			  <div class="clear"></div>
+	</div>
+	<div class="txt">
+	<div class="loadingbox"><div class="loading"><img src="{#$QISHI.site_template#}images/90.gif" /> 职位加载中.....</div></div>
+		<div class="infobox">
+		{#qishi_companyjobs_list set="列表名:company,显示数目:32,显示职位:3,职位名长度:4,企业名长度:12,排序:refreshtime>desc"#}
+		{#foreach from=$company item=list#}
+ 		<div class="jobboxlist link_lan">
+		<span class="comtip" id="{#$list.uid#}"><a href="{#$list.company_url#}" target="_blank">{#$list.companyname#}</a></span><span style="color: #666666">({#$list.refreshtime_cn#})</span>
+		{#if $QISHI.operation_mode=="2" && $list.setmeal_id>1#}<img src="{#$QISHI.site_dir#}data/setmealimg/{#$list.setmeal_id#}.gif" border="0" align="absmiddle"  title="{#$list.setmeal_name#}" class="vtip" />{#/if#}
+			<br />
+			<span style="color:#009900">聘:</span><span class="link_bk">
+			{#foreach from=$list.jobs item=jobslist#}
+			 <a href="{#$jobslist.jobs_url#}" target="_blank">{#$jobslist.jobs_name#}</a> 
+			{#/foreach#}
+			</span>
+ 		</div>
+		{#/foreach#}
+		<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<!-- banner-->
+{#qishi_ad set="显示数目:6,调用名称:QS_indexfootbanner,列表名:ad,文字长度:10"#}
+{#if $ad#}
+{#foreach from=$ad item=list#}
+<div class="indexbanner lazyload">
+<a target="_blank" href="{#$list.img_url#}"><img original="{#$list.img_path#}" src="{#$QISHI.site_template#}images/84.gif" width="985" height="80"  border="0"></a>
+</div>
+{#/foreach#}
+{#/if#}
+<!-- banner end-->
+<div class="d5">
+  <div class="left">
+    <div class="box">
+      <div class="tit">
+			<div class="tbox"><strong>最新简历</strong></div>
+			<div class="morebox link_bk"> <a href="{#"QS_resumelist"|qishi_url#}" target="_blank">更多</a></div>
+			<div class="clear"></div>			
+      </div>	  
+      	
+		<ul class="link_lan">
+		{#qishi_resume_list set="列表名:resume,显示数目:30,意向职位长度:25,填补字符:...,排序:rtime>desc"#}
+		{#foreach from=$resume item=list#}
+		<li class="newresume"><a href="{#$list.resume_url#}" target="_blank">{#$list.fullname#}</a>&nbsp;&nbsp;
+		{#$list.sex_cn#}&nbsp;&nbsp;
+		{#$list.education_cn#}&nbsp;&nbsp;
+		<span>{#$list.intention_jobs#}</span>
+		</li>
+		{#/foreach#}
+		</ul>
+		<div class="clear"></div>	
+    </div>
+  </div>
+  <div class="right"> 
+	<div class="topbox link_lan">
+	  <div class="tit">
+		<div class="left"><h3>照片简历</h3></div>
+		<div class="more link_bk"> <a href="{#"QS_resumelist,photo:1"|qishi_url#}" target="_blank">更多</a></div>
+		<div class="clear"></div>
+	  </div>
+	<div class="txt">
+	{#qishi_resume_list set="列表名:resume,显示数目:3,照片:1,意向职位长度:14,填补字符:...,排序:rtime>desc"#}
+	{#foreach from=$resume item=list#}
+	  <div class="imgbox"><a href="{#$list.resume_url#}" target="_blank"><img src="{#$list.photosrc#}"  width="68" height="85" border="0"/></a></div>
+	  <div class="infobox">
+	  <a href="{#$list.resume_url#}" target="_blank">{#$list.fullname#}</a>&nbsp;&nbsp;{#$list.sex_cn#}&nbsp;&nbsp;{#$list.age#}岁<br />
+		学历：{#$list.education_cn#}&nbsp;&nbsp;工作经验：{#$list.experience_cn#}<br />
+		<span>{#$list.intention_jobs#}</span>
+	  </div>
+	  <div class="clear"></div>
+	  {#/foreach#}
+	  
+	</div>
+	 </div>
+		<div class="tagbox" >
+		<div class="tit">
+		  <div class="left"><h3>热门简历标签</h3></div>
+		  <div class="more link_bk"><a href="{#"QS_resumetag"|qishi_url#}" target="_blank">更多</a></div>
+		  </div>
+		  <ul class="link_bku">
+		  {#qishi_get_classify set="列表名:cat,类型:QS_resumetag,显示数目:15"#}{#foreach from=$cat item=list#}				
+			  <li><a href="{#"QS_resumetag,resumetag:"|cat:$list.id|qishi_url#}" target="_blank">{#$list.categoryname#}</a></li>
+			  {#/foreach#}
+			 </ul>
+			 <div class="clear"></div>
+		</div>
+		
+  </div>
+  <div class="clear"></div>
+</div>
+<div class="d6">
+  <div class="box">
+    <div class="title">{#qishi_news_category set="列表名:newscategory,资讯小类:2"#}<h3>{#$newscategory.title#}</h3></div><div class="more link_bk"><a href="{#"QS_newslist,id:2"|qishi_url#}">更多</a></div><div class="clear"></div>	
+    <div class="txt">
+	<ul class="link_bk">
+	{#qishi_news_list set="列表名:news,显示数目:8,标题长度:20,资讯小类:2,填补字符:...,排序:article_order>desc"#}
+	{#foreach from=$news item=list#}
+	<li><a href="{#$list.url#}" target="_blank">{#$list.title#}</a></li>
+	{#/foreach#}
+	</ul>
+	</div>
+  </div>
+  <div class="box">
+    <div class="title">{#qishi_news_category set="列表名:newscategory,资讯小类:3"#}<h3>{#$newscategory.title#}</h3></div><div class="more link_bk"><a href="{#"QS_newslist,id:3"|qishi_url#}">更多</a></div><div class="clear"></div>	
+    <div class="txt">
+	<ul class="link_bk">
+	{#qishi_news_list set="列表名:news,显示数目:8,标题长度:20,资讯小类:3,填补字符:...,排序:article_order>desc"#}
+	{#foreach from=$news item=list#}
+	<li><a href="{#$list.url#}" target="_blank">{#$list.title#}</a></li>
+	{#/foreach#}
+	</ul>
+	</div>
+  </div>
+  <div class="box last">
+    <div class="title">{#qishi_news_category set="列表名:newscategory,资讯小类:4"#}<h3>{#$newscategory.title#}</h3></div><div class="more link_bk"><a href="{#"QS_newslist,id:4"|qishi_url#}">更多</a></div><div class="clear"></div>	
+    <div class="txt">
+	<ul class="link_bk">
+	{#qishi_news_list set="列表名:news,显示数目:8,标题长度:20,资讯小类:4,填补字符:...,排序:article_order>desc"#}
+	{#foreach from=$news item=list#}
+	<li><a href="{#$list.url#}" target="_blank">{#$list.title#}</a></li>
+	{#/foreach#}
+	</ul>
+	</div>
+  </div>
+  <div class="clear"></div
+></div>
+<div class="links link_bk">
+	{#qishi_link set="列表名:link,显示数目:100,调用名称:QS_index,类型:1"#}
+	<strong>友情链接：</strong>
+	{#foreach from=$link item=list#}
+	<a href="{#$list.link_url#}" target="_blank">{#$list.title#}</a>
+	{#/foreach#}
+	<a href="{#$QISHI.site_dir#}link/add_link.php"  style="color: #0066CC">[申请友情连接]</a>
+  <div class="clear"></div>
+	{#qishi_link  set="列表名:link,显示数目:18,调用名称:QS_index,类型:2"#}
+	{#foreach from=$link  item=list#}
+		<div class="imglink">
+		<a href="{#$list.link_url#}" target="_blank">
+		<img src="{#$list.link_logo#}" alt="{#$list.title#}"  border="0"  width="88" height="31" />		</a>		</div>
+	{#/foreach#}
+	<div class="clear"></div>
+</div>
+{#include file="footer.htm"#}
+{#qishi_ad set="显示数目:10,调用名称:QS_indexfloat,列表名:ad"#}{#foreach from=$ad  item=float#}{#$float#}{#/foreach#}
+</body>
+</html>

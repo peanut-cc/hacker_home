@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+//验证
+$(document).ready(function() {
+ $("#Form1").validate({
+//debug: true,
+// onsubmit:false,
+//onfocusout :true,
+submitHandler:function(form){
+if($("#agreement").attr("checked")==false)
+{
+alert("您必须同意[注册协议]才能继续下一步");
+return false;
+}
+		$("#reg").hide();
+		$("#waiting").show();
+		var tsTimeStamp= new Date().getTime();
+		$.post("{#$QISHI.site_dir#}plus/ajax_user.php", { "username": $("#username").val(),"password": $("#password").val(),"member_type": $("#member_type").val(),"email":$("#email").val(),"postcaptcha": $("#postcaptcha").val(),"time":tsTimeStamp,"act":"do_reg"},
+	 	function (data,textStatus)
+	 	 {
+			if (data=="err")
+			{
+			$("#waiting").hide();
+			$("#reg").show();
+			$("#username").attr("value","");
+			$("#email").attr("value","");
+			alert("注册失败");
+			}
+			else
+			{
+				$("body").append(data);
+			}
+	 	 })
+//$(form).ajaxSubmit();
+},
+success: function(label) {
+				label.text(" ").addClass("success");
+			},
+   rules:{
+   username:{
+    required: true,
+	userName : true,
+	nomobile : true,
+	byteRangeLength : [3, 18],
+	remote:{     
+		url:"{#$QISHI.site_dir#}plus/ajax_user.php",     
+		type:"post",    
+		data:{"usname":function (){return $("#username").val()},"act":"check_usname","time":function (){return new Date().getTime()}}     
+		}
+   },
+   email:{
+    required: true,
+	email:true,
+	remote:{     
+		url:"{#$QISHI.site_dir#}plus/ajax_user.php",     
+		type:"post",    
+		data:{"email":function (){return $("#email").val()},"act":"check_email","time": new Date().getTime()}     
+		}
+   },
+   {#if $verify_userreg=="1"#}
+    postcaptcha:{
+	IScaptchastr:true,
+    required: true,
+	remote:{     
+	url:"{#$QISHI.site_dir#}include/imagecaptcha.php",     
+	type:"post",    
+	data:{"postcaptcha":function (){return $("#postcaptcha").val()},"act":"verify","time":function (){return new Date().getTime()}}     
+	}
+   },
+   {#/if#}
+   password:{
+    required: true,
+	minlength:6,
+    maxlength:18
+   },
+   password2:{
+   required: true,
+	 equalTo:"#password"
+   }
+	},
+    messages: {
+    username: {
+    required: "请填写用户名",
+	remote: jQuery.format("用户名已经存在或者不合法")	
+   },
+    email: {
+    required: "请填写电子邮箱",
+	email: jQuery.format("电子邮箱格式错误"),
+	remote: jQuery.format("email已经存在")	
+   },
+    {#if $verify_userreg=="1"#}
+    postcaptcha: {
+    required: "请填写验证码",
+	remote: jQuery.format("验证码错误")	
+   },
+    {#/if#}
+   password: {
+    required: "请填写密码",
+    minlength: jQuery.format("填写不能小于{0}个字符"),
+	maxlength: jQuery.format("填写不能大于{0}个字符")
+   },
+   password2: {
+   required: "请填写密码",
+    equalTo: "两次输入的密码不同"
+   }
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent().next());
+	}
+    });
+	 //中文字两个字节
+	jQuery.validator.addMethod("byteRangeLength", function(value, element,	param) {
+	var length = value.length;
+	for (var i = 0; i < value.length; i++) {
+			if (value.charCodeAt(i) > 127) {
+			length++;
+			}
+		}
+	return this.optional(element)	|| (length >= param[0] && length <= param[1]);
+	}, "确保的值在3-18个字节之间");
+	 //字符验证
+	jQuery.validator.addMethod("userName", function(value, element) {
+	return this.optional(element) || /^[\u0391-\uFFE5\w]+$/.test(value);
+	}, "只能包含中英文、数字和下划线");
+	jQuery.validator.addMethod("nomobile", function(value, element) { 
+    var tel = /^(13|15|18)\d{9}$/;
+	var $cstr= true;
+	if (tel.test(value)) $cstr= false;
+	return $cstr || this.optional(element); 
+}, "用户名不能是手机号");
+	jQuery.validator.addMethod("IScaptchastr", function(value, element) {
+	var str="点击获取验证码";
+	var flag=true;
+	if (str==value)
+	{
+	flag=false;
+	}
+	return  flag || this.optional(element) ;
+	}, "请填写验证码");
+/////验证码部分
+{#if $verify_userreg=="1"#}
+function imgcaptcha(inputID,imgdiv)
+{
+	$(inputID).focus(function(){
+		if ($(inputID).val()=="点击获取验证码")
+		{
+		$(inputID).val("");
+		$(inputID).css("color","#333333");
+		}
+		$(inputID).parent("div").css("position","relative");
+		//设置验证码DIV
+		$(imgdiv).css({ position: "absolute",right: "8px", "top": "32px" , "z-index": "10", "background-color": "#FFFFFF", "border": "1px #A3C8DC solid","display": "none","margin-left": "15px"});
+		$(imgdiv).show();
+		if ($(imgdiv).html()=='')
+		{
+		$(imgdiv).append("<img src=\"{#$QISHI.site_dir#}include/imagecaptcha.php?t={#$random#}\" id=\"getcode\" align=\"absmiddle\"  style=\"cursor:pointer; margin:3px;\" title=\"看不请验证码？点击更换一张\"  border=\"0\"/>");
+		}
+		$(imgdiv+" img").click(function()
+		{
+			$(imgdiv+" img").attr("src",$(imgdiv+" img").attr("src")+"1");
+			$(inputID).val("");
+			$("#Form1").validate().element("#postcaptcha");	
+		});
+		$(document).unbind().click(function(event)
+		{
+			var clickid=$(event.target).attr("id");
+			if (clickid!="getcode" &&  clickid!="postcaptcha")
+			{
+			$(imgdiv).hide();
+			$(inputID).parent("div").css("position","");
+			$(document).unbind();
+			}			
+		});
+	});
+}
+imgcaptcha("#postcaptcha","#imgdiv");
+//验证码结束
+{#/if#}
+//
+$(".but-reg").hover(function(){$(this).addClass("but-reg-hover")},function(){$(this).removeClass("but-reg-hover")});
+$(".but-reg-login").hover(function(){$(this).addClass("but-reg-login-hover")},function(){$(this).removeClass("but-reg-login-hover")});
+//
+
+});
+</script>
+</head>
+<body>
+{#include file="user/header.htm"#}
+<div class="reg-form-box-nav">
+		<a href="?act=form&type=2" {#if $type eq "2"#}class="select"{#/if#}><strong>个人会员注册</strong></a>
+		<a href="?act=form&type=1" {#if $type eq "1"#}class="select"{#/if#}><strong>企业会员注册</strong></a>
+ 		<div class="clear"></div>
+</div>
+<div class="reg-form-box">
+  <div class="leftbox">
+  <form id="Form1" name="Form1" method="post" action="?sd">
+  	<div class="item"><span>*</span>用户名：</div>
+	<div class="item-input-box"><input name="username" type="text" id="username"  maxlength="25"  class="txtinput input-img-user"/></div>
+	<div class="item-tip"></div>
+	<div class="clear"></div>
+	<div class="item"><span>*</span>常用电子邮箱：</div>
+	<div class="item-input-box"><input name="email" type="text"  id="email"  maxlength="60" class="txtinput input-img-email"/></div>
+	<div class="item-tip"></div>
+	<div class="clear"></div>
+	<div class="item"><span>*</span>设置登录密码：</div>
+	<div class="item-input-box"><input name="password" type="password"   id="password"  maxlength="18" class="txtinput input-img-pwd"/></div>
+	<div class="item-tip"></div>
+	<div class="clear"></div>
+	<div class="item"><span>*</span>确认登录密码：</div>
+	<div class="item-input-box"><input name="password2" type="password"  id="password2"  maxlength="18" class="txtinput input-img-pwd"/></div>
+	<div class="item-tip"></div>
+	<div class="clear"></div>
+	{#if $verify_userreg=="1"#}
+	<div class="item"><span>*</span>输入验证码：</div>
+	<div class="item-input-box">
+			<div id="imgdiv"></div>
+			<input  class="txtinput"  name="postcaptcha" id="postcaptcha" type="text" value="点击获取验证码" style="color:#999999"/>			
+	</div>
+	<div class="item-tip"></div>
+	<div class="clear"></div>
+	{#/if#}
+	
+	<div class="item" style="height:50px;"> </div>
+	<div class="item-input-box link_lan" style="height:50px;">
+	<input name="member_type" type="hidden" id="member_type" value="{#$type#}" />
+	<input name="agreement" id="agreement" type="checkbox" value="1" checked="checked" />
+      我已阅读并同意 <a href="{#$QISHI.site_dir#}agreement/" target="_blank">[{#$QISHI.site_name#}用户注册协议]</a>
+	  </div>
+	<div class="clear"></div>
+	
+	<div class="item"> </div>
+	<div class="item-input-box" id="reg" >
+	<input name="reg" type="submit"  class="but-reg"  value="" />
+	</div>
+	<div class="item-input-box waiting" id="waiting" style="display:none">
+	正在注册中,请等待...
+	</div>
+	<div class="item-tip"></div>
+	<div class="clear"></div>
+	
+	</form>
+  </div>
+  <div class="rightbox">
+			<div class="tit"><strong>已经有本站帐号?</strong></div>
+			<div class="but">
+			<input name="reg2" type="submit" class="but-reg-login " id="" value=""  onclick="window.location='{#"QS_login"|qishi_url#}'" />
+			</div>	
+			{#if $QISHI.qq_apiopen=="1" || $QISHI.sina_apiopen=="1"  || $QISHI.taobao_apiopen=="1"#}
+ 			<div class="tit"><strong>或者你也可以用以下网站帐号登录</strong></div>
+			{#if $QISHI.qq_apiopen=="1"#}
+			<div class="login_connectbox">
+			<a href="{#$QISHI.site_dir#}user/{#if $QISHI.qq_logintype=='1'#}connect_qq_client.php{#else#}connect_qq_server.php{#/if#}" ><img src="{#$QISHI.site_template#}images/75.gif" align="absmiddle" title="用qq帐号登录"  border="0"/></a>
+			</div>
+			{#/if#}
+			{#if $QISHI.sina_apiopen=="1"#}
+			<div class="login_connectbox">
+			<a href="{#$QISHI.site_dir#}user/connect_sina.php" ><img src="{#$QISHI.site_template#}images/97.gif" align="absmiddle" title="新浪微博帐号登录"  border="0"/></a>
+			</div>
+			{#/if#}
+			{#if $QISHI.taobao_apiopen=="1"#}
+			<div class="login_connectbox">
+			<a href="{#$QISHI.site_dir#}user/connect_taobao.php" ><img src="{#$QISHI.site_template#}images/98.gif" align="absmiddle" title="淘宝帐号登录"  border="0"/></a>
+			</div>
+			{#/if#}
+			<div class="clear"></div>
+			{#/if#}
+  </div>
+  <div class="clear"></div>
+</div>
+
+{#include file="user/footer.htm"#}
+</body>
+</html>

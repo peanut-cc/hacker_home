@@ -1,0 +1,157 @@
+<script type="text/javascript" src="{#$QISHI.site_template#}js/jquery.vtip-min.js"></script>
+<table width="142" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td height="35" align="center"  style="color: #006600">简历完成状态</td>
+  </tr>
+</table>
+   <table width="130" border="0" cellpadding="0" cellspacing="5" align="center">
+              <tr>
+                <td height="25" align="center" background="{#$QISHI.site_template#}images/46.gif" class="user_right_box">
+				<table width="100" border="0"  cellpadding="0" cellspacing="3" style="cursor:help"   class="vtip"  title="简历完整指数为：<span style=color:#FF0000><strong>{#if $resume_basic.complete_percent==""#}0{#else#}{#$resume_basic.complete_percent#}{#/if#}</strong> %</span><br />完整指数小于<strong>60%</strong>的为无效简历。<br />简历完整指数越高，排名越靠前">
+     <tr>
+                      <td width="70"  align="left" >
+					  <div style="border:1px #006600 solid; width:70px; height:8px;">
+					  <div style="width:{#if $resume_basic.complete_percent==""#}0{#else#}{#$resume_basic.complete_percent#}{#/if#}%;background-color:#99CC00; height:8px;">
+					  </div>
+					  </div>
+					  </td>
+                      <td style="color: #009900; font-size:12px; ">{#if $resume_basic.complete_percent==""#}0{#else#}{#$resume_basic.complete_percent#}{#/if#}%</td>
+     </tr>
+</table>
+				
+				</td>
+              </tr>
+</table>
+     <table width="130" border="0" align="center" cellpadding="0" cellspacing="5"  class="link_bk" style="margin-bottom:10px;" >
+              <tr>
+                <td height="28" align="center" background="{#$QISHI.site_template#}images/46.gif" class="user_right_box"><a href="?act=resume_show&pid={#$pid#}" style="color:#006600">显示简历所有内容</a></td>
+              </tr>
+</table>
+  <table width="142" border="0" cellspacing="0" cellpadding="0"  class="link_bk">
+			  {#if $act=="make1"#}
+            <tr>
+              <td height="32" align="center"  class="resume_right_on">
+			  <img src="{#$QISHI.site_template#}images/50.png" align="absmiddle" />&nbsp;&nbsp;基本信息
+			  </td>
+            </tr>
+			{#else#}
+			<tr>
+              <td height="32" align="center">
+			  {#if $resume_basic#}
+			  <img src="{#$QISHI.site_template#}images/49.png" align="absmiddle" />
+			  {#else#}			  
+			  <img src="{#$QISHI.site_template#}images/48.png" align="absmiddle" />
+			  {#/if#}
+			  &nbsp;&nbsp;<a href="?act=make1&pid={#$pid#}">基本信息</a>
+			  </td>
+            </tr>
+			{#/if#}
+           	{#if $act=="make2"#}
+            <tr>
+              <td height="32" align="center"  class="resume_right_on">
+			  <img src="{#$QISHI.site_template#}images/50.png" align="absmiddle" />&nbsp;&nbsp;求职意向
+			  </td>
+            </tr>
+			{#else#}
+			<tr>
+              <td height="32" align="center">
+			    {#if $resume_basic.intention_jobs#}
+			  <img src="{#$QISHI.site_template#}images/49.png" align="absmiddle" />
+			  {#else#}			  
+			  <img src="{#$QISHI.site_template#}images/48.png" align="absmiddle" />
+			  {#/if#}
+			  &nbsp;&nbsp;<a href="?act=make2&pid={#$pid#}">求职意向</a>
+			  </td>
+            </tr>
+			{#/if#}
+           	{#if $act=="make3"#}
+            <tr>
+              <td height="32" align="center"  class="resume_right_on">
+			  <img src="{#$QISHI.site_template#}images/50.png" align="absmiddle" />&nbsp;&nbsp;技能特长
+			  </td>
+            </tr>
+			{#else#}
+			<tr>
+              <td height="32" align="center">
+			    {#if $resume_basic.specialty#}
+			  <img src="{#$QISHI.site_template#}images/49.png" align="absmiddle" />
+			  {#else#}			  
+			  <img src="{#$QISHI.site_template#}images/48.png" align="absmiddle" />
+			  {#/if#}
+			  &nbsp;&nbsp;<a href="?act=make3&pid={#$pid#}">技能特长</a>
+			  </td>
+            </tr>
+			{#/if#} 
+     	{#if $act=="make4" || $act=="edit_education"#}
+            <tr>
+              <td height="32" align="center"  class="resume_right_on">
+			  <img src="{#$QISHI.site_template#}images/50.png" align="absmiddle" />&nbsp;&nbsp;教育经历
+			  </td>
+            </tr>
+			{#else#}
+			<tr>
+              <td height="32" align="center">
+			    {#if $resume_education#}
+			  <img src="{#$QISHI.site_template#}images/49.png" align="absmiddle" />
+			  {#else#}			  
+			  <img src="{#$QISHI.site_template#}images/48.png" align="absmiddle" />
+			  {#/if#}
+			  &nbsp;&nbsp;<a href="?act=make4&pid={#$pid#}">教育经历</a>
+			  </td>
+            </tr>
+			{#/if#} 
+     	{#if $act=="make5" || $act=="edit_work"#}
+            <tr>
+              <td height="32" align="center"  class="resume_right_on">
+			  <img src="{#$QISHI.site_template#}images/50.png" align="absmiddle" />&nbsp;&nbsp;工作经历
+			  </td>
+            </tr>
+			{#else#}
+			<tr>
+              <td height="32" align="center">
+			    {#if $resume_work#}
+			  <img src="{#$QISHI.site_template#}images/49.png" align="absmiddle" />
+			  {#else#}			  
+			  <img src="{#$QISHI.site_template#}images/48.png" align="absmiddle" />
+			  {#/if#}
+			  &nbsp;&nbsp;<a href="?act=make5&pid={#$pid#}">工作经历</a>
+			  </td>
+            </tr>
+			{#/if#} 
+{#if $act=="make6" || $act=="edit_training"#}
+            <tr>
+              <td height="32" align="center"  class="resume_right_on">
+			  <img src="{#$QISHI.site_template#}images/50.png" align="absmiddle" />&nbsp;&nbsp;培训经历
+			  </td>
+            </tr>
+			{#else#}
+			<tr>
+              <td height="32" align="center">
+			    {#if $resume_training#}
+			  <img src="{#$QISHI.site_template#}images/49.png" align="absmiddle" />
+			  {#else#}			  
+			  <img src="{#$QISHI.site_template#}images/48.png" align="absmiddle" />
+			  {#/if#}
+			  &nbsp;&nbsp;<a href="?act=make6&pid={#$pid#}">培训经历</a>
+			  </td>
+            </tr>
+			{#/if#}
+{#if $act=="make7" || $act=="photo_cutting"#}
+            <tr>
+              <td height="32" align="center"  class="resume_right_on">
+			  <img src="{#$QISHI.site_template#}images/50.png" align="absmiddle" />&nbsp;&nbsp;形象照片
+			  </td>
+            </tr>
+			{#else#}
+			<tr>
+              <td height="32" align="center">
+			    {#if $resume_basic.photo==""#}
+			  <img src="{#$QISHI.site_template#}images/48.png" align="absmiddle" />
+			  {#else#}			  
+			  <img src="{#$QISHI.site_template#}images/49.png" align="absmiddle" />
+			  {#/if#}
+			  &nbsp;&nbsp;<a href="?act=make7&pid={#$pid#}">形象照片</a>
+			  </td>
+            </tr>
+			{#/if#}         
+</table>

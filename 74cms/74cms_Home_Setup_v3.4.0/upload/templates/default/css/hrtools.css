@@ -1,0 +1,7 @@
+/*-----HRπ§æﬂœ‰----------*/
+.hr-index {width:985px;margin:0 auto; margin-top:8px;}
+.hr-index .left{ width:160px; float:left;background:url(../images/59.gif) repeat-y right; padding-bottom:10px;}
+.hr-index .left li{ width:120px; height:30px; line-height:30px; padding-left:40px;margin-bottom:10px;background:url(../images/76.gif)  no-repeat 0px 0px;}
+.hr-index .left li.select{;background:url(../images/76.gif)  no-repeat 0px -31px;}
+.hr-index .right{ width:803px; float:left; border:1px #DBDBDB solid; border-left:0px; padding-left:20px; padding-top:10px;}
+.hr-index .right li { float:left; width:260px; height:30px; line-height:30px;background:url(../images/01.gif) no-repeat 0px -28px; padding-left:7px;}

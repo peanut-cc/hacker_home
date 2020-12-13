@@ -1,0 +1,10 @@
+/*-----หตร๗าณ----------*/
+.explain{ width:985px;margin:0 auto; margin-top:8px;}
+.explain .left{ border:1px #E4E4E4 solid; float:left;background-image:url(../images/16.jpg); background-repeat:repeat-x; margin-right:8px; width:208px; padding-bottom:30px; padding-top:30px;}
+.explain .left a { display:block; width:110px; height:26px; line-height:26px; padding-left:15px; margin-bottom:10px; border:1px solid #E4E4E4; color: #333333; text-decoration:none; margin-left:40px;}
+.explain .left  a:hover{ border:1px solid  #BEDAF1; color:#0066CC; background-color: #F4FAFF}
+.explain .right{ border:1px #E4E4E4 solid; float:left;background-image:url(../images/16.jpg); background-repeat:repeat-x; width:765px; padding-bottom:30px;}
+.explain .right .tit {width: 660px; text-align:center; font-size:22px; line-height:180%;  font-weight:bold;margin-left:34px; margin-top:15px; margin-bottom:12px; color:#333333}
+.explain .right .txt{ width: 660px; margin-left:34px; line-height:180%; font-size:14px;}
+
+

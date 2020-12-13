@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+//验证
+$(document).ready(function() {
+ $("#Form1").validate({
+ //debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   content:{
+    required: true,
+	minlength:10,
+    maxlength:600
+   }
+	},
+    messages: {
+    content: {
+    required: "请输入具体内容",
+    minlength: jQuery.format("内容不能小于{0}个字符"),
+	maxlength: jQuery.format("内容不能大于{0}个字符")
+   }
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;举报信息
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>举报信息</h1>
+		</div>
+	<form id="Form1" name="Form1" method="post" action="?act=report_save">
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom:100px" >
+            <tr>
+              <td width="17%" height="35" align="right"  style="color:#FF0000">&nbsp;</td>
+              <td width="83%"   style="color:#FF0000 "> </td>
+            </tr>
+            <tr>
+              <td height="35" align="right"> 举报：</td>
+              <td  class="link_lan"><a href="{#$url#}" target="_blank">{#$smarty.get.jobs_name#}</a></td>
+            </tr>
+            <tr>
+              <td height="35" align="right"  > 相关描述：</td>
+              <td   ><textarea name="content"   id="content"  class="input_text_200_textarea"></textarea>
+               </td>
+            </tr>
+			<tr>
+              <td height="35" align="right"  > </td>
+              <td   >
+欢迎举报违法虚假信息，您的举报是被保密的！ </td>
+            </tr>
+            <tr>
+              <td height="40"   >&nbsp;</td>
+              <td >
+			  <input name="url" type="hidden" value="{#$url#}" />
+			  <input name="jobs_id" type="hidden" value="{#$smarty.get.jobs_id#}" />
+			   <input name="jobs_name" type="hidden" value="{#$smarty.get.jobs_name#}" />
+			   <input name="jobs_addtime" type="hidden" value="{#$smarty.get.jobs_addtime#}" />
+			  <input type="submit" name="Submit2" value="举报" class="user_submit"/>
+			  </td>
+            </tr>
+          </table>
+          </form>
+          
+	</div>
+	</td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

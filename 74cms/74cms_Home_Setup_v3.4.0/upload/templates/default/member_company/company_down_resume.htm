@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;招聘管理&nbsp;>>&nbsp;已下载简历
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>已下载简历</h1>
+		</div>
+		<div class="us_tab">
+			<a href="?act={#$act#}&settr=" {#if $smarty.get.settr==""#}class="select"{#/if#}>所有的</a>
+              <a href="?act={#$act#}&settr=3" {#if $smarty.get.settr=="3"#}class="select"{#/if#}>最近3天</a>
+              <a href="?act={#$act#}&settr=7" {#if $smarty.get.settr=="7"#}class="select"{#/if#}>最近7天</a>
+			  <a href="?act={#$act#}&settr=30" {#if $smarty.get.settr=="30"#}class="select"{#/if#}>最近1月</a>
+			  <a href="?act={#$act#}&settr=90" {#if $smarty.get.settr=="90"#}class="select"{#/if#}>最近3月</a>
+			  <div class="clear"></div>
+			  </div>
+	<form id="form1" name="form1" method="post" action="?act=down_to_favorites">
+		  <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0" class="link_lan">
+              <tr>
+                <td width="120" height="26"  class="us_list_title"><label id="chkAll"><input type="checkbox" name="chkAll"  id="chk" title="全选/反选" />简历名称</label></td>
+            
+                <td   class="us_list_title">意向职位</td>
+				<td width="110" class="us_list_title" >等级</td>
+				  <td width="100" class="us_list_title" >下载日期</td>
+            </tr>
+				{#foreach  from=$list item=list#}
+				{#if $list.sex_cn#}
+<tr >
+<td   height="32" ><input name="y_id[]" type="checkbox" id="y_id"   value="{#$list.did#}"/>&nbsp;<a href="{#$list.resume_url#}" target="_blank">{#$list.fullname#}</a></td>
+
+<td >{#$list.intention_jobs#}</td>
+<td >
+{#if $list.talent=="2"#}
+<span style="color:#FF6600">高级</span>
+{#else#}
+普通
+{#/if#}</td>
+<td >{#$list.down_addtime|date_format:"%Y-%m-%d"#}</td>
+</tr>
+<tr >
+  <td   height="21" colspan="4" valign="top" class="us_list">
+		<div style="color:#999999; padding-left:22px;">
+				性别：{#$list.sex_cn#}&nbsp;&nbsp;|&nbsp;&nbsp
+				工作经验：{#$list.experience_cn#}&nbsp;&nbsp;|&nbsp;&nbsp
+				学历：{#$list.education_cn#}&nbsp;&nbsp;|&nbsp;&nbsp
+				所在地区：{#$list.district_cn#}&nbsp;&nbsp;|&nbsp;&nbsp
+				简历更新日期：{#$list.refreshtime|date_format:"%Y-%m-%d"#}		</div>
+  </td>
+  </tr>
+{#else#}
+<tr >
+  <td   height="32" colspan="4" class="us_list"><input name="y_id[]" type="checkbox" id="y_id"   value="{#$list.did#}"/><strong style="color:#333333">{#$list.resume_name#}</strong>的简历可能已从网站中移除，您可以删除本条记录</td>
+  </tr>
+  {#/if#}
+  {#/foreach#}
+          </table>            
+			{#if $list#}
+            <table width="100%" border="0" cellspacing="8" cellpadding="0">
+              <tr>
+                <td> <input type="submit" name="shift" value="转至人才库" class="user_submit"/></td>
+              </tr>
+            </table>
+			{#else#}
+			<div class="us_list_no_content">没有您要找的信息</div>
+			{#/if#}
+            <table border="0" align="center" cellpadding="0" cellspacing="0" class="link_bk">
+              <tr>
+                <td height="50" align="center"> <div class="page link_bk">{#$page#}</div></td>
+              </tr>
+            </table>
+        </form>
+		</div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

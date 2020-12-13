@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{#qishi_hrtools_category set="列表名:category,分类ID:GET[id]"#}
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#qishi_hrtools_category set="列表名:category,分类ID:GET[id]"#}{#$category.0.c_name#} - HR工具箱</title>
+<meta name="description" content="{#$page.description#}">
+<meta name="keywords" content="{#$page.keywords#}">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/hrtools.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#"QS_hrtoolslist,id:1"|qishi_url#}">HR工具箱</a>
+</div>
+<div class="hr-index">
+  <div class="left">
+  		 <ul class="link_bk">
+		 {#qishi_hrtools_category set="列表名:cat"#}
+		 {#foreach from=$cat item=list#}
+		 <li {#if $smarty.get.id==$list.c_id#}class="select"{#/if#}><a href="{#$list.url#}" >{#$list.c_name#}</a></li>
+		 {#/foreach#}
+		 </ul>
+  
+  </div>
+  <div class="right">
+ 		<ul class="link_lan">
+		 {#qishi_hrtools_list set="列表名:list,显示数目:500,分类ID:"|cat:$smarty.get.id#}
+		{#foreach from=$list item=list#}
+		 <li><a href="{#$list.h_fileurl#}" target="_blank" >{#$list.h_filename#}</a></li>
+		 {#/foreach#}
+		 <div class="clear"></div>
+		</ul>
+  </div>
+  <div class="clear"></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function()
+{
+  var lefth=$(".hr-index .left").height();
+  var righth=$(".hr-index .right").height();
+  if (lefth>righth)
+  {
+  	$(".hr-index .right").height(lefth)
+  }
+  else if (righth> lefth)
+  {
+  	$(".hr-index .left").height(righth);
+  }
+});
+</script>
+{#include file="footer.htm"#}
+</body>
+</html>

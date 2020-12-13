@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{	 
+	//计算总积分
+	$("#days").keyup(function(){	
+		var days_points={#$promotion.cat_points#};
+		var user_points={#$user_points#};
+		if((/^(\+|-)?\d+$/.test($(this).val())) && days_points>0)
+		{
+		$("#count").html("<br />延长推广天数<strong style=\"color:#009900\">&nbsp;&nbsp;"+$(this).val()+"&nbsp;&nbsp;</strong>天，需要扣除：&nbsp;&nbsp;<strong style=\"color: #009900;\">"+$(this).val()*days_points+"</strong>&nbsp;&nbsp;{#$QISHI.points_quantifier#}{#$QISHI.points_byname#}，您目前共有&nbsp;&nbsp;<strong style=\"color: #FF0000;\">"+user_points+"</strong>&nbsp;&nbsp;{#$QISHI.points_quantifier#}{#$QISHI.points_byname#}。<br /><br />");   
+		}
+		else
+		{
+		$("#count").html("");	
+		}	
+	});		
+})
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;企业推广&nbsp;>>修改{#$promotion.cat_name#}
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>企业推广</h1>
+		</div>	  
+	    <form id="Form1" name="Form1" method="post" action="?act=promotion_edit_save">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+              <td height="50" colspan="2" bgcolor="#f9f9f9" style=" border-bottom:1px #C9D9E7 solid;padding-left:15px;font-size:14px;">
+			  <span style=" color:#003399; ">修改推广</span>
+			  </td>
+              </tr>
+			  </table>
+	    <table width="98%" border="0" align="center" cellpadding="0" cellspacing="10" style="margin-top:10px;">
+          <tr>
+            <td width="220" align="right">推广方案：</td>
+            <td>{#$promotion.cat_name#}</td>
+          </tr>
+		  <tr>
+            <td width="220" align="right">推广职位：</td>
+            <td>{#$jobs.jobs_name#}</td>
+          </tr>
+		  <tr>
+            <td align="right">推广起始时间：</td>
+            <td>
+			 {#if $info.cp_endtime<$time#}
+				<span style="color:#FF6600">已经到期</span>
+				{#else#}
+				{#$info.cp_starttime|date_format:"%Y年%m月%d日"#} ≈ {#$info.cp_endtime|date_format:"%Y年%m月%d日"#}
+				{#/if#}
+		
+			</td>
+          </tr>
+          <tr>
+            <td align="right">延长推广日期：</td>
+            <td>
+			<input name="endtime" type="hidden" value="{#$info.cp_endtime#}" />
+			<input name="days" type="text" class="input_text_200" id="days" value="0" maxlength="4"   />
+			天&nbsp;&nbsp;&nbsp;
+			(0表示不延长)
+		
+			</td>
+          </tr>
+		  {#if  $info.cp_promotionid=="4"#}
+		  <script src="{#$QISHI.site_template#}js/jquery.iColorPicker.js" type='text/javascript' language="javascript"></script>
+		  <tr>
+            <td align="right">选择颜色：</td>
+            <td>
+			<input id="val" name="val" type="text" value="{#$info.cp_val#}" class="iColorPicker input_text_200"  onclick="iColorShow('val','icp_val')"/>
+		
+			</td>
+          </tr>
+		  {#/if#}
+          <tr>
+            <td align="right">&nbsp;</td>
+            <td height="55">
+			<span style="color:#0066CC" id="count"></span>
+			<input name="jobid" type="hidden" value="{#$info.cp_jobid#}" />
+			<input name="id" type="hidden" value="{#$info.cp_id#}" />
+			<input name="promotionid" type="hidden" value="{#$info.cp_promotionid#}" />
+			<input name="" type="submit" value="确定修改" class="but100" id="addsubmit"   />
+			</td>
+          </tr>
+        </table>
+		
+        </form>
+		
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		  <tr>
+          <td height="35" bgcolor="#f9f9f9" style="border-bottom:1px #C9D9E7 solid; padding-left:15px; border-top:1px #C9D9E7 solid; font-size:14px; color:#FF3300"><strong>方案说明</strong></td>
+          </tr> 
+		  <tr>
+          <td >
+		  
+		  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="5" style="margin-bottom:30px; margin-top:8px; line-height:180%">
+            <tr>
+              <td width="40%">方案名称：{#$promotion.cat_name#}</td>
+              <td width="60%">推广天数最少：
+			  {#if $promotion.cat_minday=="0"#}
+			  不限制
+			  {#else#}
+			  {#$promotion.cat_minday#}天
+			  {#/if#}			  </td>
+            </tr>
+            <tr>
+              <td>推广期每天消耗积分：
+			 {#if $promotion.cat_points=="0"#}
+			  免费
+			  {#else#}
+			  {#$promotion.cat_points#}{#$QISHI.points_quantifier#}{#$QISHI.points_byname#}
+			  {#/if#}			  </td>
+              <td>推广天数最多：
+			   {#if $promotion.cat_maxday=="0"#}
+			  不限制
+			  {#else#}
+			  {#$promotion.cat_maxday#}天
+			  {#/if#}			  </td>
+            </tr>
+            <tr>
+              <td>方案说明：</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+			   {#$promotion.cat_notes#}
+			   </td>
+              </tr>
+          </table></td>
+          </tr>
+      </table>
+</div></td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

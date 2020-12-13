@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>选择分类 -  {#$QISHI.site_name#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+{#include file="wap/header.htm"#}
+<div class="wap_tit">
+选择分类
+</div>
+{#if $smarty.get.act=="jobs"#}
+	<div class="wap_txt link_lan">
+	<a href="{#$smarty.get.url#}?subclass=&amp;subclass_cn=&amp;sdistrict={#$smarty.get.sdistrict#}&amp;sdistrict_cn={#$smarty.get.sdistrict_cn#}" >不限制</a><br />
+	{#qishi_get_classify set="列表名:classify,类型:QS_jobs"|cat:",id:"|cat:$smarty.get.id#}
+	{#foreach from=$classify item=list#}
+		{#if $smarty.get.id#}
+		<a href="{#$smarty.get.url#}?subclass={#$list.id#}&amp;subclass_cn={#$list.categoryname#}&amp;sdistrict={#$smarty.get.sdistrict#}&amp;sdistrict_cn={#$smarty.get.sdistrict_cn#}" >{#$list.categoryname#}</a><br />
+		{#else#}
+		<a href="wap-classify.php?act={#$smarty.get.act#}&amp;id={#$list.id#}&amp;cname={#$list.categoryname#}&amp;url={#$smarty.get.url#}&amp;sdistrict={#$smarty.get.sdistrict#}&amp;sdistrict_cn={#$smarty.get.sdistrict_cn#}" >{#$list.categoryname#}</a><br />
+		{#/if#}
+	{#/foreach#}
+</div>
+{#else#}
+	<div class="wap_txt link_lan">
+	<a href="{#$smarty.get.url#}?sdistrict=&amp;sdistrict_cn=&amp;subclass={#$smarty.get.subclass#}&amp;subclass_cn={#$smarty.get.subclass_cn#}" >不限制</a><br />
+	{#qishi_get_classify set="列表名:classify,类型:QS_district"|cat:",id:"|cat:$smarty.get.id#}
+	{#foreach from=$classify item=list#}
+	{#if $smarty.get.id#}
+	<a href="{#$smarty.get.url#}?sdistrict={#$list.id#}&amp;sdistrict_cn={#$list.categoryname#}&amp;subclass={#$smarty.get.subclass#}&amp;subclass_cn={#$smarty.get.subclass_cn#}" >{#$list.categoryname#}</a><br />
+	{#else#}
+	<a href="wap-classify.php?act={#$smarty.get.act#}&amp;id={#$list.id#}&amp;cname={#$list.categoryname#}&amp;url={#$smarty.get.url#}&amp;subclass={#$smarty.get.subclass#}&amp;subclass_cn={#$smarty.get.subclass_cn#}" >{#$list.categoryname#}</a><br />
+	{#/if#}
+	{#/foreach#}
+{#/if#}
+</div>
+{#include file="wap/footer.htm"#}
+</body>
+</html>

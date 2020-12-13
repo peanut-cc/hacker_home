@@ -1,0 +1,36 @@
+{#qishi_explain_show set="说明页ID:GET[id],列表名:show"#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$show.title#} - {#$QISHI.site_name#}</title>
+<meta name="description" content="{#$show.description#}">
+<meta name="keywords" content="{#$show.keywords#}">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/explain.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;{#$show.title#}
+</div>
+<div class="explain">
+  <div class="left">
+  	{#qishi_explain_list set="列表名:explain,分类ID:1"#}{#foreach from=$explain item=list#}
+	<a href="{#$list.url#}"  >{#$list.title#}</a>
+	{#/foreach#}
+  </div>
+  <div class="right">
+    <div class="tit">{#$show.title#}</div>
+	<div class="txt">{#$show.content#}</div>
+  </div>
+  <div class="clear"></div>
+</div>
+{#include file="footer.htm"#}
+</body>
+</html>

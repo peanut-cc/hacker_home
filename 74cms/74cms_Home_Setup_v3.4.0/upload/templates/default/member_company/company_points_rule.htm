@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;服务中心&nbsp;>>&nbsp;{#$QISHI.points_byname#}消费规则
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>消费规则</h1>
+		</div>
+		<div class="us_list_tip link_lan"  style="margin-top:15px;">
+		您目前共有 <span>{#$mypoints#}</span> {#$QISHI.points_quantifier#}{#$QISHI.points_byname#}&nbsp;&nbsp;&nbsp;&nbsp;<a href="?act=order_add">[充值]</a>&nbsp;&nbsp;&nbsp;<a href="?act=points_report">[账户明细]</a>
+		</div>
+		 <table width="100%" border="0" cellpadding="2" cellspacing="0" style="margin-top:10px; margin-bottom:50px;">
+		  {#foreach from=$points item=points#}
+          <tr>
+            <td width="200" height="30" align="right"   class="us_list">{#$points.title#}：</td>
+            <td class="us_list">
+			{#if $points.operation=="1"#}
+			增加
+			{#else#}
+			减少
+			{#/if#}
+		    <span style="color: #FF0000; font-size:16px;">{#$points.value#}</span>  {#$QISHI.points_quantifier#}{#$QISHI.points_byname#} </td>
+           </tr>
+		  {#/foreach#}
+        </table>
+		 <br />
+	  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;企业推广&nbsp;>>{#$promotion.cat_name#}
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>企业推广</h1>
+		</div>
+	  
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+              <td height="50" colspan="2" bgcolor="#f9f9f9" style=" border-bottom:1px #C9D9E7 solid;padding-left:15px;font-size:14px;">
+			  <span style=" color:#003399; ">{#$promotion.cat_name#}</span>
+			  <span style=" color: #666666; ">(具体请查看下方方案说明，推广到期后系统将自动取消)</span>
+			  </td>
+              </tr><tr>
+          <td  >
+		  
+		  {#if $list#}
+		 <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0" style="margin-top:10px; margin-bottom:10px;"  class="link_lan">
+            <tr>
+              <td height="26" bgcolor="#FFFFE6">&nbsp;&nbsp;&nbsp;&nbsp;<strong>推广职位名称</strong></td>
+              <td width="200" align="center" bgcolor="#FFFFE6"><strong>推广起始时间</strong></td>
+              <td width="150" align="center" bgcolor="#FFFFE6"><strong>操作</strong></td>
+            </tr>
+			{#foreach from=$list item=li#}
+            <tr>
+              <td height="26" style="border-bottom:1px #CCCCCC dashed">&nbsp;
+			  <a href="{#$li.jobs_url#}" target="_blank">{#$li.jobs_name#}</a>
+			  </td>
+              <td   align="center" style="border-bottom:1px #CCCCCC dashed">
+			  {#if $li.cp_endtime<$time#}
+				<span style="color:#FF6600">已经到期</span>
+				{#else#}
+				{#$li.cp_starttime|date_format:"%Y年%m月%d日"#} ≈ {#$li.cp_endtime|date_format:"%Y年%m月%d日"#}
+				{#/if#}
+			  </td>
+              <td align="center" style="border-bottom:1px #CCCCCC dashed">
+		
+		{#if $QISHI.operation_mode=="1"#}
+			  <a href="?act=promotion_edit&jobsid={#$li.cp_jobid#}&promotionid={#$li.cp_promotionid#}" >编辑</a>
+			  &nbsp;
+		{#/if#}
+	
+			   <a href="?act=promotion_del&id={#$li.cp_id#}" onclick="return confirm('取消将无法恢复，您确认取消吗')">取消</a>
+			  </td>
+            </tr>
+            {#/foreach#}
+          </table>
+		  {#else#}
+		  <div style="color:#FF0000; margin-top:30px; padding:10px;   text-align:center">您还没有职位进行实行此推广方案，请点击下载按钮推广您的职位吧！</div>
+		  {#/if#}
+	 
+		  
+		  <table width="100%" border="0" cellspacing="16" cellpadding="0">
+  <tr>
+    <td align="center"><input name="" type="button" value="我要推广" class="but100" id="addsubmit"  onclick="window.location='?act=promotion_add&promotionid={#$promotion.cat_id#}'"/></td>
+    </tr>
+</table>
+
+		 
+		  </td>
+          </tr>
+		  <tr>
+          <td height="35" bgcolor="#f9f9f9" style="border-bottom:1px #C9D9E7 solid; padding-left:15px; border-top:1px #C9D9E7 solid; font-size:14px; color:#FF3300"><strong>方案说明</strong></td>
+          </tr> 
+		  <tr>
+          <td >
+	
+		{#if $QISHI.operation_mode=="1"#}
+		  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="5" style="margin-bottom:30px; margin-top:8px; line-height:180%">
+            <tr>
+              <td width="40%">方案名称：{#$promotion.cat_name#}</td>
+              <td width="60%">推广天数最少：
+			  {#if $promotion.cat_minday=="0"#}
+			  不限制
+			  {#else#}
+			  {#$promotion.cat_minday#}天
+			  {#/if#}			  </td>
+            </tr>
+            <tr>
+              <td>推广期每天消耗积分：
+			 {#if $promotion.cat_points=="0"#}
+			  免费
+			  {#else#}
+			  {#$promotion.cat_points#}{#$QISHI.points_quantifier#}{#$QISHI.points_byname#}
+			  {#/if#}			  </td>
+              <td>推广天数最多：
+			   {#if $promotion.cat_maxday=="0"#}
+			  不限制
+			  {#else#}
+			  {#$promotion.cat_maxday#}天
+			  {#/if#}			  </td>
+            </tr>
+            <tr>
+              <td>方案说明：</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+			   {#$promotion.cat_notes#}
+			   </td>
+              </tr>
+          </table>
+		{#elseif $QISHI.operation_mode=="2"#}
+		  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="5" style="margin-bottom:30px; margin-top:8px; line-height:180%">
+            <tr>
+              <td width="30%">方案名称：{#$promotion.cat_name#}</td>
+              <td width="40%">您的套餐：
+			  {#$setmeal.setmeal_name#}
+			  </td>
+              <td width="30%">
+			  </td>
+            </tr>
+            <tr>
+              <td>套餐内{#$promotion.cat_name#}总条数：
+			  {# $data.total_num"#}条
+			  </td>
+              <td>套餐内{#$promotion.cat_name#}剩余：
+			   {# $data.num"#}条
+			  </td>
+              <td>推广有效期：
+			   {# $data.days"#}天
+			  </td>
+            </tr>
+            <tr>
+              <td>方案说明：</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td colspan="2">
+			   {#$promotion.cat_notes#}
+			   </td>
+              </tr>
+          </table>
+		{#/if#}		
+	
+       </td>
+          </tr>
+      </table>
+</div>
+	</td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

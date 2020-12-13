@@ -1,0 +1,8 @@
+<div class="footer">
+<div class="link_lan">
+{#qishi_explain_list set="分类ID:1,列表名:explain"#}{#foreach from=$explain item=list#}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{#$list.url#}" target="_blank">{#$list.title#}</a>{#/foreach#}</div>
+<div class="link_bk">
+联系地址：{#$QISHI.address#} 联系电话：{#$QISHI.bootom_tel#} 网站备案：<a href="http://www.miibeian.gov.cn/" target="_blank">{#$QISHI.icp#}</a>  {#$QISHI.statistics#}</div>
+<div class="link_bk">{#$QISHI.bottom_other#}</div>
+<div class="link_bk" style="font-size:10px;"> Powered by <a href="http://www.74cms.com/" target="_blank" style="color:#009900"><em> 74cms v{#$QISHI.version#}</em></a></div>
+</div>

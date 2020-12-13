@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />{#qishi_pageinfo set="列表名:page,调用:QS_jobs"#}
+<title>{#$page.title#}</title>
+<meta name="description" content="{#$page.description#}">
+<meta name="keywords" content="{#$page.keywords#}">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/jobs.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+<script src="{#$QISHI.site_dir#}data/cache_classify.js" type='text/javascript' charset="utf-8"></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#"QS_jobs"|qishi_url#}">招聘信息</a>
+</div>
+<div class="jobs-nav">
+  <a href="{#"QS_jobslist"|qishi_url#}" class="select">全能搜索</a>
+  <a href="{#"QS_officebuilding"|qishi_url#}" >按写字楼搜索</a>
+  <a href="{#"QS_street"|qishi_url#}">按道路搜索</a>
+   <a href="{#"QS_jobtag"|qishi_url#}" >按标签搜索</a>
+  <div class="clear"></div>
+</div>
+<div class="jobsearchbox" id="jobsearchbox"><div class="loading"></div></div>
+<script src="{#$QISHI.site_template#}js/jquery.jobs-search.js" type='text/javascript'></script>
+<script type="text/javascript">
+	var getstr=",,,,,,,,,";
+	var defaultkey="请输入职位名称、公司名称{#if $QISHI.jobsearch_type=='1'#}、技能特长、学校等{#/if#}关键字...";
+	var getkey="{#$smarty.get.key#}";
+	if (getkey=='')
+	{
+	getkey=defaultkey;
+	}
+	allaround('{#$QISHI.site_template#}','{#$QISHI.site_dir#}','{#"QS_jobslist"|qishi_url#}',getkey,getstr);
+</script>
+
+<div class="jobsbox">
+  <div class="tit">
+    <div class="left"><h2>推荐职位</h2></div>
+	<div class="right link_bk"><a href="{#"QS_helplist,id:10"|qishi_url#}" target="_blank">我也要出现在这里！</a></div>
+	<div class="clear"></div>
+  </div>
+	<ul class="link_bk">
+	{#qishi_jobs_list set="列表名:jobslist,显示数目:30,填补字符:...,职位名长度:6,企业名长度:16,推荐:1,排序:rtime>desc"#}
+	{#foreach from=$jobslist item=list#}
+	<li>
+	<a href="{#$list.company_url#}" target="_blank">{#$list.companyname#}</a>
+	<a href="{#$list.jobs_url#}" target="_blank" class="jobsname">{#$list.jobs_name#}</a>
+	</li>
+	{#/foreach#}
+	</ul>
+	<div class="clear"></div>
+</div>
+<div class="jobsbox">
+  <div class="tit">
+    <div class="left"><h2>紧急招聘</h2></div>
+	<div class="right link_bk"><a href="{#"QS_helplist,id:10"|qishi_url#}" target="_blank">我也要出现在这里！</a></div>
+	<div class="clear"></div>
+  </div>
+<ul class="link_bk">
+{#qishi_jobs_list set="列表名:jobslist,显示数目:30,填补字符:...,职位名长度:6,企业名长度:16,紧急招聘:1,排序:rtime>desc"#}
+{#foreach from=$jobslist item=list#}
+<li>
+<a href="{#$list.company_url#}" target="_blank">{#$list.companyname#}</a>
+<a href="{#$list.jobs_url#}" target="_blank" class="jobsname">{#$list.jobs_name#}</a>
+</li>
+{#/foreach#}
+</ul>
+<div class="clear"></div>
+</div>
+<div class="jobsbox">
+  <div class="tit">
+    <div class="left"><h2>最新职位</h2></div>
+	<div class="right link_bk"><a href="{#"QS_jobslist"|qishi_url#}" target="_blank">更多</a></div>
+	<div class="clear"></div>
+  </div>
+<ul class="link_bk">
+{#qishi_jobs_list set="列表名:jobslist,显示数目:30,填补字符:...,职位名长度:6,企业名长度:16,排序:rtime>desc"#}
+{#foreach from=$jobslist item=list#}
+<li>
+<a href="{#$list.company_url#}" target="_blank">{#$list.companyname#}</a>
+<a href="{#$list.jobs_url#}" target="_blank" class="jobsname">{#$list.jobs_name#}</a>
+</li>
+{#/foreach#}
+</ul>
+<div class="clear"></div>
+</div>
+<div class="links link_bk">
+	{#qishi_link set="列表名:link,显示数目:100,调用名称:QS_jobs,类型:1"#}
+	<strong>友情链接：</strong>
+	{#foreach from=$link item=list#}
+	<a href="{#$list.link_url#}" target="_blank">{#$list.title#}</a>
+	{#/foreach#}
+	<a href="{#$QISHI.site_dir#}link/add_link.php"  style="color: #0066CC">[申请友情连接]</a>
+  <div class="clear"></div>
+	{#qishi_link  set="列表名:link,显示数目:18,调用名称:QS_jobs,类型:2"#}
+	{#foreach from=$link  item=list#}
+		<div class="imglink">
+		<a href="{#$list.link_url#}" target="_blank">
+		<img src="{#$list.link_logo#}" alt="{#$list.title#}"  border="0"  width="88" height="31" />
+		</a>
+		</div>
+	{#/foreach#}
+	<div class="clear"></div>
+</div>
+{#include file="footer.htm"#}
+</body>
+</html>

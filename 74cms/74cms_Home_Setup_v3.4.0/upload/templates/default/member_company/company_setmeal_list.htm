@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript"> 
+$(document).ready(function()
+{
+	$(".setmeal_list").hover(
+  function () {
+    $(this).css("background-color","#FFFCE8");
+	 $(this).css("border-color","#FF9900");
+  },
+  function () {
+    $(this).css("background-color","");
+	$(this).css("border-color","");
+  }
+);
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;服务中心&nbsp;>>服务列表
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box" style=" border-bottom:0px;">
+		<div class="user_right_top_tit_bg">		
+		  <h1>服务列表</h1>
+		</div>
+		</div>
+	  {#foreach from=$setmeal item=list#}
+          <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF" class="user_right_box setmeal_list"  style="margin-top:6px; line-height:180%;">
+            <tr> 
+              <td ><table width="96%" border="0" align="center" cellpadding="0" cellspacing="0" style="margin:5px">
+                <tr>
+                  <td height="32" colspan="4">
+				   <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                     <tr>
+                       <td>
+					   <strong style="font-size:14px; color:#FF0000; font-family:microsoft yahei">{#$list.setmeal_name#}</strong>
+					   	{#if $list.id>1#}<img src="{#$QISHI.site_dir#}data/setmealimg/{#$list.id#}.gif" border="0" align="absmiddle"  alt="{#$list.setmeal_name#}"/>{#/if#}
+					   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					   <span style="color:#003399">服务费：
+				  {#if $list.expense=="0"#}
+				  <span style="color: #FF6600">免费</span>
+				  {#else#}
+				   <span style="color:#FF6600; font-size:16px;">{#$list.expense#}</span> 元
+				  {#/if#}
+				  &nbsp;&nbsp;&nbsp;&nbsp;
+				  服务期限：
+				  {#if $list.days=="0"#}
+				  <span style="color:#FF6600">永久</span>
+				  {#else#}
+				   <span style="color:#FF6600; font-size:16px;">{#$list.days#}</span> 天
+				  {#/if#}
+				  </span>				  </td>
+                     </tr>
+                  </table></td>
+                </tr>
+                <tr>
+                  <td valign="top">发布普通招聘：
+				    <strong style="color:#009900">{#$list.jobs_ordinary#}</strong> 条 
+				  </td>					
+				  <td valign="top">下载高级简历：
+				    <strong style="color:#009900">{#$list.download_resume_senior#}</strong> 份  
+				 </td> 
+ 				  <td valign="top">下载普通简历： 
+				    <strong style="color:#009900">{#$list.download_resume_ordinary#}</strong> 份 
+				  </td>
+				  <td valign="top">邀请高级人才面试： 
+				    <strong style="color:#009900">{#$list.interview_senior#}</strong> 次    
+			      </td>              
+				 </tr>
+                <tr>
+                   <td valign="top">邀请普通人才面试： 
+				    <strong style="color:#009900">{#$list.interview_ordinary#}</strong> 次 
+				  </td>
+				 </tr>
+				<tr>
+				  <td valign="top">人才库容量： 
+				    <strong style="color:#009900">{#$list.talent_pool#}</strong>
+				  </td>
+ 				 <td>允许自由切换模板：{#if $list.change_templates=="1"#}<strong style="color:#009900">允许</strong>{#else#}<strong style="color:#009900">不允许</strong>{#/if#} </td>
+				 <td>允许开启电子地图：{#if $list.map_open=="1"#}<strong style="color:#009900">允许</strong>{#else#}<strong style="color:#009900">不允许</strong>{#/if#} </td>
+				 <td>&nbsp;</td>
+                </tr>
+				  <tr>
+					<td>推荐职位剩余：<strong style="color:#009900">{#$list.recommend_num#}</strong> 条</td>
+					<td>置顶职位剩余：<strong style="color:#009900">{#$list.stick_num#}</strong> 条</td>
+					<td>紧急职位剩余：<strong style="color:#009900">{#$list.emergency_num#}</strong> 条</td>
+					<td>套色职位剩余：<strong style="color:#009900">{#$list.highlight_num#}</strong> 条</td>
+				  </tr>
+				  <tr>
+					<td>推荐职位天数：<strong style="color:#009900">{#$list.recommend_days#} 天</strong></td>
+					<td>置顶职位天数：<strong style="color:#009900">{#$list.stick_days#}</strong> 天</td>
+					<td>紧急职位天数：<strong style="color:#009900">{#$list.emergency_days#}</strong> 天</td>
+					<td>套色职位天数：<strong style="color:#009900">{#$list.highlight_days#}</strong> 天</td>
+				  </tr>
+                <tr>
+                  <td colspan="3">其他说明：
+				  {#if $list.added==""#}
+				    无 
+				   {#else#}
+				    <span style="color: #009900">{#$list.added#}</span> 
+				   {#/if#}				  </td>
+                </tr>
+                <tr>
+                  <td colspan="3" align="center">
+				  {#if $list.apply=="0"#}
+				     <span style="color: #FF0000">(此服务已经停止申请)</span> 
+					   {#else#}
+					   <input type="button" name="next" value="申请此服务" class="user_submit" onclick="window.location='?act=setmeal_order_add&setmealid={#$list.id#}'"/>
+					     {#/if#}				  </td>
+                </tr>
+              </table></td>
+            </tr>
+          </table>
+		  {#/foreach#}
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

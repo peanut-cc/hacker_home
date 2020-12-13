@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+$("#addpms").click(function(){
+var url="{#$QISHI.site_dir#}user/user_pms.php";
+dialog("发送短消息","url:get?"+url,"400px","auto","");
+});
+
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;账户管理 &nbsp;>>&nbsp;消息管理
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>消息管理</h1>
+		</div>
+		<div class="us_tab">
+			<a href="?act=pm&new=1" {#if $smarty.get.new=="1"#}class="select"{#/if#}>未读<span>({#$total1#})</span></a>
+              <a href="?act=pm&msgtype=1" {#if $smarty.get.msgtype=="1"#}class="select"{#/if#}>系统消息<span>({#$total2#})</span></a>
+              <a href="?act=pm&msgtype=2" {#if $smarty.get.msgtype=="2"#}class="select"{#/if#}>私人消息<span>({#$total3#})</span></a>
+			  <div style="padding-right:10px; text-align:right; float:right; color:#3366CC; padding-top:5px;" >
+		    <span> <strong style="cursor:pointer" title="发送短消息"  id="addpms">+ 发送短消息</strong></span>
+			 </div>	
+			  <div class="clear"></div>
+	    </div>
+		 
+	<form id="form1" name="form1" method="post" action="?act=pm_del">
+	{#if $pms#}
+	<table width="100%" border="0" cellspacing="0" cellpadding="10" class="link_lan">
+	 {#foreach from=$pms item=list#}
+  <tr>
+    <td width="50" align="right" class="us_list">
+	{#if $list.avatars &&  $list.msgtype<>'1'#}
+	<img src="{#$QISHI.site_dir#}data/avatar/48/{#$list.avatars#}" border="0" width="48" height="48"/>
+	{#else#}
+	<img src="{#$QISHI.site_dir#}data/avatar/_no_photo.gif" border="0" />
+	 {#/if#}	</td>
+    <td class="us_list">
+	<div >
+	{#if $list.msgtype=='1'#}<span style="color: #FF0000">系统消息</span>
+	{#else#}<strong>{#$list.msgfrom#}</strong>{#/if#}<span style="color:#999999; padding-left:20px;">{#$list.replytime|date_format:"%Y-%m-%d %H:%M:%S"#}</span>
+	{#if $list.new=='1' && $list.replyuid<>$uid#}<span style="color: #FF6600; padding-left:15px;">[新]</span>{#/if#}
+	</div>
+      <div style="padding-top:4px;">	  
+	  {#$list.message#}
+	  </div>
+     <div style="padding-top:4px;">
+	 <a href="?act=pm_show&pmid={#$list.pmid#}&msgtype={#$smarty.get.msgtype#}&new={#$smarty.get.new#}">查看消息>></a>
+	 </div>
+	 </td>
+    <td width="50" class="us_list"><a href="?act=pm_del&pmid={#$list.pmid#}&msgtype={#$smarty.get.msgtype#}&new={#$smarty.get.new#}" onclick="return confirm('你确定要删除吗？')">删除</a></td>
+  </tr>
+  {#/foreach#}
+</table>
+ 			{#else#}
+			<div class="us_list_no_content">没有任何信息</div>
+			{#/if#}
+            <table border="0" align="center" cellpadding="0" cellspacing="0" class="link_bk">
+              <tr>
+                <td height="50" align="center"> <div class="page link_bk">{#$page#}</div></td>
+              </tr>
+            </table> 
+        </form>
+	  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

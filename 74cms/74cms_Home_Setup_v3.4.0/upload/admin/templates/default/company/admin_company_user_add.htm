@@ -1,0 +1,117 @@
+{#include file="sys/admin_header.htm"#}
+
+<div class="admin_main_nr_dbox">
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$(":radio[name='regpoints']").click(function(){
+	ck_regpoints()
+	});	
+	ck_regpoints();
+	function ck_regpoints()
+	{
+		if ($(":radio[name='regpoints'][checked]").val()=="y")
+		{
+		$("#regpointsshow").show();
+		}
+		else
+		{
+		$("#regpointsshow").hide();
+		}
+	}
+	$(".no_money3").click(function(){
+		$(".log_amount3").hide();
+	});
+	$(".yes_money3").click(function(){
+		$(".log_amount3").show();
+	});
+});
+</script>
+<div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+<div class="toptit">添加企业会员</div>
+  <form id="form1" name="form1" method="post" action="?act=members_add_save">
+  {#$inputtoken#}
+  <table width="100%" border="0" cellpadding="4" cellspacing="0"   >
+    <tr>
+      <td width="120" height="30" align="right"  style=" border-bottom:1px #CCCCCC dashed">用户名：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed"> <input name="username" type="text" class="input_text_200" id="username" maxlength="25" value=""/> </td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  style=" border-bottom:1px #CCCCCC dashed">邮箱地址：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" ><input name="email" type="text" class="input_text_200" id="email" maxlength="25" value=""/></td>
+    </tr>
+    <tr>
+      <td height="30" align="right"  style=" border-bottom:1px #CCCCCC dashed">登陆密码：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" ><input name="password" type="password" class="input_text_200" id="password" maxlength="25" value=""/></td>
+    </tr>
+	
+    <tr>
+      <td height="30" align="right"  style=" border-bottom:1px #CCCCCC dashed">再次输入密码：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" ><input name="password1" type="password" class="input_text_200" id="password1" maxlength="25" value=""/></td>
+    </tr>
+		
+	{#if $QISHI.operation_mode=="1"#}
+	    <tr>
+      <td height="30" align="right"  style=" border-bottom:1px #CCCCCC dashed">是否赠送积分：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed"  ><label>
+        <input name="regpoints" type="radio" value="y" checked="checked" />
+        赠送</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label>
+        <input type="radio" name="regpoints" value="n"   />
+        不赠送</label></td>
+	    </tr>
+		
+		<tr id="regpointsshow">
+      <td height="30" align="right"  style=" border-bottom:1px #CCCCCC dashed">赠送数量：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" ><input name="regpoints_num" type="text" class="input_text_200" id="regpoints_num" maxlength="25" value="{#$points.reg_points.value#}" onkeyup="if(event.keyCode !=37 && event.keyCode != 39) value=value.replace(/\D/g,'');" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/\D/g,''))"/></td>
+    </tr>
+		{#/if#}
+
+	{#if $QISHI.operation_mode=='2'#}  
+	<tr>
+      <td height="30" align="right"  style=" border-bottom:1px #CCCCCC dashed">赠送服务套餐：</td>
+      <td  style=" border-bottom:1px #CCCCCC dashed" >
+          <label>
+          <input type="radio" name="reg_service" value="0" {#if $QISHI.reg_service=='0'#}checked="checked"{#/if#}/>
+          不赠送</label>
+          {#foreach from=$givesetmeal item=list#}
+		    &nbsp;&nbsp;
+		    <label>
+          <input type="radio" name="reg_service" value="{#$list.id#}"   {#if $QISHI.reg_service==$list.id#}checked="checked"{#/if#}/>
+          {#$list.setmeal_name#}</label>
+		   {#/foreach#}	    
+	  </td>
+	    </tr>
+		{#/if#}
+		<tr>
+			<td align="right" style=" border-bottom:1px #CCCCCC dashed"><span style="color:#FF0000">是否已收费：</span></td>
+			<td style=" border-bottom:1px #CCCCCC dashed">
+			<label>
+			 <input name="is_money" type="radio" value="1" checked="checked" class="yes_money3"/>
+			是</label> &nbsp;&nbsp;&nbsp;<label>
+			<input name="is_money" type="radio" value="0"  class="no_money3"/>
+			否</label>		
+			</td>
+      </tr>
+	   <tr class="log_amount3">
+        <td align="right"  style=" border-bottom:1px #CCCCCC dashed;"><span style="color:#FF0000">收费金额：</span></td>
+        <td style=" border-bottom:1px #CCCCCC dashed"><input name="log_amount" type="text" class="input_text_200"  value="{#$setmeal.log_amount#}" maxlength="5"/> 元
+         <span class="admin_note">(请填写收费金额)</span> </td>
+      </tr>
+    <tr>
+      <td height="30" align="right"  >&nbsp;</td>
+      <td height="60"  ><span style="font-size:14px;">
+        <input type="hidden" name="member_type"  value="1" />
+        <input name="submit3" type="submit" class="admin_submit"    value="添加"/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input name="submit22" type="button" class="admin_submit"    value="返 回" onclick="window.location.href='?act=members_list'"/>
+      </span></td>
+    </tr>
+  </table>
+  </form>
+</div>
+{#include file="sys/admin_footer.htm"#}
+</body>
+</html>

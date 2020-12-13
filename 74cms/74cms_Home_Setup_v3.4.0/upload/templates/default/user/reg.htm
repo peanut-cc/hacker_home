@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$(".item").hover(
+		function()
+		{
+			$(this).find(".top").addClass("top-hover");
+			$(this).find(".txtbox").addClass("txtbox-hover");
+			},
+			function()
+			{
+			$(this).find(".top").removeClass("top-hover");
+			$(this).find(".txtbox").removeClass("txtbox-hover");
+			}
+		);
+	$(".but").hover(
+		function()
+		{
+			$(this).addClass("but-hover");
+			},
+			function()
+			{
+			$(this).removeClass("but-hover");
+			}
+		);
+});
+</script>
+</head>
+<body>
+{#include file="user/header.htm"#}
+<div class="reg-box-tip">根据您的实际情况选择会员类型，我们会根据您的角色不同，为您提供专有的会员服务。</div>
+<div class="reg-box">
+  <div class="item">
+  	<div class="top">个人会员</div>	
+    <div class="txtbox">
+		<div class="txt">
+			<ul>	
+			<li>创建简历</li>
+			<li>搜索职位</li>
+			<li>在线申请职位 </li>
+			<li>职位收藏夹</li>
+			<li>......</li>
+			</ul>
+		</div>
+		<div class="butbox">
+		<input type="button" name="Submit"  id="login" class="but" value="免费注册" onclick="window.location='?act=form&type=2'"/>
+		</div>
+    </div>
+  </div>
+  <div class="item last">
+  		<div class="top">企业会员</div>	
+    <div class="txtbox">
+		<div class="txt">
+			<ul>	
+			<li>发布招聘信息</li>
+			<li>搜索人才</li>
+			<li>下载简历 </li>
+			<li>邀请面试</li>
+			<li>......</li>
+			</ul>
+		</div>
+		<div class="butbox">
+		<input type="button" name="Submit"  id="login" class="but" value="免费注册" onclick="window.location='?act=form&type=1'"/>
+		</div>
+    </div>
+  </div>
+  <div class="clear"></div>
+  </div>
+{#include file="user/footer.htm"#}
+</body>
+</html>

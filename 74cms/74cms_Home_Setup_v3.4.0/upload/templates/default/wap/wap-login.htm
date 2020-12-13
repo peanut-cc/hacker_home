@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>会员登录 -  {#$QISHI.site_name#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+{#include file="wap/header.htm"#}
+<div class="wap_tit">
+个人会员登录
+</div>
+<form action="?act=do_login" method="post">
+<div class="wap_txt link_lan">
+用户名：<br />
+<input name="username" type="text" /><br />
+密码：<br />
+<input name="password" type="password" />
+<br />
+<input type="submit" name="Submit" value="登录" />
+</div>
+</form>
+{#if $err#}
+<div class="wap_logo_err">用户名或密码错误！</div>
+{#/if#}
+{#include file="wap/footer.htm"#}
+</body>
+</html>

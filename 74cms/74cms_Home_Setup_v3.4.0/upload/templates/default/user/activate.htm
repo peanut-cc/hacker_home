@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+//验证
+$(document).ready(function() {
+ $("#form1").validate({
+ //debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   pwd:{
+    required: true
+   },
+   member_type:{
+    required: true
+   }
+	},
+    messages: {
+    pwd: {
+    required: "请输入密码"
+   },
+   member_type:{
+    required: "请选择会员类型,选定后不可修改"
+   }
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( $("#err"));
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+});
+</script>
+</head>
+<body>
+{#include file="user/header.htm"#}
+<div class="activate_box">
+   <div class="reg_box_tit"><strong>激活你的账号</strong></div>
+   
+<form id="form1" name="form1" method="post" action="?act=activate_save"  >
+<table width="700" border="0" align="center" cellpadding="5" cellspacing="0" style="margin-top:10px; line-height:180%; margin-bottom:30px;" class="link_bk">
+  <tr>
+    <td width="150" align="right">用户名：</td>
+    <td>{#$activate_username#}
+      <input name="act_username" type="hidden" value="{#$activate_username#}" /></td>
+  </tr>
+  <tr>
+    <td align="right">Email：</td>
+    <td>{#$activate_email#}
+      <input name="act_email" type="hidden" value="{#$activate_email#}" /></td>
+  </tr>
+  <tr>
+    <td align="right">登陆密码：</td>
+    <td><input name="pwd" type="password" id="pwd"  class="input_text_200"/></td>
+  </tr>
+  <tr>
+    <td align="right" valign="top">激活成为：<br />(选定后不可修改)
+</td>
+    <td>
+	<input name="member_type" type="radio" value="1" />企业会员 <span style="color:#999999">(发布招聘信息，查看人才简历，搜索简历，在线邀请面试，建立企业人才库...)</span><br />
+<input name="member_type" type="radio" value="2" />个人会员<span style="color:#999999">(填写个人简历，在线投递简历，在线申请职位，搜索职位...)</span>
+<div  id="err" style="padding-top:15px;"></div>
+</td>
+  </tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td height="40"><input type="submit" name="Submit" value="立即激活" class="but100" /></td>
+  </tr>
+</table>
+</form>
+</div>
+{#include file="user/footer.htm"#}
+</body>
+</html>

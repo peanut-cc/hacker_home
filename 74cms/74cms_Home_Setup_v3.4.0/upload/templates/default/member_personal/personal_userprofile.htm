@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript" src="{#$QISHI.site_template#}js/jquery.vtip-min.js"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#tabshow li:nth-child(4)>a").addClass("selected");
+});
+//验证
+$(document).ready(function() {
+ $("#Form1").validate({
+//debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   realname:{
+    required: true,
+	minlength:2,
+	maxlength:8
+   },
+   birthday: {
+	minlength:6
+   },
+   addresses: {
+   required: true,
+   minlength:6
+   },
+   phone:{
+	minlength:6
+   },
+	 qq: {
+	   digits:true,
+	   minlength:5
+	   },
+	 profile:{
+	maxlength:150
+	}
+	},
+    messages: {
+    realname: {
+    required: "请输入真实姓名",
+	minlength: jQuery.format("请正确输入姓名，{0}个字符以上"),
+	maxlength: jQuery.format("请正确输入姓名，{0}个字符以内")
+   },
+   birthday: {
+    minlength: jQuery.format("请正确输入生日")
+   },
+   addresses: {
+    required: "请输入联系地址",
+	minlength: jQuery.format("请详细输入地址")
+   },
+    phone: {
+	minlength: jQuery.format("请正确输入电话号码")
+   },
+    qq: {
+    digits: jQuery.format("请正确填写qq号码"),
+	minlength: jQuery.format("qq号不能小于{0}位")
+   },
+    profile: {
+    maxlength: jQuery.format("个人简介不能超过{0}个字符")
+   }
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+	jQuery.validator.addMethod("telphoneValid", function(value, element) { 
+    var tel = /^(13|15|18)\d{9}$/; 
+    return tel.test(value) || this.optional(element); 
+}, "请输入正确的手机号码");
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;账户管理&nbsp;>>&nbsp;基本资料
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>个人资料</h1>
+		</div>
+		<div class="us_tab">
+			<a href="?act=userprofile" class="select">基本资料</a>
+			<a href="?act=user_email">认证邮箱</a>
+			{#if $sms.open=="1"#}
+			<a href="?act=user_mobile"  >认证手机</a>
+			{#/if#}
+              <a href="?act=avatars" >我的头像</a>
+              <a href="?act=password_edit" >密码修改</a>
+			  <div class="clear"></div>
+			  </div>
+			  <form id="Form1" name="Form1" method="post" action="?act=userprofile_save">
+		<table width="100%" border="0" cellpadding="4" cellspacing="0"  style="margin-top:10px;">
+          <tr>
+            <td width="120" height="30" align="right"   >用户名：</td>
+            <td  >{#$user.username#}</td>
+          </tr>
+		   {#if $QISHI.qq_apiopen=="1"#}
+				 {#if $user.qq_openid#}
+			  <tr>
+				<td height="30" align="right"   >QQ帐号绑定登录：</td>
+				<td  >已绑定 <a href="?act=del_qq_binding" onclick="return confirm('您确定取消绑定吗?')">[取消绑定]</a></td>
+			  </tr>
+			  {#else#}
+			   <tr>
+				<td height="30" align="right"   >QQ帐号绑定登录：</td>
+				<td  >未绑定 <a href="{#$QISHI.site_dir#}user/{#if $QISHI.qq_logintype=='1'#}connect_qq_client.php{#else#}connect_qq_server.php{#/if#}?act=binding">[立即绑定]</a></td>
+			  </tr>
+			  {#/if#}
+		  {#/if#}
+		    {#if $QISHI.sina_apiopen=="1"#}
+				 {#if $user.sina_access_token#}
+			  <tr>
+				<td height="30" align="right"   >新浪微博绑定登录：</td>
+				<td  >已绑定 <a href="?act=del_sina_binding" onclick="return confirm('您确定取消绑定吗?')">[取消绑定]</a></td>
+			  </tr>
+			  {#else#}
+			   <tr>
+				<td height="30" align="right"   >新浪微博绑定登录：</td>
+				<td  >未绑定 <a href="{#$QISHI.site_dir#}user/connect_sina.php">[立即绑定]</a></td>
+			  </tr>
+			  {#/if#}
+		  {#/if#}
+		   {#if $QISHI.taobao_apiopen=="1"#}
+				 {#if $user.taobao_access_token#}
+			  <tr>
+				<td height="30" align="right"   >淘宝帐号绑定登录：</td>
+				<td  >已绑定 <a href="?act=del_taobao_binding" onclick="return confirm('您确定取消绑定吗?')">[取消绑定]</a></td>
+			  </tr>
+			  {#else#}
+			   <tr>
+				<td height="30" align="right"   >淘宝帐号绑定登录：</td>
+				<td  >未绑定 <a href="{#$QISHI.site_dir#}user/connect_taobao.php">[立即绑定]</a></td>
+			  </tr>
+			  {#/if#}
+		  {#/if#}
+		  <tr>
+            <td height="30" align="right" >注册邮箱：</td>
+            <td  >
+			{#$user.email#}
+			&nbsp;&nbsp;
+			{#if $user.email_audit=="1"#}
+			<a href="?act=user_email" style="color:#009900"> [已认证]</a>
+			{#else#}
+			<a href="?act=user_email"> [点击认证]</a>
+			{#/if#}
+			
+			
+			</td>
+          </tr>
+		  {#if $sms.open=="1"#}
+		   <tr>
+		     <td height="30" align="right" >手机号码：</td>
+		     <td  >
+			 
+			  {#if $user.mobile#}
+			 {#$user.mobile#}
+			{#else#}
+			未填写
+			{#/if#}
+			 &nbsp;&nbsp;
+			 {#if $user.mobile_audit=="1"#}
+			<a href="?act=user_mobile" style="color:#009900"> [已认证]</a>
+			{#else#}
+			<a href="?act=user_mobile"> [点击认证]</a>
+			{#/if#}
+			 
+			 </td>
+	      </tr>
+		  {#/if#}
+		  <tr>
+            <td height="30" align="right" ><span style="color:#FF3300; font-weight:bold">*</span>真实姓名：</td>
+            <td  ><input name="realname" type="text" class="input_text_200" id="realname" maxlength="10"  value="{#$userprofile.realname#}" /></td>
+          </tr>
+		   <tr>
+            <td height="30" align="right" >性别：</td>
+            <td  >
+              <label><input name="sex" type="radio" value="男"  {#if $userprofile.sex=="男" || $userprofile.sex==""#}checked="checked"{#/if#}/>
+              男</label>&nbsp;&nbsp;
+			  <label><input type="radio" name="sex" value="女" {#if $userprofile.sex=="女"#}checked="checked"{#/if#}/>女</label>&nbsp;&nbsp;        
+            </td>
+		   </tr>
+		   <tr>
+		     <td height="30" align="right" >生日：</td>
+		     <td  ><input name="birthday" type="text" class="input_text_200" id="birthday" maxlength="50"  value="{#$userprofile.birthday#}" /></td>
+	      </tr>
+		   <tr>
+		     <td height="30" align="right" ><span style="color:#FF3300; font-weight:bold">*</span>通讯地址：</td>
+		     <td  ><input name="addresses" type="text" class="input_text_200" id="addresses" maxlength="150"  value="{#$userprofile.addresses#}" /></td>
+	      </tr>
+		   
+		   <tr>
+		     <td  align="right" >固定电话：</td>
+		     <td  ><input name="phone" type="text" class="input_text_200" id="phone" maxlength="60"  value="{#$userprofile.phone#}" /></td>
+	      </tr>
+		  <tr>
+		     <td height="30" align="right" >QQ：</td>
+		     <td  ><input name="qq" type="text" class="input_text_200" id="qq" maxlength="30"  value="{#if $userprofile.qq<>"0"#}{#$userprofile.qq#}{#/if#}" /></td>
+	      </tr>
+		  <tr>
+		     <td height="30" align="right" >MSN：</td>
+		     <td  ><input name="msn" type="text" class="input_text_200" id="msn" maxlength="30"  value="{#$userprofile.msn#}" /></td>
+	      </tr>
+		  <tr>
+		     <td height="30" align="right" >个人简介：</td>
+		     <td  ><textarea name="profile" cols="" rows=""  class="input_text_200_textarea">{#$userprofile.profile#}</textarea></td>
+	      </tr>
+		  <tr>
+		     <td height="30" align="right" >&nbsp;</td>
+		     <td  ><input type="submit" name="Submit" value="保存"  class="user_submit" /></td>
+	      </tr>
+		  <tr>
+		     <td height="30" align="right" >&nbsp;</td>
+		     <td  > </td>
+	      </tr>
+        </table>
+		</form>
+	</div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

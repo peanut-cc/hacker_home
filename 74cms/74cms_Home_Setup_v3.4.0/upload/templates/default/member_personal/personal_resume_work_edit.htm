@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.user.selectlayer.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+//验证
+$(document).ready(function() {
+showyearbox(".date_input");
+ $("#Form1").validate({
+// debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   start:{
+    required: true
+   },
+   endtime: {
+	required:true
+   },
+   companyname: {
+   required:true
+   },
+   jobs: "required"
+	},
+    messages: {
+    start: {
+    required: "请输入开始日期"
+   },
+   endtime: {
+    required: jQuery.format("请输入结束日期")
+   },
+   companyname: {
+    required: jQuery.format("请输入企业名称")
+   },
+    jobs: {
+    required: jQuery.format("请输入职位名称")
+   }
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+});
+</script>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;编辑简历&nbsp;>>&nbsp;修改工作经历</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>我的简历</h1>
+		</div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+        <tr>
+          <td height="22" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="4" >
+            <tr>
+              <td height="50" bgcolor="#F5FAFC">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:14px; color:#0033CC">修改工作经历</span> <span style="color:#999999">(带<strong  style="color:#FF0000">*</strong>的为必填)</span></td>
+              </tr>            
+          </table>
+            <table width="100%" border="0" cellspacing="0" cellpadding="4" style="margin-bottom:150px; line-height:180%;">
+			<form id="Form1" name="Form1" method="post" action="?act=save_resume_work_edit" onsubmit="return chk_form();">
+				 <tr>
+                <td width="242" height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>开始日期：</td>
+                <td>
+				  <div>
+				<input name="start" type="text" class="input_text_200 date_input" id="start"   value="{#$work_edit.start#}" maxlength="18"/>
+                    <span style="color:#666666">(如：2003年3月)</span>
+					
+					</div>
+					</td>
+              </tr>
+              <tr>
+                <td width="242" height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>结束日期：</td>
+                <td>
+				<div>
+				<input name="endtime" type="text" class="input_text_200 date_input" id="endtime" maxlength="18"   value="{#$work_edit.endtime#}" />
+                    <span style="color:#666666">(如：2006年8月)</span>
+					</div>
+					</td>
+              </tr>
+              <tr>
+                <td width="242" height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>企业名称：</td>
+                <td width="836"><input name="companyname" type="text" class="input_text_200" id="companyname" maxlength="40"  value="{#$work_edit.companyname#}"/></td>
+              </tr>
+              <tr>
+                <td width="242" height="23" align="right" valign="top">企业介绍：</td>
+                <td><textarea name="companyprofile" id="companyprofile"  style="width:350px; height:90px;line-height:160%; font-size:12px" onpropertychange="if(this.value.length>120){this.value=this.value.slice(0,120)}">{#$work_edit.companyprofile#}</textarea>
+                  <br />
+                 请简要说明公司性质、规模、业务、发展历程等</td>
+              </tr>
+              <tr>
+                <td width="242" height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>职务名称：</td>
+                <td><input name="jobs" type="text" class="input_text_200" id="jobs" maxlength="30" value="{#$work_edit.jobs#}" /></td>
+              </tr>
+			     <tr>
+                <td width="242" height="23" align="right" valign="top">业绩或表现：</td>
+                <td><textarea name="achievements"  id="achievements" style="width:350px; height:90px; line-height:160%; font-size:12px;"  onpropertychange="if(this.value.length>200){this.value=this.value.slice(0,200)}">{#$work_edit.achievements#}</textarea>
+                  <br />请简要介绍您的个人业绩，工作情况。</td>
+              </tr>
+              <tr>
+                <td height="60" align="center" >
+				<input name="id" type="hidden" id="id" value="{#$work_edit.id#}" />
+				<input name="pid" type="hidden" id="id" value="{#$work_edit.pid#}" />
+				<input name="go_resume_show" type="hidden"  value="{#$go_resume_show#}" />
+				</td>
+                <td height="60" ><input type="submit" name="save" value="确定修改" class="user_submit"/>                  
+     
+                <br /></td>
+              </tr></form>
+            </table>
+		  </td>
+          <td width="150" valign="top" class="resume_right_box" >
+		 {#include file="member_personal/personal_right.htm"#}
+		  </td>
+        </tr>
+      </table>
+        </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

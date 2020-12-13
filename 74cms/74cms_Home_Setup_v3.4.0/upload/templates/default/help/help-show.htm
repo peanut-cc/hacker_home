@@ -1,0 +1,50 @@
+{#qishi_help_show set="列表名:show,ID:GET[id]"#}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$show.title#}- 帮助 - {#$QISHI.site_name#}</title>
+<meta name="description" content="{#$show.description#}">
+<meta name="keywords" content="{#$show.keywords#}">
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<link href="{#$QISHI.site_template#}css/common.css" rel="stylesheet" type="text/css" />
+<link href="{#$QISHI.site_template#}css/help.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' ></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#"QS_help"|qishi_url#}">帮助</a>&nbsp;>>&nbsp;{#$show.title#}
+</div>
+<div class="help-index">
+  <div class="left link_bk">
+{#qishi_help_category set="列表名:category,大类:0"#}
+{#foreach from=$category item=list#}
+    <div class="box">
+	  <div class="tit"><h3>{#$list.title#}</h3></div>	  
+	  <div class="txt">
+	  <ul>
+	  {#qishi_help_category set="列表名:sclass,大类:"|cat:$list.id#}
+		{#foreach from=$sclass item=slist#}
+		<li><a href="{#$slist.url#}">{#$slist.title#}</a></li>
+		 {#/foreach#}
+	  </ul>
+	  </div>
+    </div>
+	 {#/foreach#}
+  </div>
+  <div class="right">
+    <div class="txt link_bk">
+	  <div class="showtit">{#$show.title#}</div>
+	  <div class="showtxt">{#$show.content#}</div>
+	</div>
+
+  </div>
+  <div class="clear"></div>
+</div>
+
+{#include file="footer.htm"#}
+</body>
+</html>

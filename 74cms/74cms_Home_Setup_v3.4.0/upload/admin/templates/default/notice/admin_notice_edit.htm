@@ -1,0 +1,117 @@
+{#include file="sys/admin_header.htm"#}
+<link rel="stylesheet" href="kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="kindeditor/lang/zh_CN.js"></script>
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+	{#include file="notice/admin_notice_nav.htm"#}
+  <div class="clear"></div>
+</div>
+<div class="toptit">编辑公告</div>
+  <form action="?act=editsave" method="post" enctype="multipart/form-data" name="FormData" id="FormData">
+  {#$inputtoken#}
+    <table width="100%" border="0" cellpadding="3" cellspacing="0" class="admin_table">
+      <tr>
+        <td width="67" align="right" style="border:0px" >标题：</td>
+        <td width="400"  style="border:0px" >
+		<input name="title" type="text"  class="input_text_400" value="{#$notice.title#}" maxlength="45"/>		</td>
+        <td  style="border:0px" >
+		<div class="color_layer">
+		<input type="text" name="tit_color" id="tit_color" style="display:none">
+		<div id="color_box" onclick="color_box_display()" ></div>
+		{#include file="sys/admin_select_color.htm"#}
+		</div>
+		</td>
+      </tr>
+      <tr>
+        <td align="right" >所属分类：</td>
+        <td colspan="2" ><select name="type_id" id="type_id">
+          <option value="">请选择所属分类：</option>
+		  {#foreach from=$category item=list#}
+          <option value="{#$list.id#}"  {#if $list.id==$notice.type_id#} selected="selected" {#/if#}>{#$list.categoryname#}</option>
+ {#/foreach#}    
+        </select></td>
+      </tr>
+    </table>
+    <table width="700" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100" ><textarea  id="content" name="content" style="width:700px;height:300px;visibility:hidden;">{#$notice.content#}</textarea>
+           <script>
+      var editor;
+      KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="content"]', {
+          allowFileManager : true
+        });
+        K('input[name=Submit2]').click(function(e) {
+          editor.html('');
+        });
+      });
+    </script></td>
+      </tr>
+      <tr>
+        <td height="50" align="center" ><input type="submit" name="Submit" value="确定提交" class="admin_submit"   />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="reset" name="Submit2" value="重置表单" class="admin_submit"   /></td>
+      </tr>
+    </table>
+    <table width="100%" border="0" cellpadding="3" cellspacing="0" class="admin_table">
+      <tr>
+        <td width="120" height="30" align="right" >是否显示：</td>
+        <td width="200" >
+		
+		<label><input name="is_display" type="radio" value="1"  {#if $notice.is_display==1#} checked="checked"{#/if#} />
+显示
+</label>
+<label>
+<input type="radio" name="is_display" value="0" {#if $notice.is_display=="0"#} checked="checked"{#/if#} /> 
+不显示</label></td>
+        <td width="100" align="right" >排序：</td>
+        <td ><input name="sort" type="text"  class="input_text_150" id="show_order" style="width:50px;" onkeyup="if(event.keyCode !=37 && event.keyCode != 39) value=value.replace(/\D/g,'');" value="{#$notice.sort#}" maxlength="8" onbeforepaste="clipboardData.setData('text',clipboardData.getData('text').replace(/\D/g,''))"/>
+        <span>&nbsp;&nbsp;&nbsp;&nbsp;数字越大越靠前</span></td>
+      </tr>
+      <tr>
+        <td height="30" align="right" >外部链接：</td>
+        <td ><input name="is_url" type="text" class="input_text_150" id="is_url" value="{#$notice.is_url#}" maxlength="100"/></td>
+        <td align="right" >标题加粗：</td>
+        <td ><input name="tit_b" type="checkbox" id="tit_b" value="1"  {#if $notice.tit_b==1#} checked="checked"{#/if#} />
+        加粗</td>
+      </tr>
+	  <tr>
+	  </tr>
+	   {#if $QISHI.subsite=="1"#}
+	  <tr>
+        <td height="30" align="right" >添加到：</td>
+        <td colspan="3" >
+		 <label ><input name="subsite_id" type="radio" value="0" {#if $notice.subsite_id=="0"#}checked="checked"{#/if#}/>全站</label>
+		&nbsp;&nbsp;&nbsp;
+		{#foreach from=$subsite item=li#}
+		<label ><input name="subsite_id" type="radio" value="{#$li.s_id#}" {#if $notice.subsite_id==$li.s_id#}checked="checked"{#/if#}/>{#$li.s_districtname#}</label>
+		&nbsp;&nbsp;&nbsp;
+		{#/foreach#}
+		</td>
+      </tr>
+	  {#/if#}
+      <tr>
+        <td height="30" align="right" >keywords：</td>
+        <td colspan="3" ><input name="seo_keywords" type="text" class="input_text_400" id="keywords"  maxlength="30"    value="{#$notice.seo_keywords#}"/></td>
+      </tr>
+      <tr>
+        <td height="30" align="right" valign="top" >description：</td>
+        <td colspan="3" ><textarea name="seo_description" class="input_textarea_400" id="description">{#$notice.seo_description#}</textarea>
+<input name="id" type="hidden" id="id" value="{#$notice.id#}" /></td>
+      </tr>
+    </table>
+  </form>
+</div>
+{#if $notice.tit_color#}
+<script type="text/javascript" >
+var rgb="{#$notice.tit_color#}";
+document.FormData.tit_color.value= rgb;
+document.getElementById('tit_color').style.background=rgb;
+document.getElementById('color_box').style.background=rgb;
+</script>
+{#/if#}
+{#include file="sys/admin_footer.htm"#}
+</body>
+</html>

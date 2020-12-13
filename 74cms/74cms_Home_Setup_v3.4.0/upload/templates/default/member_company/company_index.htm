@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.vtip-min.js" type='text/javascript' language="javascript"></script>
+		
+<script src="{#$QISHI.site_template#}js/jquery.reasontip-min.js" type='text/javascript' language="javascript"></script>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+	//头像
+	$("#show_avatars_url").mouseover(function() {
+		$(".avatars_edit").show();
+		$(".avatars_edit").css("opacity", 0.2);
+		$("#show_avatars_url").mouseout(function() {
+		$(".avatars_edit").hide();
+		});	
+	});
+		
+	vtip_reason("{#$QISHI.site_dir#}","company_reason");
+
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a> 
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+{#include file="member_company/left.htm"#}
+	</td>
+		
+   <td valign="top" class="link_lan">
+	{#if $QISHI.operation_mode=='1' && $points<=$QISHI.points_min_remind#}
+		 <div class="remind link_lan" >
+		温馨提醒：您的账户{#$QISHI.points_byname#}仅剩余<span>{#$points#}</span>{#$QISHI.points_quantifier#}，建议您尽快<a href="company_service.php?act=order_add">[充值]</a> 。
+		</div>
+		{##/if#}
+		
+		{#if $QISHI.operation_mode=='2' #}
+			{#if $meal_min_remind=="已经到期" || $setmeal_endtime_days=="已到期,请您重新申请"#}
+			<div class="remind link_lan" >
+			温馨提醒：您的的服务已经到期，建议您尽快<a href="company_service.php?act=setmeal_list">[购买新套餐]</a> 。
+			</div>
+			{#elseif $meal_min_remind>="1"#}
+			<div class="remind link_lan" >
+			温馨提醒：您的的服务还有<span>{#$meal_min_remind#}</span>天到期，建议您尽快<a href="company_service.php?act=setmeal_list">[购买新套餐]</a> 。
+			</div>
+			{#/if#}
+		{#/if#}
+<div class="com_user_box">
+  <div class="titbox">
+  	<div class="lefttit"><u>欢迎：{#$user.username#}</u>(uid:{#$user.uid#})&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="company_user.php?act=userprofile">会员资料</a></div>
+	
+	<div class="rightip">{#if $loginlog#}上次登录时间：{#$loginlog.log_addtime|date_format:"%Y-%m-%d %H:%M"#}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上次登录IP：{#$loginlog.log_ip#}{#else#}上次登录时间：从未登录&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上次登录IP：从未登录{#/if#}</div>
+	<div class="clear"></div>
+  </div>
+ 
+<table width="98%" border="0" align="center" cellpadding="0" cellspacing="5" >
+            <tr>
+              <td width="120">
+			  <table border="0" cellpadding="0" cellspacing="1" bgcolor="#CDE6F3" style="margin:3px; padding:3px;" >
+                <tr>
+                  <td bgcolor="#FFFFFF"  >
+				  <div style=" position:relative"  id="show_avatars_url">
+				  <a href="company_user.php?act=avatars">
+				  {#if $user.avatars==""#}<img src="{#$QISHI.site_dir#}data/avatar/no_photo.gif" border="0"  width="100" height="100" />{#else#}<img src="{#$QISHI.site_dir#}data/avatar/100/{#$user.avatars#}?rand={#$rand#}" border="0"   width="100" height="100"  />{#/if#}</a>
+				  <div class="avatars_edit">修改头像</div>
+				  </div>				  </td>
+                </tr>
+              </table>			  </td>
+              <td valign="top">
+			  
+			  <table width="100%" border="0" cellspacing="0" cellpadding="0"  style="color:#666666">
+				{#if $QISHI.operation_mode=="1"#}
+					<tr>
+					  <td style=" padding-top:12px;">&nbsp;账户{#$QISHI.points_byname#}：&nbsp;<span style="color: #FF6600; font-size:30px; font-family:Arial, Helvetica, sans-serif">{#$points#}</span>&nbsp;&nbsp;{#$QISHI.points_quantifier#}
+						<a href="company_service.php?act=order_add"><img src="{#$QISHI.site_template#}images/15.gif" alt="马上充值" width="55" height="26" border="0" align="absmiddle" style="margin-left:40px;" /></a>
+					  </td>
+					</tr>
+				{#elseif $QISHI.operation_mode=="2"#}
+					<tr>
+					  <td style=" padding-top:12px;">&nbsp;我的套餐：&nbsp;<span style="color: #FF6600; font-size:12px; font-family:Arial, Helvetica, sans-serif">{#$setmeal.setmeal_name#}</span>
+						{#if $setmeal.setmeal_id>1#}<a href="company_service.php?act=setmeal_list" ><img src="{#$QISHI.site_dir#}data/setmealimg/{#$setmeal.setmeal_id#}.gif" border="0" align="absmiddle"  title="{#$setmeal.setmeal_name#}" class="vtip"/></a>{#/if#}
+						&nbsp;&nbsp;&nbsp;&nbsp;<a href="company_service.php?act=setmeal_list" >[申请服务]</a>
+					  </td>
+					</tr>
+				{#/if#}				
+                <tr>
+                  <td  style=" padding-top:12px;" class="butimglink">
+				  &nbsp;认证状态：&nbsp;
+		
+				  {#if $company.audit=="1"#}
+				  <a href="company_info.php?act=company_auth" class="vtip" title="营业执照已认证，执照编号：{#$company.license#}">营业执照已认证</a>
+				  {#elseif $company.audit=="2"#}
+				  <a href="company_info.php?act=company_auth" class="vtip" style=" background-position: 0px -16px; color: #999999" title="营业执照认证中.....，执照编号：{#$company.license#}">营业执照认证中</a>
+					{#else#}
+					 <a href="company_info.php?act=company_auth" class="reason" id="{#$company.uid#}" title="营业执照认证未通过<br/>认证通过后可增加信息的可信度，还可能额外赠送积分哦！" style=" background-position: 0px -16px; color: #999999">营业执照认证未通过</a>
+					{#/if#}
+
+					{#if $sms.open=="1"#}			
+						{#if $user.mobile_audit=="1"#}
+						<a href="company_user.php?act=user_mobile" class="vtip" title="手机已认证，手机号：{#$user.mobile#}" style=" background-position: 0px -33px;">手机已认证</a>
+						{#else#}
+						<a href="company_user.php?act=user_mobile" class="vtip" title="手机未认证<br/>认证通过可以使用手机号登录本站，还能接收各类短信通知！"  style=" background-position: 0px -55px;color: #999999">手机未认证</a>
+						{#/if#}	
+					{#/if#}				
+					{#if $user.email_audit=="1"#}
+					<a href="company_user.php?act=user_email" class="vtip" title="邮箱已认证，邮箱：{#$user.email#}" style=" background-position: 0px -74px;">邮箱已认证</a>
+					{#else#}
+					<a href="company_user.php?act=user_email" class="vtip" title="邮箱未认证<br/>认证通过可以使用邮箱号登录本站，还能接收各类邮件通知！" style=" background-position: 0px -93px;color: #999999">邮箱未认证</a>
+					{#/if#}
+				  </td>
+                </tr>
+                <tr>
+                  <td style=" padding-top:12px;">&nbsp;消息提醒：&nbsp;系统消息
+				  {#if $msg_total1>0#}
+				  <a href="company_user.php?act=pm&msgtype=1" style="color:#FF0000">({#$msg_total1#})</a>
+				  {#else#}
+				  <a href="company_user.php?act=pm&msgtype=1" style="color:#666666">(0)</a>
+				  {#/if#}				  
+				  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;私人消息
+				   {#if $msg_total2>0#}
+				   <a href="company_user.php?act=pm&msgtype=2" style="color:#FF0000">({#$msg_total2#})</a>
+				  {#else#}
+				 <a href="company_user.php?act=pm&msgtype=2" style="color:#666666">(0)</a>
+				  {#/if#}				  </td>
+                </tr>
+              </table></td>
+              <td width="180" valign="top"><table width="100%" border="0" cellspacing="16" cellpadding="0">
+                <tr>
+                  <td><a href="company_jobs.php?act=addjobs"><img src="{#$QISHI.site_template#}images/71.gif" alt="发布职位"  border="0"  /></a></td>
+                </tr>
+                <tr>
+                  <td><a href="company_jobs.php?act=jobs"><img src="{#$QISHI.site_template#}images/81.gif" alt="管理职位"  border="0"  /></a></td>
+                </tr>
+              </table></td>
+          </tr>
+      </table>	
+</div>
+
+	{#if $QISHI.operation_mode=="2"#}
+	<div class="com_user_box" style="margin-top:10px;">
+  <div class="titbox">
+  	<div class="lefttit"><u>我的服务</u></div>
+	<div class="rightip"><a href="company_service.php?act=setmeal_list" >申请服务</a></div>
+	<div class="clear"></div>
+  </div>
+ <table width="98%" border="0" align="center" cellpadding="0" cellspacing="9">
+      <tr>
+        <td colspan="4">
+		<span style="color:#FF6600">剩余时间：{#if $setmeal.endtime=="0"#}不限制{#else#}{#$setmeal_endtime_days#}{#/if#}</span>
+		<span style="color:#999999">
+		(开通时间：{#$setmeal.starttime|date_format:"%Y-%m-%d"#}，结束时间{#if $setmeal.endtime=="0"#}不限制{#else#}{#$setmeal.endtime|date_format:"%Y-%m-%d"#}{#/if#})
+		</span>
+		</td>
+        </tr>
+      <tr>
+        <td>服务名称：<span>{#$setmeal.setmeal_name#}</span>
+		{#if $setmeal.setmeal_id>1#}<a href="company_service.php?act=setmeal_list" ><img src="{#$QISHI.site_dir#}data/setmealimg/{#$setmeal.setmeal_id#}.gif" border="0" align="absmiddle"  title="{#$setmeal.setmeal_name#}" class="vtip"/></a>{#/if#}
+		</td>
+        <td>可发布普通招聘剩余：<span>{#$setmeal.jobs_ordinary#}</span></td>
+        <td>可下载普通简历剩余：<span>{#$setmeal.download_resume_ordinary#}</span></td>
+        <td>可下载高级简历剩余：<span>{#$setmeal.download_resume_senior#}</span></td>
+      </tr>
+      <tr>
+        <td>可邀请普通人才面试剩余：<span>{#$setmeal.interview_ordinary#}</span></td>
+        <td>可邀请高级人才面试剩余：<span>{#$setmeal.interview_senior#}</span></td>
+        <td>人才库容量剩余：<span>{#$setmeal.talent_pool#}</span></td>
+        <td></td>
+      </tr>
+       <tr>
+        <td>推荐职位剩余：<span>{#$setmeal.recommend_num#}</span></td>
+        <td>置顶职位剩余：<span>{#$setmeal.stick_num#}</span></td>
+        <td>紧急职位剩余：<span>{#$setmeal.emergency_num#}</span></td>
+        <td>套色职位剩余：<span>{#$setmeal.highlight_num#}</span></td>
+      </tr>
+      <tr>
+        <td>推荐职位天数：<span>{#$setmeal.recommend_days#}</span></td>
+        <td>置顶职位天数：<span>{#$setmeal.stick_days#}</span></td>
+        <td>紧急职位天数：<span>{#$setmeal.emergency_days#}</span></td>
+        <td>套色职位天数：<span>{#$setmeal.highlight_days#}</span></td>
+      </tr>
+      <tr>
+        <td>允许自由切换模板：{#if $setmeal.change_templates=="1"#}允许{#else#}不允许{#/if#}</td>
+        <td>允许开通电子地图：{#if $setmeal.map_open=="1"#}允许{#else#}不允许{#/if#}</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+</div>
+{#/if#}
+<div class="com_user_box" style="margin-top:10px;">
+  <div class="titbox">
+  	<div class="lefttit" ><u>企业信息</u></div>
+	<div class="rightip" ><a href="company_info.php?act=company_profile">修改</a></div>
+	<div class="clear"></div>
+  </div>
+  {#if $company.companyname#}
+  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="9">
+      <tr>
+        <td>公司名称：{#$company.companyname#}</td>
+        <td>企业性质：{#$company.nature_cn#}</td>
+        <td>所属行业：{#$company.trade_cn#}</td>
+      </tr>
+      <tr>
+        <td>联 系 人：{#$company.contact#}</td>
+        <td>联系电话：{#$company.telephone#}</td>
+        <td>联系邮箱：{#$company.email#}</td>
+      </tr>
+		<tr>
+        <td>所在地区：{#$company.district_cn#}</td>
+        <td colspan="2">通讯地址：{#$company.address#}</td>
+        </tr>
+		<tr>
+        <td>电子地图：<a href="company_info.php?act=company_map">{#if $company.map_x && $company.map_y#}已经标注{#else#}未标注{#/if#}</a></td>
+        <td>企业LOGO：<a href="company_info.php?act=company_logo">{#if $company.logo==""#}未上传{#else#}已经上传{#/if#}</a></td>
+        <td>&nbsp;</td>
+		</tr>
+    </table>
+  {#else#}
+  <div  style=" height:50px; line-height:50px; text-align:center">您没有填写企业资料，<a href="company_info.php?act=company_profile">立即填写</a></div>
+  {#/if#}
+</div>
+ 
+
+
+<div class="com_user_box" style="margin-top:10px;">
+  <div class="titbox">
+  	<div class="lefttit"><u>您可能感兴趣的人才</u></div>
+	<div class="rightip"><a href="{#"QS_resumelist"|qishi_url#}"  target="_blank">更多</a></div>
+	<div class="clear"></div>
+  </div>
+  {#qishi_resume_list set="列表名:resumelist,显示数目:6,意向职位长度:30,填补字符:...,排序:rtime>desc,职位大类:"|cat:$concern_id#}
+  {#if !$resumelist#}
+  {#qishi_resume_list set="列表名:resumelist,显示数目:6,意向职位长度:30,填补字符:...,排序:rtime>desc"#}
+  {#/if#}
+					  {#if $resumelist#}
+					  <table width="98%" border="0" align="center" cellpadding="0" cellspacing="0" class="link_lan">
+                        <tr>
+                          <td width="80" height="28" class="us_list_title" style="padding-left:10px;">姓名</td>
+
+                          <td class="us_list_title">意向职位</td>
+                        </tr>
+{#foreach from=$resumelist item=list#}
+                        <tr>
+                          <td height="30" style="padding-left:10px;"><a href="{#$list.resume_url#}" target="_blank">{#$list.fullname#}</a></td>
+    
+                          <td  >{#$list.intention_jobs#}</td>
+                        </tr>
+                        <tr>
+                          <td height="22" colspan="2" valign="top" class="us_list" style="padding-left:10px; color:#999999">
+						  性别：{#$list.sex_cn#}&nbsp;&nbsp;|&nbsp;&nbsp;
+						  年龄：{#$list.age#}岁&nbsp;&nbsp;|&nbsp;&nbsp;
+						  学历：{#$list.education_cn#}&nbsp;&nbsp;|&nbsp;&nbsp;
+						  工作经验：{#$list.experience_cn#}&nbsp;&nbsp;|&nbsp;&nbsp;
+						  期望月薪：{#$list.wage_cn#}&nbsp;&nbsp;|&nbsp;&nbsp;
+						  点击次数：{#$list.click#}&nbsp;&nbsp;|&nbsp;&nbsp;
+						  更新日期：{#$list.refreshtime|date_format:"%Y-%m-%d"#}
+						  </td>
+                        </tr>
+						{#/foreach#}
+        </table>
+					   {#else#}
+			<div class="us_list_no_content">没有匹配的信息</div><br />
+		  {#/if#}
+</div>
+ </td>
+      </tr>
+    </table>
+{#include file="footer.htm"#}
+</body>
+</html>

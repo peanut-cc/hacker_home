@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;服务中心&nbsp;>>&nbsp;付款
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>付款</h1>
+		</div>
+		
+      <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF">   
+        <tr>
+          <td width="20%" height="30" align="right" bgcolor="#FFFFFF" style="border-bottom:1px  #93C4DB dashed">付款金额为：</td>
+          <td width="80%" bgcolor="#FFFFFF" style="border-bottom:1px  #93C4DB dashed">￥<span style="font-size:20px; color:#FF0000"><em>{#$amount#}</em></span>&nbsp;&nbsp;元</td>
+        </tr>
+        <tr >
+          <td height="30" align="right" bgcolor="#FFFFFF" style="border-bottom:1px  #93C4DB dashed">您选择的支付方式为：</td>
+          <td bgcolor="#FFFFFF" style="border-bottom:1px  #93C4DB dashed">{#$byname.byname#}
+		  
+		  </td>
+        </tr>
+		<tr >
+          <td height="30" align="right" bgcolor="#FFFFFF" style="border-bottom:1px  #93C4DB dashed">支付手续费用为：</td>
+          <td bgcolor="#FFFFFF" style="border-bottom:1px  #93C4DB dashed">￥{#$fee#}元
+		  
+		  </td>
+        </tr>
+		<tr >
+          <td height="30" align="right" bgcolor="#FFFFFF" style="border-bottom:1px  #93C4DB dashed">支付方式描述：</td>
+          <td bgcolor="#FFFFFF" style="border-bottom:1px  #93C4DB dashed; line-height:180%">{#$byname.notes#}</td>
+        </tr>
+        <tr>
+          <td height="30" align="right" bgcolor="#FFFFFF">&nbsp;</td>
+          <td height="150" valign="top" bgcolor="#FFFFFF"  style=" padding-top:10px;">{#if $payment_form#}{#$payment_form#}
+            <br />
+            <br />
+          点击“付款”将会在新窗口中打开网上银行页面。{#/if#}
+
+</td>
+        </tr>
+      </table>
+	  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

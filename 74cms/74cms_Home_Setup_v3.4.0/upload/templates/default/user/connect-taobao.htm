@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+//验证
+$(document).ready(function() {
+//验证
+ $("#Form1").validate({
+//debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   username:{
+    required: true,
+	userName : true,
+	byteRangeLength : [3, 18],	
+	remote:{     
+		url:"{#$QISHI.site_dir#}plus/ajax_user.php",     
+		type:"post",    
+		data:{"usname":function (){return $("#username").val()},"act":"check_usname"}     
+		}
+   },
+   email:{
+    required: true,
+	email:true,
+	remote:{     
+		url:"{#$QISHI.site_dir#}plus/ajax_user.php",     
+		type:"post",    
+		data:{"email":function (){return $("#email").val()},"act":"check_email"}     
+		}
+   },
+    password:{
+    required: true,
+	minlength:6,
+    maxlength:18
+   },
+    password2:{
+   required: true,
+	 equalTo:"#password"
+   },
+   member_type:{
+    required: true
+   }
+	},
+    messages: {
+    username: {
+    required: "请填写用户名",
+	remote: jQuery.format("用户名已经存在或者不合法")	
+   },
+    email: {
+    required: "请填写电子邮箱",
+	email: jQuery.format("电子邮箱格式错误"),
+	remote: jQuery.format("email已经存在")	
+   },
+   password: {
+    required: "请填写密码",
+    minlength: jQuery.format("填写不能小于{0}个字符"),
+	maxlength: jQuery.format("填写不能大于{0}个字符")
+   },
+   password2: {
+   required: "请填写密码",
+    equalTo: "两次输入的密码不同"
+   },
+   member_type:{
+    required: "请选择您要成为哪种会员"
+   }
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( $("#member_type_tip"));
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+	 //中文字两个字节
+	jQuery.validator.addMethod("byteRangeLength", function(value, element,	param) {
+	var length = value.length;
+	for (var i = 0; i < value.length; i++) {
+			if (value.charCodeAt(i) > 127) {
+			length++;
+			}
+		}
+	return this.optional(element)	|| (length >= param[0] && length <= param[1]);
+	}, "确保的值在3-18个字节之间(1个中文字算2个字节)");
+	 //字符验证
+	jQuery.validator.addMethod("userName", function(value, element) {
+	return this.optional(element) || /^[\u0391-\uFFE5\w]+$/.test(value);
+	}, "用户名只能包括中文、英文字母、数字和下划线");
+});
+</script>
+</head>
+<body>
+{#include file="user/header.htm"#}
+ <div class="activate_box">
+   <div class="link_lan activate_box_tit"><strong>
+ 最后一步，请完善一点信息 </strong></div>
+   <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom:50px; margin-top:30px;">
+  <tr>
+    <td width="700" style=" border-right:1px #DDDDDD solid">
+	<form id="Form1" name="Form1" method="post" action="?act=reg_save">
+  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" >
+  <tr>
+    <td width="130" height="40" align="right">用户名：</td>
+    <td><input name="username" type="text"  class="reg_input" id="username"  maxlength="25" /></td>
+    </tr>
+    <tr>
+    <td height="40" align="right">常用电子邮箱：</td>
+    <td><input name="email" type="text"  class="reg_input" id="email"    maxlength="60"/></td>
+    </tr>
+	<tr>
+    <td height="40" align="right">设置登录密码：</td>
+    <td><input name="password" type="password"  class="reg_input" id="password"    maxlength="60"/></td>
+    </tr>
+	<tr>
+    <td height="40" align="right">重新输入密码：</td>
+    <td><input name="password2" type="password"  class="reg_input" id="password2"    maxlength="60"/></td>
+    </tr>
+	<tr>
+    <td height="30" align="right">成为哪种会员：</td>
+    <td> (选定后不可修改)</td>
+    </tr>
+	  <tr>
+    <td align="right" valign="top"> 
+</td>
+    <td>
+	<input name="member_type" type="radio" value="1" />企业会员 <span style="color:#999999">(发布招聘信息，查看人才简历，搜索简历，在线邀请面试，建立企业人才库...)</span> 
+    <div  style="height:10px;"></div>	 
+<input name="member_type" type="radio" value="2"    />个人会员<span style="color:#999999">(填写个人简历，在线投递简历，在线申请职位，搜索职位...)</span>
+</td> </tr>
+    <tr>
+    <td>
+       </td>
+    <td  class="link_lan">
+	<div style="color:#FF6600; padding-top:10px;" id="member_type_tip"></div>
+	 </td>
+    </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td height="50">
+      <input name="reg" type="submit" id="reg" class="but100"  value="完成" />
+	   </td>
+    </tr>
+</table>
+</form>
+	</td>
+    <td valign="top">
+	<table width="300" border="0" align="center" cellpadding="0" cellspacing="10" style="line-height:180%" class="link_lan">
+      <tr>
+        <td   style="font-size:14px;"><strong>已经有本站帐号，您可以设置与淘宝帐号关联登录</strong></td>
+      </tr>
+      <tr>
+        <td><input name="reg2" type="submit" class="but100" id="" value="立即登录"  onclick="window.location='{#"QS_login"|qishi_url#}'" /></td>
+      </tr>
+      <tr>
+        <td>&nbsp;&nbsp;&nbsp;<a href="{#$sinaurl#}">[更换微博帐号]</a></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+    </table></td>
+  </tr>
+</table>
+ </div>
+{#include file="user/footer.htm"#}
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.vtip-min.js" type="text/javascript" ></script>
+<script type="text/javascript">
+<!--
+$(document).ready(function()
+{
+ 
+	$('#jobselect').change(function(){ 
+	var p1=$(this).children('option:selected').val();
+	window.location.href="?act=interview_lsit&jobsid="+p1;
+	});
+	
+	
+});
+//-->
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;招聘管理&nbsp;>>&nbsp;发起的面试邀请
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>我发起的面试邀请</h1>
+		</div>
+		<div class="us_tab">
+			<a href="?act={#$act#}&look=" {#if $smarty.get.look==""#}class="select"{#/if#}>所有的</a>
+              <a href="?act={#$act#}&look=1" {#if $smarty.get.look=="1"#}class="select"{#/if#}>对方未看</a>
+              <a href="?act={#$act#}&look=2" {#if $smarty.get.look=="2"#}class="select"{#/if#}>对方已看</a>
+		<div style="padding-right:10px; text-align:right; float:right" >
+			  按面试职位查看：			 
+			  <select name="jobselect" id="jobselect" style="font-size:12px;">
+			   <option value="">所有职位</option>
+			  {#foreach from=$jobs item=li#}
+			    <option value="{#$li.id#}" {#if $li.id==$smarty.get.jobsid#}selected="selected"{#/if#}>{#$li.jobs_name#}</option>
+					{#/foreach#}
+		      
+			  </select>
+		</div>	
+			  <div class="clear"></div>
+			  </div>
+	<form id="form1" name="form1" method="post" action="?act=interview_del">
+      <table width="98%" border="0" cellpadding="4" cellspacing="0"  class="link_lan"  >
+        <tr>
+          <td height="600" valign="top" bgcolor="#FFFFFF"><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                <td height="26" class="us_list_title"><label id="chkAll"><input type="checkbox" name="chkAll"  id="chk" title="全选/反选" />被邀请人</label></td>
+                <td class="us_list_title">被邀请人意向职位</td>
+                <td width="150" class="us_list_title">邀请面试职位</td>
+
+   
+                <td width="80" class="us_list_title"> 是否查看</td>
+                <td width="60" class="us_list_title">其他说明</td>
+              </tr>
+			   {#foreach from=$resume item=list#}
+			   {#if $list.sex_cn#}
+              <tr>
+                <td height="32" ><input name="y_id[]" type="checkbox" id="y_id"   value="{#$list.did#}"/><a href="{#$list.resume_url#}" target="_blank">{#$list.fullname#}</a></td>
+                <td height="32" >{#$list.intention_jobs#}</td>
+                <td >{#$list.jobs_name#}</td>
+
+                <td >
+				{#if $list.personal_look=="1"#}
+				   <span style="color: #FF6600">[对方未看]</span>
+				   {#else#}
+				   <span style="color: #999999">[对方已看]</span>
+				   {#/if#}				</td>
+                <td align="center">
+					{#if $list.notes#}
+				<img src="{#$QISHI.site_template#}images/32.gif"  border="0"  style="cursor:pointer" title="{#$list.notes|nl2br#}" class="vtip"/>
+				{#else#}
+				&nbsp;
+				{#/if#}				</td>
+              </tr>
+			    <tr>
+                <td height="22" colspan="5" valign="top" class="us_list">
+				<div style="color:#999999; padding-left:20px;">
+				邀请时间：{#$list.interview_addtime|date_format:"%Y-%m-%d"#}&nbsp;&nbsp;|&nbsp;&nbsp
+				性别：{#$list.sex_cn#}&nbsp;&nbsp;|&nbsp;&nbsp
+				工作经验：{#$list.experience_cn#}&nbsp;&nbsp;|&nbsp;&nbsp
+				学历：{#$list.education_cn#}&nbsp;&nbsp;|&nbsp;&nbsp
+				所在地区：{#$list.district_cn#}&nbsp;&nbsp;|&nbsp;&nbsp
+				简历更新日期：{#$list.refreshtime|date_format:"%Y-%m-%d"#}
+				</div>
+				</td>
+                </tr>
+			  {#else#}
+              <tr>
+                <td height="32" colspan="5" class="us_list">
+				<input name="y_id[]" type="checkbox" id="y_id"  value="{#$list.did#}"/>被邀请人[{#$list.resume_name#}] 的简历可能已被删除，您可以删除本条信息.				</td>
+                </tr>
+				{#/if#}
+				
+			  {#/foreach#}
+            </table>
+            {#if $resume#}
+            <table width="100%" border="0" cellspacing="8" cellpadding="0">
+              <tr>
+                <td><input type="submit" name="delete" value="删除所选"  class="user_submit"    onClick="return confirm('您确定删除吗?')"/>
+                </td>
+              </tr>
+            </table>
+			{#else#}
+			<div class="us_list_no_content">没有您要找的信息</div>
+			{#/if#}
+            <table border="0" align="center" cellpadding="0" cellspacing="0" class="link_bk">
+              <tr>
+                <td height="50" align="center"> <div class="page link_bk">{#$page#}</div></td>
+              </tr>
+            </table></td>
+          </tr>
+      </table>
+        </form>
+		</div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script language="javascript" type="text/javascript" src="{#$QISHI.site_template#}js/image.drag.js"></script>
+<script language="javascript" type="text/javascript" src="{#$QISHI.site_template#}js/image.cut.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#tabshow li:nth-child(2)>a").addClass("selected");
+{#if $smarty.get.show && $resume_thumb_photo#}
+$("#saveimg").show();
+$("#cuttingbox").hide();
+{#/if#}
+
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;裁切照片
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>我的简历</h1>
+		</div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td height="22" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="4">
+            <tr>
+              <td height="80" bgcolor="#F5FAFC" style=" border-bottom:1px #CCCCCC dashed; color:#003399; padding-left:25px;"><span style="font-size:14px;">裁切照片
+                <br />
+              </span><span style="color: #009900; line-height:160%;">裁切步骤：拖动方框内的照片，调整到最佳效果，然后点击按钮“裁切照片”，系统将生成一寸照片，此时点击“保存此照片”完成裁切。</span><br />
+                </td>
+              </tr>
+          </table>
+		    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="padding-bottom:80px; margin-top:15px;" id="cuttingbox">
+              <tr>
+                <td>
+				<table   border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+	<form name="form" id="form" action="?act=save_resume_photo_cutting" method="post" onSubmit="return getcutpos();">
+				<div id="cut_div" style="border:3px solid #FFCC33; width:320px; height:300px; overflow: hidden; position:relative; top:0px; left:0px; cursor:pointer;">
+                    <table style="border-collapse: collapse; z-index: 10; filter: alpha(opacity=65); position: relative; left: 0px; top: 0px; width: 320px;  height: 300px; opacity: 0.75;" cellspacing="0" cellpadding="0" border="0" unselectable="on">
+                      <tr>
+                        <td style="background: #cccccc; height: 75px;" colspan="3"></td>
+                      </tr>
+                      <tr>
+                        <td style="background: #cccccc; width: 100px;"></td>
+                        <td style="border: 1px  dotted  #000000; width: 120px; height: 150px;"></td>
+                        <td style="background: #cccccc; width: 100px;"></td>
+                      </tr>
+                      <tr>
+                        <td style="background: #cccccc;height: 75px;" colspan="3"></td>
+                      </tr>
+                    </table>
+                    <img id="cut_img" style="position:relative;top:-300px; left:0px" src="{#$QISHI.resume_photo_dir#}{#$resume_photo#}" /></div>
+					  <table align="center" cellpadding="0" cellspacing="0">
+            <tr>
+              <td><img style="margin-top: 5px; cursor:pointer;"  src="{#$QISHI.site_template#}images/_h.gif" alt="图片缩小" onmouseover="this.src='{#$QISHI.site_template#}images/_c.gif'" onmouseout="this.src='{#$QISHI.site_template#}images/_h.gif'" onclick="imageresize(false)" /></td>
+              <td><img id="img_track" style="width: 250px; height: 18px; margin-top: 5px" src="{#$QISHI.site_template#}images/18.gif" /></td>
+              <td><img style="margin-top: 5px; cursor:pointer;" src="{#$QISHI.site_template#}images/+h.gif" alt="图片放大"  onmouseover="this.src='{#$QISHI.site_template#}images/+c.gif'" onmouseout="this.src='{#$QISHI.site_template#}images/+h.gif'" onclick="imageresize(true)" /></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td height="30" align="center" class="font_12_hui">拖动滑动条调整原始照片大小</td>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td><input name="pid" type="hidden" id="pid" value="{#$pid#}" /></td>
+              <td height="30" align="center" class="font_12_hui"><input type="submit"  name="submit"  id="submit" value=" 裁切照片 "  class="user_submit" />
+&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button"  name="submit22"  id="submit22" value=" 重新选择照片 "   onclick="window.location='?act=make7&pid={#$pid#}&addphoto=ok'" class="user_submit"/></td>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
+                    <input type="hidden" name="cut_pos" id="cut_pos" value="" />
+				</form>
+	</td>
+  </tr>
+</table>
+
+		  <img id="img_grip" style="position:absolute; z-index:100; left:-1000px; top:-1000px; cursor:pointer;" src="{#$QISHI.site_template#}images/17.gif" />
+				</td>
+              </tr>
+            </table>
+			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="padding-bottom:80px; display:none" id="saveimg">
+              <tr>
+                <td align="center"   valign="top" >
+				<form id="form2" name="form2" method="post" action="?act=edit_photo_display">
+<div style="height:30px; background-color: #FFFFCC; line-height:30px; margin-bottom:15px; text-align:left; padding-left:15px;">裁切后的照片</div>
+<img id="cutimg_l" src="{#$QISHI.resume_photo_dir_thumb#}{#$resume_thumb_photo#}"  style="margin-bottom:5px; border:1px #cccccc solid;"/><br /><br /><br />
+<input name="pid" type="hidden" id="pid" value="{#$pid#}" />
+
+<input type="button"  name="submit22"  id="submit22" value="重新裁切 "   onclick="window.location='?act=make7&pid={#$pid#}'" class="user_submit"/>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="submit"  name="submit2"  id="submit2" value=" 保存此照片"   class="user_submit"  style="color:#FF0000"/>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<input type="button"  name="submit22"  id="submit22" value=" 重选照片 "   onclick="window.location='?act=make7&pid={#$pid#}&addphoto=ok'" class="user_submit"/>
+<img id="cutimg_l" src="{#$QISHI.resume_photo_dir_thumb#}{#$resume_photo#}"  style="margin-bottom:18px; display:none"/>
+<img id="cutimg_m" src="m.jpg" border="1"  style="display:none;"/>
+                </form>
+				</td>
+              </tr>
+            </table>
+
+		  </td>
+          <td width="150" valign="top" class="resume_right_box" >
+		 {#include file="member_personal/personal_right.htm"#}
+		  </td>
+        </tr>
+      </table>
+	  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.user.selectlayer.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.vtip-min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_dir#}data/cache_classify.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	//范例展开
+	$("#model").click(function(){	$("#cp").toggle()});
+	//菜单层
+	showmenulayer("#district_cn","#menu3","#district","#sdistrict",QS_city);
+	showmenu("#nature_cn","#menu1","#nature","#Form1","#nature");
+	showmenu("#trade_cn","#menu2","#trade","#Form1","#trade");	
+	showmenu("#scale_cn","#menu4","#scale","#Form1","#scale");
+	showmenu("#street_cn","#menu_street","#street","#Form1","#street");
+	showmenu("#officebuilding_cn","#menu_officebuilding","#officebuilding","#Form1","#officebuilding");	
+	//道路
+	$("#street_alphabet a").click(function()
+	{
+		$("#streetkey").val('');
+		$("#street_alphabet a").removeClass("select");
+		$(this).addClass("select");
+		var x=$(this).attr('id');
+		$.get("{#$QISHI.site_dir#}plus/ajax_street.php", {"act":"alphabet","x":x,"listtype":"li"},
+			function (data,textStatus)
+			{	
+				$("#street_showtit").html("首字母为：<b>"+x+"</b>");
+				$("#street_showli").html(data);
+				$("#street_showli >li").hover(
+				function()
+				{
+				$(this).css("background-color","#DAECF5");
+				},
+				function()
+				{
+				$(this).css("background-color","");
+				}
+				);
+			}
+		);		
+	});
+	$("#streetkeyso").click(function()
+	{
+		var str=$("#streetkey").val();
+		$("#street_alphabet a").removeClass("select");
+			$.get("{#$QISHI.site_dir#}plus/ajax_street.php", {"act":"key","listtype":"li","key":str},
+				function (data,textStatus)
+				{	
+					$("#street_showtit").html("搜索结果：");
+					$("#street_showli").html(data);
+					$("#street_showli >li").hover(
+					function()
+					{
+					$(this).css("background-color","#DAECF5");
+					},
+					function()
+					{
+					$(this).css("background-color","");
+					}
+					);
+				}
+			);	
+	});
+	//写字楼
+	$("#officebuilding_alphabet a").click(function()
+	{
+		$("#officebuildingkey").val('');
+		$("#officebuilding_alphabet a").removeClass("select");
+		$(this).addClass("select");
+		var x=$(this).attr('id');
+		$.get("{#$QISHI.site_dir#}plus/ajax_officebuilding.php", {"act":"alphabet","x":x,"listtype":"li"},
+			function (data,textStatus)
+			{	
+				$("#officebuilding_showtit").html("首字母为：<b>"+x+"</b>");
+				$("#officebuilding_showli").html(data);
+				$("#officebuilding_showli >li").hover(
+				function()
+				{
+				$(this).css("background-color","#DAECF5");
+				},
+				function()
+				{
+				$(this).css("background-color","");
+				}
+				);
+			}
+		);		
+	});
+	$("#officebuildingkeyso").click(function()
+	{
+		var str=$("#officebuildingkey").val();
+		$("#officebuilding_alphabet a").removeClass("select");
+			$.get("{#$QISHI.site_dir#}plus/ajax_officebuilding.php", {"act":"key","listtype":"li","key":str},
+				function (data,textStatus)
+				{	
+					$("#officebuilding_showtit").html("搜索结果：");
+					$("#officebuilding_showli").html(data);
+					$("#officebuilding_showli >li").hover(
+					function()
+					{
+					$(this).css("background-color","#DAECF5");
+					},
+					function()
+					{
+					$(this).css("background-color","");
+					}
+					);
+				}
+			);	
+	});
+	
+});
+//验证
+$(document).ready(function() {
+ $("#Form1").validate({
+ //debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   companyname:{
+    required: true,
+	minlength:4
+   },
+   nature:"required",
+   trade:"required",
+   district:"required",
+   scale: "required",
+   contact:{
+   required: true,
+   minlength:2
+    },
+   telephone:{
+   required: true,
+	minlength:7
+   },
+	   email: {
+	   required:true,
+	   email:true
+	   },
+	   address: {
+	   required:true,
+	    minlength:8
+	   },
+	   contents: {
+	   required:true,
+	    minlength:10,
+		maxlength:2000
+	   }
+	},
+    messages: {
+    companyname: {
+    required: "请输入公司名称",
+    minlength: jQuery.format("公司名称不能小于{0}个字符")
+   },
+   nature: {
+    required: jQuery.format("请选择企业性质")
+   },
+   trade: {
+    required: jQuery.format("请选择所属行业")
+   },
+   district: {
+    required: jQuery.format("请选择所在地区")
+   },
+    scale: {
+    required: jQuery.format("请选择企业规模")
+   },
+   contact:{
+    required:jQuery.format("请输入联系人"),
+	minlength:jQuery.format("联系人不能小于{0}个字符")
+   },
+   telephone: {
+    required: jQuery.format("请填写联系电话"),
+	minlength:jQuery.format("联系电话不能小于{0}个字符")
+   },
+   email: {
+    required: jQuery.format("请填写电子邮箱"),
+	email: jQuery.format("请正确填写电子邮箱")
+   },
+   address: {
+    required: jQuery.format("请填写联系地址"),
+	minlength: jQuery.format("请详细填写联系地址")
+   },
+   contents: {
+    required: jQuery.format("请填写公司简介"),
+	minlength: jQuery.format("请填写公司简介，不能小于{0}个字符"),
+	maxlength:jQuery.format("公司简介不能大于{0}个字符，省略一下吧")
+   }
+   
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+});
+</script>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;公司信息&nbsp;>>基本信息
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>企业基本信息</h1>
+		</div>
+		<form id="Form1" name="Form1" method="post" action="?act=company_profile_save"  >
+      <table width="100%" border="0" cellpadding="4" cellspacing="0"  style="margin-top:10px;">
+        <tr>
+          <td width="90" height="30" align="right"   ><span style="color:#FF3300; font-weight:bold">*</span>公司名称：</td>
+          <td  ><input name="companyname" type="text" class="input_text_200" id="companyname" maxlength="30"  style="width:350px;" value="{#$company_profile.companyname#}" /></td>
+        </tr>
+        <tr>
+          <td height="30" align="right"  ><span style="color:#FF3300; font-weight:bold">*</span>企业性质：</td>
+          <td  >		  
+		   <div>
+		<input type="text" value="{#$company_profile.nature_cn|default:"请选择企业性质"#}"  readonly="readonly" name="nature_cn" id="nature_cn" class="input_text_200 input_text_200_selsect"/>
+		<input name="nature" id="nature" type="hidden" value="{#$company_profile.nature#}" />
+		<div id="menu1" class="menu">
+			<ul>
+			{#qishi_get_classify set="列表名:c_nature,类型:QS_company_type"#}{#foreach from=$c_nature item=list#}
+			<li id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+			{#/foreach#}
+			</ul>
+		</div>
+		  </div>
+		  </td>
+        </tr>
+        <tr>
+          <td height="30" align="right"  ><span style="color:#FF3300; font-weight:bold;">*</span>所属行业：</td>
+          <td  >
+		  <div>
+		<input type="text" value="{#$company_profile.trade_cn|default:"请选择所属行业"#}"  readonly="readonly" name="trade_cn" id="trade_cn" class="input_text_200 input_text_200_selsect"/>
+		<input name="trade" id="trade" type="hidden" value="{#$company_profile.trade#}" />
+		<div id="menu2" class="dmenu shadow">
+			<ul>
+			{#qishi_get_classify set="类型:QS_trade,列表名:c_trade"#}{#foreach from=$c_trade item=list#}
+			<li id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+			{#/foreach#}
+			</ul>
+		</div>
+		  </div>
+		   </td>
+        </tr>
+        <tr>
+          <td height="30" align="right" ><span style="color:#FF3300; font-weight:bold">*</span>所在地区：</td>
+          <td  >
+		   <div>
+		<input type="text" value="{#$company_profile.district_cn|default:"请选择所在地区"#}"  readonly="readonly" name="district_cn" id="district_cn" class="input_text_200 input_text_200_selsect"/>
+		<input name="district" id="district" type="hidden" value="{#$company_profile.district#}" />
+		<input name="sdistrict" id="sdistrict" type="hidden" value="{#$company_profile.sdistrict#}" />
+		<div id="menu3" class="dmenu shadow">
+			<ul>
+			{#qishi_get_classify set="类型:QS_district,id:0,列表名:c_province"#}{#foreach from=$c_province item=list#}
+			<li id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+			{#/foreach#}
+			</ul>
+		</div>
+		<div id="menu3_s" class="dmenu shadow" style="display:none"></div>
+		  </div>
+		  </td>
+        </tr>
+		<tr>
+          <td height="30" align="right"  >所在道路：</td>
+          <td  >
+		  
+		    <div>
+		<input type="text" value="{#$company_profile.street_cn|default:"未标注道路"#}"  readonly="readonly" name="street_cn" id="street_cn" class="input_text_200 input_text_200_selsect"/>
+		<input name="street" id="street" type="hidden" value="{#$company_profile.street#}" />
+		<div id="menu_street" class="somenu shadow">
+		  <div class="sobox">
+		   <div class="tit">提示：如您公司所在的道路无法在下方找到，请略过此项或反馈给网站管理员</div>		   
+		   <div class="left">按字母检索：</div>
+		   <div class="right link_bk" id="street_alphabet">
+		   	  <a href="javascript:void(0);" id="a">A</a>
+			  <a href="javascript:void(0);" id="b">B</a>
+			  <a href="javascript:void(0);" id="c">C</a>
+			  <a href="javascript:void(0);" id="d">D</a>
+			  <a href="javascript:void(0);" id="e">E</a>
+			  <a href="javascript:void(0);" id="f">F</a>
+			  <a href="javascript:void(0);" id="g">G</a>
+			  <a href="javascript:void(0);" id="h">H</a>
+			  <a href="javascript:void(0);" id="j">J</a>
+			  <a href="javascript:void(0);" id="k">K</a>
+			  <a href="javascript:void(0);" id="l">L</a>
+			  <a href="javascript:void(0);" id="m">M</a>
+			  <a href="javascript:void(0);" id="n">N</a>
+			  <a href="javascript:void(0);" id="o">O</a>
+			  <a href="javascript:void(0);" id="p">P</a>
+			  <a href="javascript:void(0);" id="q">Q</a>
+			  <a href="javascript:void(0);" id="r">R</a>
+			  <a href="javascript:void(0);" id="s">S</a>
+			  <a href="javascript:void(0);" id="t">T</a>
+			  <a href="javascript:void(0);" id="w">W</a>
+			  <a href="javascript:void(0);" id="x">X</a>
+			  <a href="javascript:void(0);" id="y">Y</a>
+			  <a href="javascript:void(0);" id="z">Z</a>
+			  <div class="clear"></div>
+		   </div>
+		   <div class="left"  style=" padding-top:16px;">按关键字检索：</div>
+		    <div class="right">
+		      <div class="inputbox"> <input name="key" id="streetkey"type="text" /></div>			  
+		      <div class="inputsub"><a href="javascript:void(0);" id="streetkeyso">确定</a></div>
+			  <div class="clear"></div>
+		    </div>
+	 		<div class="clear"></div>
+		  </div>
+					<div class="showli">
+						<div class="left" id="street_showtit">热门道路：</div>
+						<div class="right">
+								<ul id="street_showli">
+								{#qishi_get_classify set="类型:QS_street,列表名:list,显示数目:20"#}{#foreach from=$list item=list#}
+								<li id="{#$list.c_id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+								{#/foreach#}
+								</ul>
+						</div>
+						<div class="clear"></div>
+					</div>
+		</div>
+		  </div>
+		  </td>
+        </tr>
+		<tr>
+          <td height="30" align="right"  >所在写字楼：</td>
+          <td  >
+ 
+		      <div>
+		<input type="text" value="{#$company_profile.officebuilding_cn|default:"未标注写字楼"#}"  readonly="readonly" name="officebuilding_cn" id="officebuilding_cn" class="input_text_200 input_text_200_selsect"/>
+		<input name="officebuilding" id="officebuilding" type="hidden" value="{#$company_profile.officebuilding#}" />
+		<div id="menu_officebuilding" class="somenu shadow">
+		  <div class="sobox">
+		   <div class="tit">提示：如您公司所在的写字楼无法在下方找到，请略过此项或反馈给网站管理员</div>		   
+		   <div class="left">按字母检索：</div>
+		   <div class="right link_bk" id="officebuilding_alphabet">
+		   	  <a href="javascript:void(0);" id="a">A</a>
+			  <a href="javascript:void(0);" id="b">B</a>
+			  <a href="javascript:void(0);" id="c">C</a>
+			  <a href="javascript:void(0);" id="d">D</a>
+			  <a href="javascript:void(0);" id="e">E</a>
+			  <a href="javascript:void(0);" id="f">F</a>
+			  <a href="javascript:void(0);" id="g">G</a>
+			  <a href="javascript:void(0);" id="h">H</a>
+			  <a href="javascript:void(0);" id="j">J</a>
+			  <a href="javascript:void(0);" id="k">K</a>
+			  <a href="javascript:void(0);" id="l">L</a>
+			  <a href="javascript:void(0);" id="m">M</a>
+			  <a href="javascript:void(0);" id="n">N</a>
+			  <a href="javascript:void(0);" id="o">O</a>
+			  <a href="javascript:void(0);" id="p">P</a>
+			  <a href="javascript:void(0);" id="q">Q</a>
+			  <a href="javascript:void(0);" id="r">R</a>
+			  <a href="javascript:void(0);" id="s">S</a>
+			  <a href="javascript:void(0);" id="t">T</a>
+			  <a href="javascript:void(0);" id="w">W</a>
+			  <a href="javascript:void(0);" id="x">X</a>
+			  <a href="javascript:void(0);" id="y">Y</a>
+			  <a href="javascript:void(0);" id="z">Z</a>
+			  <div class="clear"></div>
+		   </div>
+		   <div class="left"  style=" padding-top:16px;">按关键字检索：</div>
+		    <div class="right">
+		      <div class="inputbox"> <input name="key" id="officebuildingkey"type="text" /></div>			  
+		      <div class="inputsub"><a href="javascript:void(0);" id="officebuildingkeyso">确定</a></div>
+			  <div class="clear"></div>
+		    </div>
+	 		<div class="clear"></div>
+		  </div>
+					<div class="showli">
+						<div class="left" id="officebuilding_showtit">热门写字楼：</div>
+						<div class="right">
+								<ul id="officebuilding_showli">
+								{#qishi_get_classify set="类型:QS_officebuilding,列表名:list,显示数目:20"#}{#foreach from=$list item=list#}
+								<li id="{#$list.c_id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+								{#/foreach#}
+								</ul>
+						</div>
+						<div class="clear"></div>
+					</div>
+		</div>
+		  </div>
+		  </td>
+        </tr>
+		<tr>
+          <td height="30" align="right" ><span style="color:#FF3300; font-weight:bold">*</span>公司规模：</td>
+          <td  >
+		  <div>
+		<input type="text" value="{#$company_profile.scale_cn|default:"请选择公司规模"#}"  readonly="readonly" name="scale_cn" id="scale_cn" class="input_text_200 input_text_200_selsect"/>
+		<input name="scale" id="scale" type="hidden" value="{#$company_profile.scale#}" />
+		<div id="menu4" class="menu">
+			<ul>
+			{#qishi_get_classify set="类型:QS_scale,列表名:c_scale"#}{#foreach from=$c_scale item=list#}
+			<li id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+			{#/foreach#}
+			</ul>
+		</div>
+		  </div>
+		   </td>
+        </tr>
+		 <tr>
+          <td height="30" align="right"  >注册资金：</td>
+          <td  ><input name="registered" type="text" class="input_text_200" id="registered" maxlength="20" value="{#$company_profile.registered#}" style="width:80px;"/> 万
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<label><input name="currency" type="radio" value="人民币"  {#if $company_profile.currency eq '' || $company_profile.currency eq "人民币"#} checked="checked"{#/if#} />人民币</label>&nbsp;&nbsp;&nbsp;<label><input type="radio" name="currency" value="美元" {#if $company_profile.currency eq "美元"#}s checked="checked"{#/if#}/>美元</label>
+</td>
+        </tr>
+		
+        <tr>
+          <td height="30" align="right"  ><span style="color:#FF3300; font-weight:bold">*</span>联 系 人：</td>
+          <td  >
+		  <input name="contact" type="text" class="input_text_200" id="contact" maxlength="30" value="{#$company_profile.contact#}"/>
+           <label><input name="contact_show"  type="checkbox" value="1" {#if $company_profile.contact_show<>"0"#}checked="checked"{#/if#} />联系人在企业详细页中显示
+		  </td>
+        </tr>
+		       <tr>
+          <td height="30" align="right"  ><span style="color:#FF3300; font-weight:bold">*</span>联系电话：</td>
+          <td  >
+		  <input name="telephone" type="text" class="input_text_200" id="telephone" maxlength="40" value="{#$company_profile.telephone#}"/>
+           <label><input name="telephone_show"  type="checkbox" value="1" {#if $company_profile.telephone_show<>"0"#}checked="checked"{#/if#} />联系电话在企业详细页中显示
+		  </td>
+        </tr>
+		<tr>
+          <td height="30" align="right"  ><span style="color:#FF3300; font-weight:bold">*</span>联系邮箱：</td>
+          <td  >
+		  <input name="email" type="text" class="input_text_200" id="email" maxlength="80" value="{#$company_profile.email#}"/>
+           <label><input name="email_show"  type="checkbox" value="1" {#if $company_profile.email_show<>"0"#}checked="checked"{#/if#} />联系邮箱在企业详细页中显示
+		  </td>
+        </tr>
+        <tr>
+          <td height="30" align="right" >公司网址：</td>
+          <td  ><input name="website" type="text" class="input_text_200" id="website" maxlength="80" value="{#$company_profile.website#}"/></td>
+        </tr>
+		<tr>
+          <td height="30" align="right"  ><span style="color:#FF3300; font-weight:bold">*</span>通讯地址：</td>
+          <td  >
+		  <input name="address" type="text" class="input_text_200" id="address" maxlength="80"  style="width:447px;" value="{#$company_profile.address#}"/>
+		  </td>
+        </tr>
+		<tr>
+          <td height="30" align="right"  >&nbsp;</td>
+          <td  >
+           <label><input name="address_show"  type="checkbox" value="1" {#if $company_profile.address_show<>"0" #}checked="checked"{#/if#} />联系地址在企业详细页中显示
+		  </td>
+        </tr>
+        <tr>
+          <td align="right" valign="top"  >
+		  <span style="color:#FF3300; font-weight:bold">*</span> 公司介绍：</td>
+          <td  >
+		  <textarea name="contents" class="input_text_200_textarea" id="contents" style="width:450px; height:150px; margin-bottom:6px;" >{#$company_profile.contents#}</textarea>
+            <br />
+            <span id="model" style="color: #0033CC; margin-right:200px; cursor:pointer;">[查看范例]</span></td>
+        </tr>
+		<tr id="cp" style="display:none">
+          <td align="right" valign="top" bgcolor="#E4F2F8" style="color:#FF0000">公司简介范例：</td>
+          <td height="160" valign="top" bgcolor="#E4F2F8" style="line-height:180%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XXX技术有限公司成立于2000年,是XXX投资有限公司与美国XXX公司合资兴建的中外合资企业,引进美国海XXX专利技术,专业从事XX研究开发和生产应用.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;公司2002年被XX认定为高新技术企业,是目前国内唯一的一家既生产XXX又生产X的生产厂家,主要产品有各XX,XX列产品XXX等.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目前,XX公司拥有总资产X亿元,生产加工基地占地XX余亩,具有一次性XX万余吨的XX储存能力,具有自营进出口权,是目前国内最具实力XX生产供应商之一.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用先进,成熟,适用的技术服务XX事业 ,是X公司的企业宗旨,公司在引进新技术的同时,不断根据XXX实际情况在应用方面进行研究与推广立足XXX,面向全国,走向世界是XX公司的发展目标,目前XXX公司的产品除在X大量使用外,已经打入了江苏,浙江,河南,安徽,湖南,江西,四川,湖北,广东等十余个省份,同时公司生产的XXX已经返销美国,并在俄罗斯,哈萨克斯坦开始应用,已成功进入国际市场.</td>
+        </tr>		
+        <tr>
+          <td align="right" valign="top" >&nbsp;</td>
+          <td   > 
+           <label><input name="yellowpages"  type="checkbox" value="1" {#if $company_profile.yellowpages<>'0'#}checked="checked"{#/if#} />
+           公司信息在网站黄页中显示</label>
+		   </td>
+        </tr>
+		<tr>
+          <td align="right" valign="top" >&nbsp;</td>
+          <td height="160" valign="top" ><br />
+            <input type="submit" name="Submit" value="保存"  class="user_submit" />            
+          &nbsp;</td>
+        </tr>
+      </table>
+        </form>
+		</div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

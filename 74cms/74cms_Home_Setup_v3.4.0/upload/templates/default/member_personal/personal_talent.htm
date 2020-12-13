@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript" src="{#$QISHI.site_template#}js/jquery.vtip-min.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#tabshow li:nth-child(2)>a").addClass("selected");
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;<a href="personal_resume.php?act=resume_list">简历管理</a>&nbsp;>>&nbsp;升级简历</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>升级简历</h1>
+		</div>
+		<table width="100%" border="0" cellpadding="0" cellspacing="0">
+			<tr>
+              <td height="50" colspan="2" bgcolor="#F5FAFC" style=" border-bottom:1px #C9D9E7 solid; color:#003399">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:14px;">升级简历（高级人才简历让您在众多简历中脱颖而出，申请前请先阅读申请条件）</span> </span></td>
+              </tr><tr>
+          <td  >
+		  
+		  <table width="95%" border="0" align="center" cellpadding="5" cellspacing="0" style="margin-top:10px; margin-bottom:10px;"  class="link_lan">
+            <tr>
+              <td height="26" bgcolor="#FFFFE6">&nbsp;&nbsp;&nbsp;&nbsp;<strong>简历名称</strong></td>
+              <td width="120" align="center" bgcolor="#FFFFE6"><strong>简历等级</strong></td>
+              <td width="160" align="center" bgcolor="#FFFFE6"><strong>完整指数</strong></td>
+              <td width="200" align="center" bgcolor="#FFFFE6"><strong>申请升级</strong></td>
+            </tr>
+			{#foreach from=$resume_list item=list#}
+            <tr>
+              <td height="26" style="border-bottom:1px #CCCCCC dashed">&nbsp;&nbsp;&nbsp;&nbsp;<a href="?act=resume_show&pid={#$list.id#}" target="_blank">{#$list.title#}</a></td>
+              <td width="120" align="center" style="border-bottom:1px #CCCCCC dashed">
+			   {#if $list.talent=="2"#}
+				  <span style="color:#FF6600">高级</span>
+				  {#else#}
+				  普通
+				  {#/if#}
+			  </td>
+              <td style="border-bottom:1px #CCCCCC dashed">
+			  
+			  	  <table width="120" border="0"  cellpadding="0" cellspacing="3"  class="vtip" title="简历完整指数为：<span style=color:#FF0000><strong>{#$list.complete_percent#}</strong> %</span><br />如完整指数小于<strong>60%</strong>，则系统视为无效简历。<br />简历完整指数越高，排名越靠前" style=" cursor:help" align="center">
+                    <tr>
+                      <td  align="left" >
+					  <div style="border:1px #006600 solid; width:70px; height:8px;">
+					  <div style="width:{#$list.complete_percent#}%;background-color:#99CC00; height:8px;">
+					  </div>
+					  </div>
+					  </td>
+                      <td width="40"   style="color: #009900; font-size:12px; ">{#$list.complete_percent#}%</td>
+                    </tr>
+                  </table>
+				  
+			  </td>
+              <td align="center" style="border-bottom:1px #CCCCCC dashed">
+			   {#if $list.talent=="1"#}
+				   {#if  $list.complete_percent<$QISHI.elite_resume_complete_percent#}				   
+				  <span>完整指数<strong><{#$QISHI.elite_resume_complete_percent#}%</strong> 禁止申请</span>
+				  {#else#}
+				   <a href="?act=talent_save&pid={#$list.id#}">申请升级</a>
+				  {#/if#}
+			  
+			  {#elseif $list.talent=="2"#}
+			  已申请成功
+			  {#elseif $list.talent=="3"#}
+			 <span style=" color:#009900"> 已提交申请，请等待！</span>
+			  {#/if#}
+			  </td>
+            </tr>
+            {#/foreach#}
+          </table>
+		  
+		  {#if !$resume_list#}
+		  <div class="us_list_no_content">您没有发布简历或审核未通过！</div><br />
+
+		  {#/if#}
+		  </td>
+          </tr>
+		  <tr>
+          <td height="35" bgcolor="#F5FAFC" style="border-bottom:1px #C9D9E7 solid; padding-left:20px; border-top:1px #C9D9E7 solid; font-size:14px; color:#FF3300"><strong>申请条件</strong></td>
+          </tr> 
+		  <tr>
+          <td ><div style=" line-height:180%; padding-left:20px; padding-right:20px; padding-top:10px; padding-bottom:10px;">{#$personal_talent_requirement#}</div></td>
+          </tr>
+      </table>
+</div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

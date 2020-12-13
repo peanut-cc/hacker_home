@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+$(".addpms").click(function(){
+	var url="{#$QISHI.site_dir#}user/user_pms.php?tuid="+$(this).attr('id');
+	dialog("发送短消息","url:get?"+url,"400px","auto","");
+	});
+
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;账户管理 &nbsp;>>&nbsp;好友列表
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>好友列表</h1>
+		</div>
+	 
+
+	{#if $buddy#}
+ 
+	 {#foreach from=$buddy item=list#}
+	 <div style="width:240px; border:1px  #F0F0F0 solid; float:left; height:58px;  margin-top:15px; margin-left:15px;">
+	 		<div style=" width:55px; height:48px; padding-left:5px; padding-top:5px; float:left">
+			{#if $list.avatars &&  $list.msgtype<>'1'#}
+	<img src="{#$QISHI.site_dir#}data/avatar/48/{#$list.avatars#}" border="0" width="48" height="48"/>
+	{#else#}
+	<img src="{#$QISHI.site_dir#}data/avatar/_no_photo.gif" border="0" />
+	 {#/if#}
+			</div>
+			
+		  <div style="float:left; width:175px; line-height:150%;" class="link_lan">
+			{#$list.username#}<br />
+			<span style="color:#999999">添加时间{#$list.addtime|date_format:"%Y-%m-%d"#}</span><br />
+			<a href="javascript:void(0)" class="addpms" id="{#$list.tuid#}">[发消息]</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="?act=buddy_del&id={#$list.id#}" onClick="return confirm('您确定删除吗?')">[删除]</a>
+			</div>
+			<div class="clear"></div>
+	 </div>
+ 
+  {#/foreach#}
+ 
+ 	<div class="clear"></div>
+	
+	{#else#}
+			<div class="us_list_no_content">你还没有添加好友！</div>
+			{#/if#}
+            <table border="0" align="center" cellpadding="0" cellspacing="0" class="link_bk">
+              <tr>
+                <td height="50" align="center"> <div class="page link_bk">{#$page#}</div></td>
+              </tr>
+            </table> 
+
+	  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

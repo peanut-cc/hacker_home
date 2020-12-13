@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;公司信息&nbsp;>>&nbsp;开通电子地图
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>开通电子地图</h1>
+		</div>		
+		<form action="?act=company_map_open" method="post" > 
+      <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF"  style=" margin-bottom:100px;">
+		
+		  <tr>
+          <td height="30" bgcolor="#FFFFFF"  style="padding-left:20px; color: #009900; line-height:200%;border-bottom:1px  #93C4DB dashed" class="link_lan">
+	{#if $QISHI.operation_mode=='1'#}  
+		开通电子地图可提高招聘效率，让求职者快速找到您企业位置，开通此服务一次性扣除 {#$points#} {#$QISHI.points_quantifier#}{#$QISHI.points_byname#}。	
+	{#elseif $QISHI.operation_mode=='2'#}  
+		开通电子地图可提高招聘效率，让求职者快速找到您企业位置。
+		{#if $map_open=="1"#}
+		<br> 提示：您的套餐可以享有该服务！
+		{#elseif $map_open=="0"#}
+		<br> 提示：您的套餐没有享有该服务的权限！<a href="company_service.php?act=setmeal_list"> [升级套餐] </a>
+		{#/if#}  
+	{#/if#}  
+
+		 </td>
+        </tr>
+		<tr>
+          <td height="50" align="center" bgcolor="#FFFFFF"><input type="submit" name="Submit" value="立即开通"  class="user_submit" /></td>
+        </tr>
+      </table></form>
+	  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

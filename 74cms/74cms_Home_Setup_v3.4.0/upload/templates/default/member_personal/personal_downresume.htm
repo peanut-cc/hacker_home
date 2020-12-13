@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script type="text/javascript">
+<!--
+$(document).ready(function()
+{
+ 
+	$('#resumeselect').change(function(){ 
+	var p1=$(this).children('option:selected').val();
+	window.location.href="?act=down&resume_id="+p1;
+	});
+	
+	
+});
+//-->
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;求职管理&nbsp;>>&nbsp;谁下载了我的简历
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>谁下载了我的简历</h1>
+		</div>
+		<div class="us_tab">
+			<a href="?act={#$act#}&settr=" {#if $smarty.get.settr==""#}class="select"{#/if#}>所有的{#if $count>0#}<span>({#$count#})</span>{#/if#}</a>
+              <a href="?act={#$act#}&settr=3" {#if $smarty.get.settr=="3"#}class="select"{#/if#}>最近3天</a>
+              <a href="?act={#$act#}&settr=7" {#if $smarty.get.settr=="7"#}class="select"{#/if#}>最近7天</a>
+			  <div style="padding-right:10px; text-align:right; float:right" >
+			  按简历查看：			 
+			  <select name="resumeelect" id="resumeselect" style="font-size:12px;">
+			   <option value="">所有简历</option>
+			  {#foreach from=$resume_list item=li#}
+			    <option value="{#$li.id#}" {#if $li.id==$smarty.get.resume_id#}selected="selected"{#/if#}>{#$li.title#}</option>
+					{#/foreach#}
+		      
+			  </select>
+		</div>	
+			  <div class="clear"></div>
+			  </div>
+	  <table width="100%" border="0" cellpadding="4" cellspacing="0" >
+        <tr>
+          <td height="600" valign="top" bgcolor="#FFFFFF">		  
+		  <table width="97%" border="0" align="center" cellpadding="0" cellspacing="0"  class="link_lan"  >
+              <tr>
+                <td height="26"  class="us_list_title"><label id="chkAll">                公司名称
+                </label></td>
+                <td width="180"  class="us_list_title">我的简历</td>
+                <td width="120"  class="us_list_title">下载时间</td>
+                </tr>
+				 {#foreach from=$mylist item=list#}
+				 {#if $list.district_cn#}
+                <tr >
+            <td   height="32" >
+			<a href="{#$list.company_url#}" target="_blank"><strong>{#$list.companyname#}</strong></a>			</td>
+                  <td  >
+				  {#$list.resume_name#}				  </td>
+                  <td   >{#$list.down_addtime|date_format:"%Y-%m-%d"#}</td>
+                </tr>
+                <tr >
+                  <td   height="22" colspan="3" valign="top" class="us_list" style="color: #999999">
+				  所属行业： {#$list.trade_cn#} &nbsp;&nbsp;|&nbsp;&nbsp; 所在地区： {#$list.district_cn#}&nbsp;&nbsp;|&nbsp;&nbsp; 企业性质： {#$list.nature_cn#}	</td>
+                </tr>
+				{#else#}
+				 <tr >
+                  <td   height="25" colspan="3"   class="us_list" style="color: #999999">
+				  <strong style="color:#333333"> {#$list.company_name#}</strong> 的企业资料已经被删除。
+				   	</td>
+                </tr>
+				{#/if#}
+{#/foreach#}
+            </table>
+			  {#if !$mylist#}
+			<div class="us_list_no_content">没有您要找的信息</div>
+			{#/if#}
+            <table border="0" align="center" cellpadding="0" cellspacing="0" class="link_bk">
+                <tr>
+                  <td height="50" align="center"> <div class="page link_bk">{#$page#}</div></td>
+                </tr>
+            </table></td>
+        </tr>
+      </table>
+	</div>
+	</td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

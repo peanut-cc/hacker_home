@@ -1,0 +1,15 @@
+/*-----¼òÀúÏêÏ¸Ò³----------*/
+.resume_show { margin-top:8px; width:650px;}
+.resume_show .btit{padding:10px; position:relative}
+.resume_show .btit .qrcode{position:absolute; top:8px; right:10px;}
+.resume_show .top_a{ text-align:right}
+.resume_show .top_a a{ padding-left:10px;}
+
+.resume_show .title{ padding-left:15px; font-size:14px;}
+.resume_show h1{ font-size:30px; font-family:"ºÚÌå"; margin-bottom:10px;}
+.resume_show .tip{ color:#FF6600; line-height:160%}
+.resume_contact {}
+.resume_contact .contact{ padding:3px; border:1px   #FF9900 solid; background-color: #FDFBF0; padding-left:8px; height:20px; line-height:20px;}
+.resume_contact img{ margin:10px; cursor:pointer}
+.resume_contact li{   line-height:25px; height:25px;   padding-left:10px;}
+.resume_contact .add_resume_pool{ cursor:pointer; color:#0066CC}

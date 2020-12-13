@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;账户管理&nbsp;>>&nbsp;手机认证
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>手机认证</h1>
+		</div>
+		<div class="us_tab">
+			<a href="?act=userprofile" >基本资料</a>
+			<a href="?act=user_email" >认证邮箱</a>
+			<a href="?act=user_mobile"  class="select">认证手机</a>
+              <a href="?act=avatars" >我的头像</a>
+              <a href="?act=password_edit" >密码修改</a>
+			  <div class="clear"></div>
+	    </div>
+			  {#if $user.mobile_audit!="1" || $re_audit#}
+			  <div style=" font-size:12px; line-height:180%;  color:#999999; padding-left:15px; padding-bottom:15px;padding-top:5px;">
+					<div style=" font-size:14px; "><strong>手机认证成功后，您可以享有以下服务：</strong></div>	
+					<strong style="color: #666666">手机账户登录:</strong> 可直接使用手机号登录到{#$QISHI.site_name#}。 <br />
+					<strong style="color:#666666">重要事件提醒:</strong> 进行面试邀请等时，可及时收到手机短信提醒。 <br />
+			 </div>
+			  <script type="text/javascript">
+$(document).ready(function()
+{
+//发送验证
+	$("#send").click(function()
+	{
+		var tel = /^(13|15|14|18)\d{9}$/; 
+		if($("#mobile").val()=='')
+		{
+		alert('请填写手机号');
+		}
+		else if(!tel.test($("#mobile").val()))
+		{
+		alert('手机号错误');
+		}
+		else
+		{
+			 $("#send").val("正在发送...");
+			 $("#sendsms input").attr("disabled","disabled");
+			 $.post("{#$QISHI.site_dir#}plus/ajax_verify_mobile.php", {"mobile": $("#mobile").val(),"send_key": "{#$send_key#}","time":new Date().getTime(),"act":"send_code"},
+	 	function (data,textStatus)
+	 	 {
+			if (data=="success")
+			{	
+				$("#send").val("已成功发送");
+				$("#sendtip").show();
+				$("#sendsms").css({ "background-color": "#ffffff", "border-color": "#E0E0E0" });
+				$("#sendsms .us_step").addClass("wait");
+				$("#verifysms").css({ "background-color": "#F1FBFE", "border-color": "#C9D9E7" });
+				$("#verifysms .us_step").removeClass("wait");
+				$("#verifysms input").attr("disabled","");
+				SysSecond =60;
+				InterValObj = window.setInterval(SetRemainTime, 1000);
+				 function SetRemainTime()
+				 {
+						  if (SysSecond > 0)
+						  {
+						   SysSecond --;
+						   $("#remainTime").html(SysSecond);
+						  } 
+						  else 
+						  {
+						   window.clearInterval(InterValObj);
+						   $("#send").attr("disabled","");
+							$("#mobile").attr("disabled","");
+							$("#send").val("获取验证码");
+							$("#sendtip").hide();
+						  }
+				 }
+			}
+			else
+			{
+				$("#sendsms input").attr("disabled","");
+				$("#send").val("获取验证码");
+				$("#sendtip").hide();
+				alert(data); 
+			}
+	 	 }
+		 ,"text"
+		 )				 
+		}
+	});
+//发送验证完毕
+//检测验证码
+	$("#postverify").click(function()
+	{
+		if($("#verifycode").val()=='')
+		{
+			alert('请填写效验码');
+		}
+		else
+		{
+					$.post("{#$QISHI.site_dir#}plus/ajax_verify_mobile.php", {"verifycode": $("#verifycode").val(),"send_key": "{#$send_key#}","time":new Date().getTime(),"act":"verify_code"},
+				function (data,textStatus)
+				 {
+					if (data=="success")
+					{	
+						 window.location.href="?act=user_mobile";
+					}
+					else
+					{
+						alert("验证码填写错误"); 
+					}
+				 })		
+		}
+	});
+});
+</script>
+			  <div style="width:740px; background-color:#F1FBFE; border:1px #C9D9E7 solid; margin:0 auto; padding:10px; " id="sendsms">
+			    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="5">
+                  <tr>
+                    <td width="100" rowspan="2">
+					  <div class="us_step">1</div>					</td>
+                    <td width="150" align="right">请输入手机号：</td>
+                    <td><input name="mobile" type="text" class="input_text_200" id="mobile"  value="{#if !$re_audit#}{#$user.mobile#}{#/if#}"  /></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td  style="padding-top:6px;">
+                  <input type="submit" name="Submit" value="获取验证码"  id="send"  class="user_submit"  />
+				  <div style=" padding-top:10px; display:none" id="sendtip">效验码已经发出，请注意查收短信，如果没有收到你在可以 <strong style="color:#FF0000" id="remainTime">60</strong> 秒后要求系统重发</div>				  </td>
+                  </tr>
+                </table>
+			  </div>
+
+			  <div style="width:740px; background-color: #FFFFFF; border:1px  #E0E0E0 solid; margin:0 auto; padding:10px; margin-top:10px;" id="verifysms">
+			    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="5">
+                  <tr>
+                    <td width="100" rowspan="2">
+					<div class="us_step wait">2</div>
+					</td>
+                    <td width="150" align="right">请输入短信效验码：</td>
+                    <td><input name="mobile" type="text" class="input_text_200" id="verifycode"  disabled="disabled" /></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td  style="padding-top:6px;">
+                  <input type="button" name="Submit" value="提交"   id="postverify" class="user_submit" disabled="disabled"/></td></tr>
+                </table>
+			  </div>
+			  <br />
+<br />
+
+			 
+			  {#else#}
+			   <table width="100%" border="0" cellpadding="10" cellspacing="0"  style="margin-top:30px;  color: #666666" class="link_lan">
+		  <tr>
+            <td width="100" align="right" valign="top" ><img src="{#$QISHI.site_template#}images/13.gif" /></td>
+            <td valign="top"  >
+			<div style=" font-size:12px; line-height:200%">
+			<strong style="font-size:14px; color:#000000;">您已经通过{#$QISHI.site_name#}手机认证！</strong><br />
+			手机号为：<strong style="color:#FF6600">{#$user.mobile#}</strong>
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="?act=user_mobile&re_audit=1">[修改]</a>	
+			
+			<br />
+			</div>
+			<div style=" border-top:1px #CCCCCC dashed; font-size:12px; margin-top:10px; line-height:180%; padding-top:10px; margin-bottom:50px; color:#999999">
+		
+
+			<div style=" font-size:14px; padding-bottom:5px;">现在开始，您可以享有以下服务：</div>
+	
+			<strong style="color: #666666">手机号登录:</strong> 可直接使用手机号到{#$QISHI.site_name#}。 <br />
+
+			<strong style="color:#666666">重要事件提醒:</strong> 进行面试邀请等时，可及时收到手机短信提醒。 <br />
+
+			<strong style="color:#666666">找回账号密码:</strong> 忘记密码时，可使用手机短信找回密码。 <br />
+			<a href="personal_index.php">>>返回会员中心首页</a>			</div>
+			
+
+			</td>
+          </tr>
+        </table>
+			  
+		
+			  {#/if#}
+			 
+	</div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

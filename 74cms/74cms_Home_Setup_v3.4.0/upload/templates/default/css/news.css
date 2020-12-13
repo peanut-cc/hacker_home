@@ -1,0 +1,84 @@
+/*-----资讯首页----------*/
+.news-index{ width:985px;margin:0 auto; margin-top:8px;}
+.news-index .left{ width:288px; float:left;}
+.news-index .left .news_imgad{ width:278px; height:230px;border:1px solid #E4E4E4;}
+.news-index .center{ width:417px; float:left;}
+.news-index .center .listbox{ width:407px; height:230px;border:1px solid #E4E4E4;background:url(../images/16.jpg) repeat-x;}
+.news-index .center .listbox .top{ width:330px; margin-left:15px; padding:5px; line-height:180%; border-bottom:1px #CCCCCC dashed;text-indent:2em; margin-bottom:5px;}
+.news-index .center .listbox .top h1{ font-size:18px; font-weight:bold; text-align:center; margin-top:10px; margin-bottom:6px;text-indent:0px;}
+.news-index .center .listbox  li{ float:left; width:170px; padding-left:16px;background:url(../images/01.gif) no-repeat 10px -32px;}
+.news-index .right{ width:280px; float:left; overflow:hidden}
+.news-index .right .sobox{width:278px;height:45px;border:1px solid #E4E4E4; margin-bottom:8px; background-color:#F9F9F9}
+.news-index .right .sobox .sleft{ width:195px; float:left; padding-left:10px; padding-top:9px;}
+.news-index .right .sobox .sleft input{ width:180px; height:21px; line-height:21px; border:1px  #CCCCCC solid; padding-left:5px;}
+.news-index .right .sobox .sright{ width:65px; float:left;padding-top:10px;}
+.news-index .right .sobox .sright input{ width:60px; height:23px;  border:0px ; background-color:#FF9900; color:#FFFFFF; font-size:12px;}
+.news-index .right .listbox{ width:278px;height:175px;border:1px solid #E4E4E4;}
+.news-index .right .listbox .title{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px;}
+.news-index .right .listbox .title h2{font-size:14px;color:#666666; padding-left:15px;}
+.news-index .right .listbox .txt{ padding:5px;}
+.news-index .right .listbox .txt li{ line-height:180%; padding-left:13px;background:url(../images/01.gif) no-repeat 5px 10px;}
+.news-index-list{ width:985px;margin:0 auto; margin-top:8px;}
+.news-index-list .left{ width:288px; float:left;}
+.news-index-list .left .listbox{ width:278px;border:1px solid #E4E4E4;}
+.news-index-list .left .listbox .title{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px; width:220px; float:left; padding-left:10px; font-size:14px;}
+.news-index-list .left .listbox .more{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px; width:48px; float:left}
+.news-index-list .left .listbox .txt { padding:5px;}
+.news-index-list .left .listbox li{line-height:180%; padding-left:13px;background:url(../images/01.gif) no-repeat 5px 10px;}
+.news-index-list .center{ width:417px; float:left;}
+.news-index-list .center .listbox{ width:407px;border:1px solid #E4E4E4;}
+.news-index-list .center .listbox .title{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px; width:347px; float:left; padding-left:10px; font-size:14px;}
+.news-index-list .center .listbox .more{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px; width:50px; float:left}
+.news-index-list .center .listbox .txt { padding:5px;}
+.news-index-list .center .listbox li{line-height:180%; padding-left:13px;background:url(../images/01.gif) no-repeat 5px 10px;}
+.news-index-list .right{ width:280px; float:left;}
+.news-index-list .right .listbox{ width:278px;border:1px solid #E4E4E4;}
+.news-index-list .right .listbox .title{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px; width:220px; float:left; padding-left:10px; font-size:14px;}
+.news-index-list .right .listbox .more{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px; width:48px; float:left}
+.news-index-list .right .listbox .txt { padding:5px;}
+.news-index-list .right .listbox li{line-height:180%; padding-left:13px;background:url(../images/01.gif) no-repeat 5px 10px;}
+.news_index_banner {width:960px;margin:0 auto; margin-top:8px;}
+/*-----列表页面----------*/
+.news-list{ width:985px;margin:0 auto; margin-top:8px;}
+.news-list .left{ width:735px; float:left}
+.news-list .left .listbox{ width:725px;border:1px solid #E4E4E4}
+.news-list .left .listbox .tit{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px;}
+.news-list .left .listbox .tit h1 {font-size:14px; font-weight:bold; color:#666666;padding:0px; margin:0px; padding-left:15px;}
+.news-list .left .listbox .txt { background:url(../images/19.gif) no-repeat 13px 12px; padding:8px;padding-left:30px; line-height:180%; border-bottom:1px solid #E4E4E4;}
+.news-list .left .listbox .txt h2 { font-size:14px; font-weight:bold ; padding:0px; margin:0px;}
+.news-list .left .listbox .txt em { color: #009900; margin-right:30px;font-style: normal}
+.news-list .right{ width:250px; float:left; overflow:hidden}
+.news-list .right .sobox{width:248px;height:45px;border:1px solid #E4E4E4; margin-bottom:8px; background-color:#F9F9F9}
+.news-list .right .sobox .sleft{ width:165px; float:left; padding-left:10px; padding-top:10px;}
+.news-list .right .sobox .sleft input{ width:150px; height:21px; line-height:21px; border:1px  #CCCCCC solid; padding-left:5px;}
+.news-list .right .sobox .sright{ width:65px; float:left;padding-top:11px;}
+.news-list .right .sobox .sright input{ width:60px; height:23px;  border:0px ; background-color:#FF9900; color:#FFFFFF; font-size:12px;}
+.news-list .right .listbox{width:248;border:1px solid #E4E4E4; margin-bottom:8px;}
+.news-list .right .listbox .tit{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px;}
+.news-list .right .listbox .tit strong {font-size:14px;  color:#666666; padding-left:15px;}
+.news-list .right .listbox .txt { padding:5px;}
+.news-list .right .listbox .txt li { padding-left:12px;line-height:180%;background:url(../images/01.gif) no-repeat 5px 10px;}
+.news-list .right .listbox .category { padding:12px 0px 12px 14px; overflow:hidden; width:230px;}
+.news-list .right .listbox .category a{ display:block; height:23px; line-height:23px; width:90px;border:1px solid #E4E4E4; margin-right:10px; float:left; padding-left:10px; margin-bottom:5px; margin-top:5px;text-decoration: none; color:#0066CC}
+.news-list .right .listbox .category a:hover{border:1px solid #0099FF; background-color:#F5FBFE}
+/*-----详细页----------*/
+.news-show{ width:985px;margin:0 auto; margin-top:8px;}
+.news-show .left{ width:735px; float:left}
+.news-show .left .show{ width:705px;border:1px solid #E4E4E4;background:url(../images/16.jpg) repeat-x; padding:10px;}
+.news-show .left .show h1{text-align:center; font-size:23px; line-height:180%;  font-weight:bold; color:#000000;margin-top:15px; margin-bottom:12px; }
+.news-show .left .show .date{width: 600px;text-align:center; height:28px; line-height:28px; border-top:1px #E4E4E4 solid; border-bottom:1px #E4E4E4 solid; margin-left:34px; }
+.news-show .left .show .txt { padding:15px; font-size:14px;line-height:180%;}
+.news-show .right{ width:250px; float:left; overflow:hidden}
+.news-show .right .sobox{width:248px;height:45px;border:1px solid #E4E4E4; margin-bottom:8px; background-color:#F9F9F9}
+.news-show .right .sobox .sleft{ width:165px; float:left; padding-left:10px; padding-top:10px;}
+.news-show .right .sobox .sleft input{ width:150px; height:21px; line-height:21px; border:1px  #CCCCCC solid; padding-left:5px;}
+.news-show .right .sobox .sright{ width:65px; float:left;padding-top:11px;}
+.news-show .right .sobox .sright input{ width:60px; height:23px;  border:0px ; background-color:#FF9900; color:#FFFFFF; font-size:12px;}
+.news-show .right .listbox{width:248;border:1px solid #E4E4E4; margin-bottom:8px;}
+.news-show .right .listbox .tit{height:30px;background:url(../images/52.gif) repeat-x 0px -239px; border-bottom:1px solid #E4E4E4; line-height:30px;}
+.news-show .right .listbox .tit strong {font-size:14px;  color:#666666; padding-left:15px;}
+.news-show .right .listbox .txt { padding:5px;}
+.news-show .right .listbox .txt li { padding-left:12px;line-height:180%;background:url(../images/01.gif) no-repeat 5px 10px;}
+.news-show .right .listbox .category { padding:10px 14px; overflow:hidden; width:215px;}
+.news-show .right .listbox .category a{ display:block; height:23px; line-height:23px; width:90px;border:1px solid #E4E4E4; margin-right:10px; float:left; padding-left:10px; margin-bottom:5px; margin-top:5px;text-decoration: none; color:#0066CC}
+.news-show .right .listbox .category a:hover{border:1px solid #0099FF; background-color:#F5FBFE}

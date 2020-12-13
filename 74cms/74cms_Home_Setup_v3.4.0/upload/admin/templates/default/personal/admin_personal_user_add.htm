@@ -1,0 +1,40 @@
+{#include file="sys/admin_header.htm"#}
+<div class="admin_main_nr_dbox">
+ <div class="pagetit">
+	<div class="ptit"> {#$pageheader#}</div>
+  <div class="clear"></div>
+</div>
+<div class="toptit">添加个人会员</div>
+  <form id="form1" name="form1" method="post" action="?act=members_add_save">
+  {#$inputtoken#}
+  <table width="100%" border="0" cellpadding="4" cellspacing="0"  >
+    <tr>
+      <td width="120" height="30" align="right" style=" border-bottom:1px #CCCCCC dashed">用户名：</td>
+      <td style=" border-bottom:1px #CCCCCC dashed"> <input name="username" type="text" class="input_text_200" id="username" maxlength="25" value=""/> </td>
+    </tr>
+    <tr>
+      <td height="30" align="right" style=" border-bottom:1px #CCCCCC dashed">邮箱地址：</td>
+      <td style=" border-bottom:1px #CCCCCC dashed" ><input name="email" type="text" class="input_text_200" id="email" maxlength="25" value=""/></td>
+    </tr>
+    <tr>
+      <td height="30" align="right" >登陆密码：</td>
+      <td style=" border-bottom:1px #CCCCCC dashed" ><input name="password" type="password" class="input_text_200" id="password" maxlength="25" value=""/></td>
+    </tr>
+    <tr>
+      <td height="30" align="right" >再次输入密码：</td>
+      <td  ><input name="password1" type="password" class="input_text_200" id="password1" maxlength="25" value=""/></td>
+    </tr>
+    <tr>
+      <td height="30" align="right" >&nbsp;</td>
+      <td   >
+        <input type="hidden" name="member_type"  value="2" />
+        <input name="submit3" type="submit" class="admin_submit"    value="添加"/>
+        <input name="submit22" type="button" class="admin_submit" value="返 回" onclick="window.location.href='?act=members_list'"/>
+      </td>
+    </tr>
+  </table>
+  </form>
+</div>
+{#include file="sys/admin_footer.htm"#}
+</body>
+</html>

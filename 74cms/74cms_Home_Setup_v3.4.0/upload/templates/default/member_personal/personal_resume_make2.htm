@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.user.selectlayer.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.dialog.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_dir#}data/cache_classify.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$("#tabshow li:nth-child(2)>a").addClass("selected");
+	//菜单层
+	showmenulayer("#district_cn","#menu2","#district","#sdistrict",QS_city);
+	showmenu("#wage_cn","#menu1","#wage","#Form1","#wage");	
+	//性质中文字段复制
+	$("#nature_cn").val($(":radio[name='nature'][checked]").attr("title"));
+	$("input[name='nature']").click(function(){
+	$("#nature_cn").val($(this).attr("title"));
+	// alert ($("#nature_cn").val())
+	});
+//行业选择
+OpentradeLayer("#showtrade","#trade","#trade_cn","#trade_txt","#sel_trade",80);
+//从已有数据恢复行业选择
+var get_trade="{#$resume_basic.trade#}";
+if (get_trade!="")
+{
+	get_trade=get_trade.split(",");
+	for( var i=0;i<get_trade.length;++i)
+	{
+		$("#sel_trade :checkbox").each(function(index)
+			{
+				if ($(this).val()==get_trade[i]) $(this).attr("checked",true)
+		
+			});
+	}
+	$("#sel_trade  :checkbox").parent().css("color","");
+	$("#sel_trade  :checkbox[checked]").parent().css("color","#009900");
+}
+OpenCategoryLayer("#showjobs","#sel_category","#intention_jobs_id","#intention_jobs","#jobs_txt",QS_jobs,80);
+//从已有数据恢复职位选择
+var jobcategory="{#$resume_jobs_id#}";
+if (jobcategory)
+{	
+	jobcategory=jobcategory.split("-");
+	for( var i=0;i<jobcategory.length;++i)
+	{
+		var catid=jobcategory[i].split(".");
+	 	var jscat=QS_jobs[catid[0]];
+		var html=MakeLi(jscat,catid[0]);		
+		if ($("#sel_category .item[id='"+catid[0]+"'] .sitem").html()=="")
+		{
+		$("#sel_category .item[id='"+catid[0]+"'] .sitem").html(html);
+		}
+		if (catid[1]=="0")
+		{
+		$("#sel_category  :checkbox[value="+catid[0]+"]").attr("checked",true);
+		$("#sel_category .item[id='"+catid[0]+"'] .sitem :checkbox").attr("checked",true);
+		}
+		else
+		{
+		$("#sel_category  .sitem :checkbox[value='"+catid[1]+"']").attr("checked",true);
+		}
+	}
+					$("#sel_category .OpenFloatBox .item label :checkbox").parent().css("color","");
+					$("#sel_category .OpenFloatBox .item label :checkbox[checked]").parent().css("color","#FF6600");
+					$("#sel_category .OpenFloatBox .sitem :checkbox[checked]").each(function(index){
+					 	$(this).parent().parent().prev().css("color","#FF6600");
+					});
+					CopyItem("#sel_category");
+}
+//提交表单】
+	$("#submitsave").click(function(){
+	$('#Form1').submit();
+	})
+});
+//验证
+$(document).ready(function() {
+$("#Form1").validate({
+// debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   nature:{
+   required: true
+   },
+   district: {
+	min:1
+   },
+   wage: {
+	min:1
+   },
+   intention_jobs:"required",
+   trade_cn:"required"
+	},
+    messages: {
+    nature: {
+    required: "请选择意向职位性质"
+   },
+    district: {
+    min: jQuery.format("请选择期望工作地")
+   },
+   wage: {
+    min: "请选择期望月薪"
+   },
+   intention_jobs:"请选择意向职位",
+   trade_cn:"请选择意向行业"
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+});
+function getjobshtml(val)
+{
+	if (val=="")return false;
+    arr=val.split("|");
+	var htmlstr='<ul>';
+	for (x in arr)
+	{
+	 var v=arr[x].split(",");
+	htmlstr+="<li><label><input name=\"jobs\" type=\"checkbox\" value=\""+v[0]+"\" title=\""+v[1]+"\"/>"+v[1]+"</label></li>";
+	}
+	htmlstr+="</ul>";
+	htmlstr+="<div class=\"clear\"></div>";
+	return htmlstr; 
+}
+function setcheckbox(){
+		//点击下方单选，然后拷贝
+		$("#s_jobsemenu :checkbox").click(function(){
+			if ($("#s_jobsemenu :checkbox[checked]").length>5)
+			{
+				alert("不能超过5个选项");
+				$(this).attr("checked",false);
+			}
+			else
+			{
+				$("#s_jobsemenu :checkbox").parent().css("color","");
+				$("#s_jobsemenu :checkbox[checked]").parent().css("color","#FF0000");
+				//克隆
+				copyjobshtml();								
+			}	
+		});
+	}
+function copyjobshtml()
+{
+	var a_job_id=new Array();
+				var htmlstr='<ul>';
+				$("#s_jobsemenu :checkbox[checked]").each(function(index){
+				htmlstr+="<li><label><input name=\"jobsid\" type=\"checkbox\" value=\""+$(this).attr("value")+"\" title=\""+$(this).attr("title")+"\" checked/>"+$(this).attr("title")+"</label></li>";
+				})
+				htmlstr+="</ul>";
+				htmlstr+="<div class=\"clear\"></div>";
+				$("#menu4 .sel").html(htmlstr);	
+	//已选项目绑定click
+	$(".sel :checkbox").click(function(){
+	var selval=$(this).val();
+	//alert(selval);
+	//取消下方对应的复选
+		$("#s_jobsemenu :checkbox[checked]").each(function(){
+			if ($(this).val()==selval)
+			{
+				$(this).attr("checked",false)
+				//重新克隆
+				copyjobshtml();
+				$("#s_jobsemenu :checkbox").parent().css("color","");
+				$("#s_jobsemenu :checkbox[checked]").parent().css("color","#FF0000");
+			}	
+		})
+	});
+}
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a>&nbsp;>>&nbsp;创建简历&nbsp;>>&nbsp;第二步 - 求职意向
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_personal/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>我的简历</h1>
+		</div>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" >
+        <tr>
+          <td height="22">
+		  <form id="Form1" name="Form1" method="post" action="?act=make2_save" >
+		  <table width="100%" border="0" cellspacing="0" cellpadding="4"  >
+            <tr>
+              <td height="50" colspan="2" bgcolor="#F5FAFC" style=" border-bottom:1px #CCCCCC dashed; color:#003399">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:14px;  ">第二步 - 求职意向</span> <span style="color:#999999">(带<strong  style="color:#FF0000">*</strong>的为必填)</span></td>
+              </tr>
+			    <tr>
+              <td width="100" height="10"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td width="160" height="23" align="right">最近工作过的职位：</td>
+              <td><input name="recentjobs" type="text" class="input_text_200" id="recentjobs" maxlength="40" style="width:280px;" value="{#$resume_basic.recentjobs#}"/><span style="color:#999999"> (无工作经验者可忽略)</span></td>
+            </tr>
+            <tr>
+              <td height="23" align="right"><strong  style="color:#FF0000">*</strong>期望岗位性质：</td>
+              <td>		  
+			  {#qishi_get_classify  set="类型:QS_jobs_nature,列表名:c_nature"#}
+{#foreach from=$c_nature item=list#}
+		   <label><input name="nature"  type="radio" value="{#$list.id#}"   {#if $resume_basic.nature==$list.id#} checked="checked"{#/if#}/ title="{#$list.categoryname#}">{#$list.categoryname#}</label>  &nbsp;&nbsp;&nbsp;&nbsp;
+		 {#/foreach#}
+		 <input name="nature_cn" id="nature_cn" type="hidden" value="{#$resume_basic.nature_cn#}" />
+		  </td>
+            </tr>
+			<tr>
+              <td height="23" align="right"><strong  style="color:#FF0000">*</strong>期望工作地区：</td>
+              <td>
+			  <div>
+		<input type="text" value="{#$resume_basic.district_cn|default:"期望工作地区"#}"  readonly="readonly" name="district_cn" id="district_cn" class="input_text_200 input_text_200_selsect"/>
+		<input name="district" id="district" type="hidden" value="{#$resume_basic.district#}" />
+		<input name="sdistrict" id="sdistrict" type="hidden" value="{#$resume_basic.sdistrict#}" />
+		<div id="menu2" class="dmenu shadow">
+			<ul>
+			{#qishi_get_classify set="类型:QS_district,id:0,列表名:c_province"#}{#foreach from=$c_province item=list#}
+			<li id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+			{#/foreach#}
+			</ul>
+		</div>
+		<div id="menu2_s" class="dmenu shadow" style="display:none"></div>
+		  </div>
+			</td>
+            </tr>
+			<tr>
+              <td height="23" align="right"><strong  style="color:#FF0000">*</strong>期望月薪：</td>
+              <td>
+			  <div>
+		<input type="text" value="{#$resume_basic.wage_cn|default:"请选择期望月薪"#}"  readonly="readonly" name="wage_cn" id="wage_cn" class="input_text_200 input_text_200_selsect"/>
+		<input name="wage" id="wage" type="hidden" value="{#$resume_basic.wage#}" />
+		<div id="menu1" class="menu">
+			<ul>
+			{#qishi_get_classify set="类型:QS_wage,列表名:c_wage"#}{#foreach from=$c_wage item=list#}
+			<li id="{#$list.id#}" title="{#$list.categoryname#}">{#$list.categoryname#}</li>
+			{#/foreach#}
+			</ul>
+		</div>
+		  </div>
+			  </td>
+            </tr>
+			  <tr>
+              <td height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>期望从事的岗位：</td>
+              <td>
+<div>
+			  <input type="button" name="Submit22" value="选择 / 修改" class="user_submit"  id="showjobs" />
+			   <div id="jobs_txt" style="color: #006699; line-height:30px;">{#$resume_basic.intention_jobs|default:"请选择期望从事的岗位"#}</div>
+			   <input name="intention_jobs" id="intention_jobs" type="hidden" value="{#$resume_basic.intention_jobs#}" />
+			   <input name="intention_jobs_id" id="intention_jobs_id"  type="hidden" value="{#$resume_jobs_id#}" />
+			    <div  style="display:none" id="sel_category">
+					<div class="OpenFloatBoxBg" ></div>
+					<div class="OpenFloatBox">
+							<div class="title"><h4>请选择职位类别</h4><div class="DialogClose" title="关闭"></div></div>
+							<div class="tip">可多选，最多选择5项</div>
+							<div class="content link_lan">					
+										<div class="txt">							
+												{#qishi_get_classify set="列表名:c_jobs,类型:QS_jobs"#}
+												{#foreach from=$c_jobs item=list#}
+												<div class="item" id="{#$list.id#}">
+														<label title="{#$list.categoryname#}" class="titem" >
+														<input  type="checkbox" value="{#$list.id#}"  title="{#$list.categoryname#}" class="b" />{#$list.categoryname#}
+														</label>
+														<div class="sitem"></div>
+												</div>
+												{#/foreach#}
+												<div class="clear"></div>
+										</div>
+										<div class="txt"><div class="selecteditem"></div></div>							
+										<div class="txt">
+										<div align="center"><input type="button"  class="but80 Set" value="确定" /></div>
+										</div>			
+							</div>
+					</div>
+			  </div>
+	  
+</td>
+            </tr><tr>
+              <td height="23" align="right" valign="top"><strong  style="color:#FF0000">*</strong>期望从事的行业：</td>
+              <td>	
+			   <input type="button" name="Submit23" value="选择 / 修改" class="user_submit"  id="showtrade"/>
+			   <div id="trade_txt" style="color: #006699; line-height:30px;">{#$resume_basic.trade_cn|default:"请选择期望从事的行业"#}</div>
+			   <input name="trade_cn" id="trade_cn" type="hidden" value="{#$resume_basic.trade_cn#}" />
+			   <input name="trade" id="trade" type="hidden" value="{#$resume_basic.trade#}" />
+			   
+			   
+							   <div  style="display:none" id="sel_trade">
+							<div class="OpenFloatBoxBg" ></div>
+							<div class="OpenFloatBox">
+									<div class="title"><h4>请选择行业</h4><div class="DialogClose" title="关闭"></div></div>
+									<div class="tip">可多选，最多选择5项</div>
+									<div class="content link_lan">					
+												<div class="txt">							
+														{#qishi_get_classify set="列表名:c_trade,类型:QS_trade"#}{#foreach from=$c_trade item=list#}
+														<div class="item" id="{#$list.id#}">
+																<label title="{#$list.categoryname#}" class="titem" >
+																<input  type="checkbox" value="{#$list.id#}"  title="{#$list.categoryname#}" class="b" />{#$list.categoryname#}
+																</label>
+														</div>
+														{#/foreach#}
+														<div class="clear"></div>
+												</div>						
+												<div class="txt">
+												<div align="center"><input type="button"  class="but80 Set" value="确定" /></div>
+												</div>			
+									</div>
+							</div>
+					  </div>
+			  </td>
+         </tr>
+          </table>
+		  <input name="pid" type="hidden" id="pid" value="{#$pid#}" />
+		   <input name="go_resume_show" type="hidden"  value="{#$go_resume_show#}" />
+		  </form>
+		  <table width="100%" border="0" cellspacing="0" cellpadding="4" >
+   
+              <td width="160" height="23" align="right"></td>
+              <td height="60">
+			   {#if $go_resume_show#}
+			   <input type="submit" name="submitsave" id="submitsave" value="保存" class="user_submit"/>&nbsp;&nbsp;
+			    &nbsp;&nbsp;
+			   <input type="button" name="next" value="返回"  class="user_submit" onclick="window.location='?act=resume_show&pid={#$pid#}'"/>
+			
+			    {#else#}
+			<input type="submit" name="submitsave" id="submitsave" value="保存并跳到下一步" class="user_long_submit"/>&nbsp;&nbsp;
+                  <input type="button" name="next" value="返回上一步"  class="user_submit" onclick="window.location='?act=make1&pid={#$pid#}'" />
+			  {#/if#}
+			   
+			  </td>
+            </tr>
+</table>
+		  </td>
+          <td width="150" valign="top" class="resume_right_box" >
+		 {#include file="member_personal/personal_right.htm"#} 
+		  </td>
+        </tr>
+      </table>
+	  
+	  </div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>

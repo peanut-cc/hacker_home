@@ -1,0 +1,21 @@
+<div class="head_top">
+	<div class="head_top_box">
+			<div class="head_top_box_left link_lan"><span id="top_loginform"></span></div>
+			<div class="head_top_box_right link_bk">
+			{#include file="top-nav.htm"#}
+			</div>
+			<div class="clear"></div>
+	</div>
+</div>
+<div class="head">
+	<div class="head_logo">
+		<a href="{#$QISHI.site_dir#}"><img src="{#$QISHI.upfiles_dir#}{#$QISHI.web_logo#}" alt="{#$QISHI.site_name#}" border="0" align="absmiddle" /></a>
+	</div>
+	<div class="head_logo_right">
+	<div class="city"> </div>
+	{#qishi_ad set="显示数目:1,调用名称:QS_alltopimg,列表名:ad"#}
+	{#foreach from=$ad item=list#}
+	<a href="{#$list.img_url#}"><img src="{#$list.img_path#}" alt="{#$QISHI.site_name#}" border="0" align="absmiddle" /></a>
+	{#/foreach#}	</div>
+	<div class="clear"></div>
+</div>

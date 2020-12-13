@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{#$title#}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=7">
+<link rel="shortcut icon" href="{#$QISHI.site_dir#}favicon.ico" />
+<meta name="author" content="骑士CMS" />
+<meta name="copyright" content="74cms.com" />
+<link href="{#$QISHI.site_template#}css/user.css" rel="stylesheet" type="text/css" />
+<script src="{#$QISHI.site_template#}js/jquery.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.idTabs.min.js" type='text/javascript' language="javascript"></script>
+<script src="{#$QISHI.site_template#}js/jquery.validate.min.js" type='text/javascript' language="javascript"></script>
+		
+<script src="{#$QISHI.site_template#}js/jquery.reasontip-min.js" type='text/javascript' language="javascript"></script>
+
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+		
+	vtip_reason("{#$QISHI.site_dir#}","company_reason");
+
+	//隐藏展开
+	$("#spanshow").click(function(){	$("#why").toggle()});
+//控制图片大小
+{#if $company_profile.certificate_img<>""#}
+var imgwidth=$("#c_img").attr("width");
+if (imgwidth>500)
+{
+$("#c_img").attr("width","500")
+}
+{#/if#}
+});
+//验证
+$(document).ready(function() {
+ $("#Form1").validate({
+ //debug: true,
+// onsubmit:false,
+//onfocusout :true,
+   rules:{
+   license:"required",
+	   certificate_img: {
+	   required:true,
+	   accept:true
+	   }
+	},
+    messages: {
+    license:{
+    required:jQuery.format("请输入企业注册号")
+   },
+   certificate_img:{
+    required:jQuery.format("请上传营业执照"),
+	accept:jQuery.format("您上传的文件格式不正确")
+   }   
+  },
+  errorPlacement: function(error, element) {
+    if ( element.is(":radio") )
+        error.appendTo( element.parent().next().next() );
+    else if ( element.is(":checkbox") )
+        error.appendTo ( element.next());
+    else
+        error.appendTo(element.parent());
+	}
+    });
+});
+</script>
+</head>
+<body>
+{#include file="header.htm"#}
+<div class="page_location link_bk">
+
+当前位置：<a href="{#$QISHI.site_dir#}">首页</a>&nbsp;>>&nbsp;<a href="{#$userindexurl#}">会员中心</a> &nbsp;>>&nbsp;公司信息 &nbsp;>>&nbsp;营业执照
+</div>
+<table width="985" border="0" align="center" cellpadding="0" cellspacing="0" style="margin-top:8px;" >
+  <tr>
+    <td width="173" valign="top" class="link_bk">
+	{#include file="member_company/left.htm"#}
+	</td>
+    <td valign="top">
+	<div class="user_right_box">
+		<div class="user_right_top_tit_bg">		
+		  <h1>营业执照</h1>
+		</div>
+		 <form action="?act=company_auth_save" method="post"  enctype="multipart/form-data" id="Form1">
+		 <table width="100%" border="0" cellpadding="4" cellspacing="0" bgcolor="#FFFFFF" style="margin-bottom:100px;">
+        
+		  <tr>
+          <td height="30" colspan="2" bgcolor="#FFFFFF"  style="padding-left:20px; color: #009900; line-height:200%;" class="link_lan">营业执照只作为网站核实贵公司真实性的材料，不在任何页面显示，我们不会以任何形式公布您的执照信息！<br />
+通过网站核实后营业执照我们将立即删除。<span  id="spanshow" style="color:#0066CC; cursor:pointer" >[为什么要上传营业执照?]</span></td>
+        </tr>	
+<tr id="why" style="display:none">
+          <td width="139" height="30" align="right" bgcolor="#EAF4F7" >为什么要上传营业执照：</td>
+          <td width="595" bgcolor="#EAF4F7" style="line-height:200%">① 通过认证后您将获得更多权限；<br />
+		{#if $QISHI.operation_mode=="1"#}
+          ② 通过认证后可增加信息的可信度，成为<strong>已认证企业</strong>；<br />
+          ③ 通过认证后可额外获得 {#$points.company_auth.value#} {#$QISHI.points_quantifier#}{#$QISHI.points_byname#}；<br />
+		{#else#}
+          ② 通过认证后可增加信息的可信度，成为<strong>已认证企业</strong>；<br />
+		{#/if#}  
+          注：上传营业执照仅供我们审核，绝不会用任何形式对外公开。</td>
+        </tr>
+        <tr>
+          <td width="139" height="30" align="right" bgcolor="#FFFFFF" >您的营业执照认证状态：</td>
+          <td width="595" bgcolor="#FFFFFF" style="color:#FF0000">
+		  {#if $company_profile.audit=="0"#}
+		  未上传营业执照，请上传！
+		  {#elseif $company_profile.audit =="1"#}
+		   已认证通过！
+		  {#elseif $company_profile.audit =="2"#}
+		   认证中,请耐心等待
+		
+	  {#elseif $company_profile.audit =="3"#}
+		   认证失败！请上传正确的营业执照 <img src="{#$QISHI.site_template#}images/99.gif"  border="0"  style="cursor:pointer;" id="{#$company_profile.uid#}"  class="reason" align="absmiddle"/>
+	
+		  {#/if#}&nbsp;		  </td>
+        </tr>
+		{#if $company_profile.audit <>"1"#}
+        <tr>
+          <td height="30" align="right" bgcolor="#FFFFFF" >营业执照注册号：</td>
+          <td bgcolor="#FFFFFF" >
+            <input name="license" type="text" class="input_text_200" id="license" value="{#$company_profile.license#}" maxlength="80" />
+              </td>
+        </tr>
+        <tr>
+          <td height="30" align="right" bgcolor="#FFFFFF">上传执照图片：</td>
+          <td bgcolor="#FFFFFF"><input type="file" name="certificate_img"  style="height:24px; width:275px; font-size:12px; line-height:20px;"  onkeydown="alert('请点击右侧“浏览”选择您电脑上的图片！');return false" id="certificate_img"/>
+            (图片大小不超过 {#$QISHI.certificate_max_size#} KB,允许格式：jpg/gif/bmp/png)<br />
+</td>
+        </tr>
+		<tr>
+          <td height="30" align="right" bgcolor="#FFFFFF">&nbsp;</td>
+          <td bgcolor="#FFFFFF"><input type="submit" name="Submit" value="上传"   class="user_submit"/></td>
+		</tr>
+		{#/if#}
+{#if $company_profile.certificate_img<>"" && $company_profile.audit <>"1"#}
+<tr>
+          <td height="30" align="right" bgcolor="#FFFFFF">营业执照图片：</td>
+          <td valign="top" bgcolor="#FFFFFF"><div style="width:500px; overflow:hidden "><a href="{#$QISHI.site_dir#}data/{#$QISHI.updir_certificate#}/{#$company_profile.certificate_img#}" target="_blank"><img src="{#$QISHI.site_dir#}data/{#$QISHI.updir_certificate#}/{#$company_profile.certificate_img#}" border="0" id="c_img"  /></a></div></td>
+        </tr>
+		{#/if#}
+      </table></form>
+		</div>
+    </td>
+  </tr>
+</table>
+{#include file="footer.htm"#}
+</body>
+</html>
