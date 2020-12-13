@@ -1,0 +1,19 @@
+
+RewriteEngine On
+RewriteBase /
+
+RewriteRule index.html index.php
+
+RewriteRule ^category-([0-9]+)-0\.html$ category\.php\?cid=$1  [L]
+RewriteRule ^category-([0-9]+)-([0-9]+)\.html$ category\.php\?cid=$1&aid=$2  [L]
+RewriteRule ^category-([0-9]+)-([0-9]+)-([0-9]+)\.html$ category\.php\?cid=$1&aid=$2&page_id=$3  [L]
+RewriteRule ^info-([0-9]+)\.html$ info\.php?id=$1 [L]
+
+RewriteRule ^news_cat\.html$ news_cat\.php   [L]
+RewriteRule ^news_cat-([0-9]+)\.html$ news_cat\.php?page_id=$1   [L]
+RewriteRule ^news_cat-([0-9]+)-([0-9]+)\.html$ news_cat\.php?cid=$1&page_id=$2   [L]
+RewriteRule ^news\.html$ news\.php [L]
+RewriteRule ^news-([0-9]+)\.html$ news\.php?id=$1 [L]
+RewriteRule ^newslist-([0-9]+)\.html$ news\.php?page_id=$1 [L] 
+RewriteRule ^info_index\.html$ info_index\.php [L]
+RewriteRule ^guest_book\.html$ guest_book\.php [L]
